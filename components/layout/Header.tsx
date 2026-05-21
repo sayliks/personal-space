@@ -12,11 +12,11 @@ export function Header() {
           <Link href="/" className="hover:text-foreground transition-colors">
             Home
           </Link>
-          <Link href="/about" className="hover:text-foreground transition-colors">
-            About
-          </Link>
           <Link href="/search" className="hover:text-foreground transition-colors">
             Search
+          </Link>
+          <Link href="/about" className="hover:text-foreground transition-colors">
+            About
           </Link>
           <ThemeToggle />
         </nav>
