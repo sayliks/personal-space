@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma"
+import { env } from "@/lib/env"
 import type { MetadataRoute } from "next"
 
 export const dynamic = "force-dynamic"
 
-const SITE_URL = process.env.AUTH_URL ?? "http://localhost:3000"
+const SITE_URL = env.AUTH_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, categories, tags] = await Promise.all([
