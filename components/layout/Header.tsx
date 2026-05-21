@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
 
 export function Header() {
   return (
@@ -26,6 +27,7 @@ export function Header() {
           >
             Admin
           </Link>
+          <ThemeToggle />
         </nav>
       </div>
     </header>
