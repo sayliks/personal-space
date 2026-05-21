@@ -18,9 +18,6 @@ export function Header() {
           <Link href="/search" className="hover:text-foreground transition-colors">
             Search
           </Link>
-          <Link href="/rss.xml" className="hover:text-foreground transition-colors">
-            RSS
-          </Link>
           <ThemeToggle />
         </nav>
       </div>

@@ -22,11 +22,6 @@ export const metadata: Metadata = {
     template: "%s | frostsalix blog",
   },
   description: "A personal blog built with Next.js",
-  alternates: {
-    types: {
-      "application/rss+xml": "/rss.xml",
-    },
-  },
   openGraph: {
     type: "website",
     siteName: "frostsalix blog",
