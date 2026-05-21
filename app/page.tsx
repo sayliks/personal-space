@@ -2,6 +2,8 @@ import { getPublishedPosts } from "@/lib/queries"
 import { PostCard } from "@/components/blog/PostCard"
 import { Pagination } from "@/components/blog/Pagination"
 
+export const dynamic = "force-dynamic"
+
 export default async function HomePage({
   searchParams,
 }: {

@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "id": "6b397c9a",
+      "cron": "3,8,13,18,23,28,33,38,43,48,53,58 * * * *",
+      "prompt": "阅读 docs/PLAN.md，对照当前项目实际状态，找出 PLAN.md 中列出的待完成事项中尚未实现的部分，按优先级修复问题并提交代码。重点关注：\n1. lib/env.ts、lib/validations.ts 是否已存在且被使用\n2. middleware.ts 是否存在且正常\n3. app/error.tsx、app/loading.tsx、app/not-found.tsx 是否存在\n4. 公开页面（首页、文章详情、分类/标签页、搜索、关于）是否完善\n5. 评论系统（API + 组件）是否完整\n6. RSS、sitemap、SEO metadata 是否到位\n7. Zod schemas 是否在 API routes 中实际使用\n8. Toast 通知是否接入\n9. admin 功能是否完整（CRUD + 评论审核）\n10. 代码质量问题（语言一致性、日期显示、未使用的导入等）\n\n每次发现问题后直接修复，修复完成后 npm run build 验证，然后 git commit。",
+      "createdAt": 1779364218772,
+      "recurring": true,
+      "createdBySessionId": "87d50b9c-549f-4d9d-bc4b-7ec5bb508474",
+      "createdByPid": 17332
+    }
+  ]
+}

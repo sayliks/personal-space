@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import { PostCard } from "@/components/blog/PostCard"
 import { Pagination } from "@/components/blog/Pagination"
 
+export const dynamic = "force-dynamic"
+
 export default async function TagPage({
   params,
   searchParams,

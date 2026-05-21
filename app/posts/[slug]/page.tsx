@@ -7,6 +7,8 @@ import { CommentSection } from "@/components/blog/CommentSection"
 import { formatDateLong } from "@/lib/utils"
 import type { Metadata } from "next"
 
+export const dynamic = "force-dynamic"
+
 export async function generateMetadata({
   params,
 }: {
