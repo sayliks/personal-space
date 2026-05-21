@@ -1,6 +1,3 @@
-import { remark } from "remark";
-import strip from "strip-markdown";
-
 export function getExcerpt(markdown: string, maxLength = 200): string {
   const text = markdown.replace(/^#{1,6}\s.*$/gm, "").trim();
   const plain = text.replace(/[*_~`>\[\]()#!|]/g, "").replace(/\s+/g, " ").trim();

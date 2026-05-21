@@ -1,5 +1,5 @@
-import { slugger } from "github-slugger";
+import { slug } from "github-slugger";
 
 export function generateSlug(text: string): string {
-  return slugger.slug(text);
+  return slug(text);
 }

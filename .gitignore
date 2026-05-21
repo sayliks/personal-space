@@ -23,6 +23,17 @@
 # misc
 .DS_Store
 *.pem
+*.swp
+*.swo
+
+# ide
+.vscode/
+.idea/
+
+# claude code
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.workbuddy/
 
 # debug
 npm-debug.log*
@@ -41,4 +52,4 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
-PLAN.md
+/PLAN.md
