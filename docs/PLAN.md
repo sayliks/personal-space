@@ -316,10 +316,9 @@ CLOUDINARY_API_SECRET="..."
 | 优先级 | 问题 | 风险 | 状态 |
 |--------|------|------|------|
 | P2 | 无测试（单元 + E2E） | 重构风险高 | 待实现 |
-| P3 | RSS + sitemap 用 `AUTH_URL` 代替站点 URL | 配置混淆 | 可优化 |
 | P3 | 无暗色模式切换 | 用户体验 | 可选 |
 
-> ✅ 已修复：Zod 接入 API routes、文章可见性逻辑、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time 元素。
+> ✅ 已修复：Zod 接入 API routes、文章可见性、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time、env.ts 全链路接入（prisma/sitemap/RSS）。
 
 ---
 
