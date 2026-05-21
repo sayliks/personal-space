@@ -23,7 +23,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.2.1",
-    "feed": "^5.2.1",
     "github-slugger": "^2.0.0",
     "highlight.js": "^11.11.1",
     "lucide-react": "^1.16.0",
