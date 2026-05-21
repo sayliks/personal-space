@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma"
+import { env } from "@/lib/env"
 import { Feed } from "feed"
 
 export const dynamic = "force-dynamic"
 
-const SITE_URL = process.env.AUTH_URL ?? "http://localhost:3000"
+const SITE_URL = env.AUTH_URL
 
 export async function GET() {
   const posts = await prisma.post.findMany({

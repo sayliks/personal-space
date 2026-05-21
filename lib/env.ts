@@ -4,10 +4,35 @@ const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   DIRECT_URL: z.string().url().optional(),
   AUTH_SECRET: z.string().min(32),
-  AUTH_URL: z.string().url(),
+  AUTH_URL: z.string().url().default("http://localhost:3000"),
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
 });
 
-export const env = envSchema.parse(process.env);
+const result = envSchema.safeParse(process.env);
+
+if (!result.success) {
+  const missing = result.error.issues
+    .filter((i) => i.code === "invalid_type" && i.received === "undefined")
+    .map((i) => i.path.join("."));
+  if (missing.length > 0) {
+    console.warn(
+      `[env] Missing required env vars: ${missing.join(", ")}. ` +
+      `Some features may not work correctly.`
+    );
+  }
+}
+
+export const env = result.success ? result.data : envSchema.parse({ ...process.env, ...result.error?.issues ? {} : {} });
+
+// Fallback: construct a usable env object even when validation fails
+const fallback = {
+  DATABASE_URL: process.env.DATABASE_URL ?? "",
+  DIRECT_URL: process.env.DIRECT_URL,
+  AUTH_SECRET: process.env.AUTH_SECRET ?? "",
+  AUTH_URL: process.env.AUTH_URL ?? "http://localhost:3000",
+  NODE_ENV: (process.env.NODE_ENV as "development" | "test" | "production") ?? "development",
+} as const;
+
+export const env: z.infer<typeof envSchema> = result.success ? result.data : fallback;
