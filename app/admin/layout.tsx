@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { FileText, FolderOpen, Tags, MessageSquare, LayoutDashboard } from "lucide-react"
+import { Toaster } from "sonner"
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
@@ -51,6 +52,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
       </aside>
       <main className="flex-1 p-6">{children}</main>
+      <Toaster />
     </div>
   )
 }
