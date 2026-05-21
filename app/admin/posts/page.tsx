@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { getAllPosts } from "@/lib/queries"
 import { formatDate } from "@/lib/utils"
-import { Plus, Pencil } from "lucide-react"
+import { Plus, Pencil, ExternalLink } from "lucide-react"
 import { DeletePostButton } from "./DeletePostButton"
 
 export default async function AdminPostsPage() {
@@ -77,6 +77,16 @@ export default async function AdminPostsPage() {
                       >
                         <Pencil className="size-4" />
                       </Link>
+                      {post.published && (
+                        <Link
+                          href={`/posts/${post.slug}`}
+                          target="_blank"
+                          className="inline-flex items-center justify-center rounded-md h-7 w-7 text-sm hover:bg-muted transition-colors"
+                          title="View post"
+                        >
+                          <ExternalLink className="size-3.5" />
+                        </Link>
+                      )}
                       <DeletePostButton postId={post.id} />
                     </div>
                   </td>
