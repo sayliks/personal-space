@@ -150,7 +150,7 @@ post.content (Markdown) → react-markdown + remark-gfm + rehype-highlight
 - `prisma db push` 已完成
 - 基础工具文件已创建：`lib/slug.ts`, `lib/utils.ts`, `lib/queries.ts`, `lib/markdown.ts`
 - Phase 1 依赖已安装
-- 待完成：`prisma/seed.ts` 管理员播种脚本
+- ✅ `prisma/seed.ts` 管理员播种脚本（bcrypt hash 12 rounds + upsert）
 
 ### Phase 2：认证系统 ✅（已完成）
 - ✅ 安装 `next-auth` `@auth/prisma-adapter`
@@ -278,7 +278,7 @@ CLOUDINARY_API_SECRET="..."
 - [x] ~~搜索逻辑抽取到 `lib/queries.ts`~~
 - [x] ~~`force-dynamic` 修复构建时数据库连接池耗尽~~
 - [x] ~~PostCard 空 `publishedAt` 时渲染空 `<time>` 元素~~ ✅
-- [ ] `prisma/seed.ts` — 管理员播种脚本
+- [x] ~~`prisma/seed.ts` — 管理员播种脚本~~ ✅
 - [ ] 暗色模式完善
 - [ ] Phase 9：单元测试 + E2E 测试
 
@@ -765,7 +765,7 @@ test: 添加 createComment Server Action 的单元测试
 | **Week 3** | ⑩ ~~实现 MarkdownRenderer（Phase 3）~~ ✅<br>⑪ ~~搭建后台文章 CRUD（Phase 4）~~ ✅<br>⑫ ~~实现 Server Actions 表单提交~~ ✅<br>⑬ ~~添加 toast 反馈（sonner + PostForm 集成）~~ ✅ | Server Actions、UI 开发 |
 | **Week 4** | ⑭ ~~开发博客公开页面（Phase 5）~~ ✅<br>⑮ ~~实现评论系统（Phase 6）~~ ✅<br>⑯ ~~搜索 + RSS + sitemap（Phase 7-8）~~ ✅<br>⑰ 写第一批单元测试<br>⑱ `npm run build` 零警告 | 完整功能、测试习惯 |
 
-> **当前进度（2026-05-21）**：Phase 0-8 基本完成（仅缺暗色模式），Phase 9 待开始。遗留：seed.ts、测试、暗色模式。
+> **当前进度（2026-05-21）**：Phase 0-8 基本完成（仅缺暗色模式），seed 脚本已就绪。Phase 9 待开始。遗留：暗色模式、测试。
 
 ---
 
