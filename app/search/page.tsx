@@ -3,6 +3,8 @@ import { PostCard } from "@/components/blog/PostCard"
 import { searchPosts } from "@/lib/queries"
 import type { Metadata } from "next"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Search",
   description: "Search blog posts",

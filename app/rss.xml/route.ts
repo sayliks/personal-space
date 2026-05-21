@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { Feed } from "feed"
 
+export const dynamic = "force-dynamic"
+
 const SITE_URL = process.env.AUTH_URL ?? "http://localhost:3000"
 
 export async function GET() {

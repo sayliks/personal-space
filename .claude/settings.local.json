@@ -12,7 +12,8 @@
       "Bash(npx shadcn@latest add card input textarea label badge -y)",
       "Bash(git *)",
       "Bash(npx shadcn@latest add table dialog tabs -y)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }
