@@ -11,9 +11,11 @@ export function PostCard({ post }: { post: PostWithRelations }) {
     <article className="border-b pb-6 last:border-0">
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <time dateTime={post.publishedAt?.toISOString()}>
-            {post.publishedAt ? formatDate(post.publishedAt) : null}
-          </time>
+          {post.publishedAt && (
+            <time dateTime={post.publishedAt.toISOString()}>
+              {formatDate(post.publishedAt)}
+            </time>
+          )}
           {post.category && (
             <CategoryBadge name={post.category.name} slug={post.category.slug} />
           )}
