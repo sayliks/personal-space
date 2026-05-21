@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export const createPostSchema = z.object({
   title: z.string().min(1).max(200),
-  content: z.string().optional(),
-  summary: z.string().max(500).optional().or(z.literal("")),
-  coverImage: z.string().url().optional().or(z.literal("")),
-  categoryId: z.string().optional(),
+  content: z.string().nullish(),
+  summary: z.string().max(500).nullish().or(z.literal("")),
+  coverImage: z.string().url().nullish().or(z.literal("")),
+  categoryId: z.string().nullish(),
   tags: z.array(z.string()).default([]),
   published: z.boolean().optional(),
 });
