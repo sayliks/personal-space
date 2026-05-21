@@ -101,6 +101,23 @@ export async function getCommentsByPostId(postId: string) {
   });
 }
 
+export async function searchPosts(q: string) {
+  return prisma.post.findMany({
+    where: {
+      published: true,
+      publishedAt: { lte: new Date() },
+      OR: [
+        { title: { contains: q, mode: "insensitive" } },
+        { content: { contains: q, mode: "insensitive" } },
+        { summary: { contains: q, mode: "insensitive" } },
+      ],
+    },
+    include: POST_INCLUDES,
+    orderBy: { publishedAt: "desc" },
+    take: 20,
+  });
+}
+
 export async function getPendingComments() {
   return prisma.comment.findMany({
     where: { approved: false },

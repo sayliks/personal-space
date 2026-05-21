@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -75,9 +76,14 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
     })
 
     if (res.ok) {
+      toast.success(isEdit ? "Post updated" : "Post created")
       router.push("/admin/posts")
       router.refresh()
     } else {
+      const data = await res.json()
+      toast.error(data.error?.fieldErrors
+        ? Object.values(data.error.fieldErrors).flat().join(", ")
+        : data.error || "Failed to save post")
       setSaving(false)
     }
   }

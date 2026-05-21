@@ -29,7 +29,7 @@ export default async function PostPage({
   const { slug } = await params
   const post = await getPostBySlug(slug)
 
-  if (!post || (!post.published && post.publishedAt && post.publishedAt > new Date())) {
+  if (!post || !post.published) {
     notFound()
   }
 

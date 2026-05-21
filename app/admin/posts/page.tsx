@@ -67,7 +67,7 @@ export default async function AdminPostsPage() {
                     {post.category?.name ?? "-"}
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">
-                    {formatDate(post.createdAt)}
+                    {formatDate(post.publishedAt ?? post.createdAt)}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">

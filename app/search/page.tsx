@@ -1,32 +1,11 @@
 import { SearchForm } from "@/components/blog/SearchForm"
 import { PostCard } from "@/components/blog/PostCard"
-import { prisma } from "@/lib/prisma"
+import { searchPosts } from "@/lib/queries"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Search",
   description: "Search blog posts",
-}
-
-async function searchPosts(q: string) {
-  return prisma.post.findMany({
-    where: {
-      published: true,
-      publishedAt: { lte: new Date() },
-      OR: [
-        { title: { contains: q, mode: "insensitive" } },
-        { content: { contains: q, mode: "insensitive" } },
-        { summary: { contains: q, mode: "insensitive" } },
-      ],
-    },
-    include: {
-      author: { select: { id: true, name: true } },
-      category: true,
-      tags: { include: { tag: true } },
-    },
-    orderBy: { publishedAt: "desc" },
-    take: 20,
-  })
 }
 
 export default async function SearchPage({

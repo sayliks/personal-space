@@ -21,7 +21,7 @@ export default async function HomePage({
           posts.map((post) => <PostCard key={post.id} post={post} />)
         )}
       </div>
-      <Pagination page={page} totalPages={totalPages} />
+      <Pagination page={page} totalPages={totalPages} baseUrl="/" />
     </div>
   )
 }

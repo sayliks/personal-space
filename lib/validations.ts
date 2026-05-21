@@ -1,15 +1,12 @@
 import { z } from "zod";
 
 export const createPostSchema = z.object({
-  title: z.string().min(1, "标题不能为空").max(200),
-  slug: z
-    .string()
-    .regex(/^[a-z0-9-]+$/, "slug 只能包含小写字母、数字和连字符"),
+  title: z.string().min(1).max(200),
   content: z.string().optional(),
-  summary: z.string().max(500).optional(),
+  summary: z.string().max(500).optional().or(z.literal("")),
   coverImage: z.string().url().optional().or(z.literal("")),
-  categoryId: z.string().cuid().optional(),
-  tagIds: z.array(z.string().cuid()).default([]),
+  categoryId: z.string().optional(),
+  tags: z.array(z.string()).default([]),
   published: z.boolean().optional(),
 });
 

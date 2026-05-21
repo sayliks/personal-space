@@ -1,18 +1,16 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { createCommentSchema } from "@/lib/validations"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const { content, authorName, authorEmail, postId, parentId } = body
-
-  if (!content || !authorName || !postId) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+  const result = createCommentSchema.safeParse(body)
+  if (!result.success) {
+    return NextResponse.json({ error: result.error.flatten() }, { status: 400 })
   }
 
-  if (content.length > 2000) {
-    return NextResponse.json({ error: "Comment too long" }, { status: 400 })
-  }
+  const { content, authorName, authorEmail, postId, parentId } = result.data
 
   const post = await prisma.post.findUnique({ where: { id: postId } })
   if (!post) {

@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   session: { strategy: "jwt" },
-  pages: { signIn: "/admin/login" },
+  pages: { signIn: "/login" },
   callbacks: {
     async session({ session, token }) {
       if (session.user && token.sub) {

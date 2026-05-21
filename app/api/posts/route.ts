@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { generateSlug } from "@/lib/slug"
+import { createPostSchema } from "@/lib/validations"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
@@ -8,9 +9,12 @@ export async function POST(request: Request) {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const body = await request.json()
-  const { title, content, summary, coverImage, published, categoryId, tags } = body
+  const result = createPostSchema.safeParse(body)
+  if (!result.success) {
+    return NextResponse.json({ error: result.error.flatten() }, { status: 400 })
+  }
 
-  if (!title) return NextResponse.json({ error: "Title is required" }, { status: 400 })
+  const { title, content, summary, coverImage, published, categoryId, tags } = result.data;
 
   let slug = generateSlug(title)
 
@@ -45,9 +49,16 @@ export async function PUT(request: Request) {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const body = await request.json()
-  const { id, title, content, summary, coverImage, published, categoryId, tags } = body
+  const { id, ...fields } = body
 
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 })
+
+  const result = createPostSchema.partial().safeParse(fields)
+  if (!result.success) {
+    return NextResponse.json({ error: result.error.flatten() }, { status: 400 })
+  }
+
+  const { title, content, summary, coverImage, published, categoryId, tags } = result.data;
 
   const existing = await prisma.post.findUnique({ where: { id } })
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 })
