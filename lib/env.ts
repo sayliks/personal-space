@@ -13,20 +13,13 @@ const envSchema = z.object({
 const result = envSchema.safeParse(process.env);
 
 if (!result.success) {
-  const missing = result.error.issues
-    .filter((i) => i.code === "invalid_type" && i.received === "undefined")
-    .map((i) => i.path.join("."));
-  if (missing.length > 0) {
-    console.warn(
-      `[env] Missing required env vars: ${missing.join(", ")}. ` +
-      `Some features may not work correctly.`
-    );
-  }
+  const missing = result.error.issues.map((i) => i.path.join("."));
+  console.warn(
+    `[env] Env validation failed for: ${missing.join(", ")}. ` +
+    `Using fallback values.`
+  );
 }
 
-export const env = result.success ? result.data : envSchema.parse({ ...process.env, ...result.error?.issues ? {} : {} });
-
-// Fallback: construct a usable env object even when validation fails
 const fallback = {
   DATABASE_URL: process.env.DATABASE_URL ?? "",
   DIRECT_URL: process.env.DIRECT_URL,
