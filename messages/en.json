@@ -1,6 +1,6 @@
 {
   "common": {
-    "home": "Home",
+    "articles": "Articles",
     "about": "About",
     "search": "Search",
     "admin": "Admin",
@@ -10,12 +10,31 @@
     "loading": "Loading..."
   },
   "home": {
-    "title": "frostsalix blog",
+    "siteTitle": "frostsalix",
+    "tagline": "Full-stack developer. I build software that matters.",
+    "recentPosts": "Recent writing"
+  },
+  "posts": {
+    "title": "Articles",
+    "description": "Thoughts on code, design, and building things.",
     "noPosts": "No posts yet."
   },
   "about": {
     "title": "About",
-    "content": "Hi, I am frostsalix."
+    "bio": "A passionate full-stack developer building elegant solutions with code. I believe in creating impactful software that makes a difference. I enjoy working across the entire stack — from crafting pixel-perfect UIs to designing robust backend systems.",
+    "location": "Location",
+    "locationValue": "Wuhan, Hubei",
+    "projects": {
+      "title": "Projects",
+      "lumison": "A minimalist music player with immersive visuals, built with TypeScript.",
+      "ecommerceApi": "A Spring Boot e-commerce backend API with auth, cart, orders, and Alipay integration.",
+      "minotes": "A simple and elegant note-taking application for Android."
+    },
+    "skills": "Skills & Tools",
+    "links": {
+      "title": "Links",
+      "blog": "Blog"
+    }
   },
   "search": {
     "title": "Search",
@@ -37,7 +56,11 @@
     "content": "Your comment",
     "submitting": "Submitting...",
     "commentSubmitted": "Comment submitted. It will appear after approval.",
-    "failedToSubmitComment": "Failed to submit comment"
+    "failedToSubmitComment": "Failed to submit comment",
+    "signInWithGithub": "Sign in with GitHub",
+    "signedInAs": "Signed in as {name}",
+    "signOut": "Sign out",
+    "loginRequiredToComment": "Please sign in with GitHub to leave a comment."
   },
   "admin": {
     "blogAdmin": "Blog Admin",
@@ -90,7 +113,7 @@
     "nothingToPreview": "Nothing to preview."
   },
   "footer": {
-    "copyright": "© {year} frostsalix blog"
+    "copyright": "Powered by Next.js"
   },
   "notFound": {
     "title": "Page not found",

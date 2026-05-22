@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: result.error.flatten() }, { status: 400 })
   }
 
-  const { content, authorName, authorEmail, postId, parentId } = result.data
+  const { content, authorName, authorEmail, postId, parentId, userId } = result.data
 
   const post = await prisma.post.findUnique({ where: { id: postId } })
   if (!post) {
@@ -24,11 +24,15 @@ export async function POST(request: Request) {
     }
   }
 
+  const session = await auth()
+  const isAuthenticated = session?.user?.id && userId === session.user.id
+
   const comment = await prisma.comment.create({
     data: {
       content,
-      authorName,
-      authorEmail: authorEmail || null,
+      authorName: isAuthenticated ? (session.user.name ?? authorName) : authorName,
+      authorEmail: isAuthenticated ? (session.user.email ?? authorEmail ?? null) : (authorEmail || null),
+      userId: isAuthenticated ? session.user.id : null,
       postId,
       parentId: parentId || null,
     },

@@ -1,6 +1,6 @@
 {
   "common": {
-    "home": "首页",
+    "articles": "文章",
     "about": "关于",
     "search": "搜索",
     "admin": "管理",
@@ -10,12 +10,31 @@
     "loading": "加载中..."
   },
   "home": {
-    "title": "frostsalix blog",
+    "siteTitle": "frostsalix",
+    "tagline": "全栈开发者，构建有价值的软件。",
+    "recentPosts": "最新文章"
+  },
+  "posts": {
+    "title": "文章",
+    "description": "关于代码、设计与构建的思考。",
     "noPosts": "暂无文章。"
   },
   "about": {
     "title": "关于",
-    "content": "你好，我是 frostsalix。"
+    "bio": "一名热衷于用代码构建优雅解决方案的全栈开发者。我相信创造有影响力的软件可以改变世界。我享受在整个技术栈中工作——从打磨像素级完美的界面到设计稳健的后端系统。",
+    "location": "所在地",
+    "locationValue": "湖北 武汉",
+    "projects": {
+      "title": "项目",
+      "lumison": "一个极简风格的音乐播放器，具有沉浸式视觉效果，使用 TypeScript 构建。",
+      "ecommerceApi": "基于 Spring Boot 的电商后端 API，包含用户认证、购物车、订单管理和支付宝集成。",
+      "minotes": "一款简洁优雅的 Android 笔记应用。"
+    },
+    "skills": "技术栈与工具",
+    "links": {
+      "title": "链接",
+      "blog": "博客"
+    }
   },
   "search": {
     "title": "搜索",
@@ -37,7 +56,11 @@
     "content": "评论内容",
     "submitting": "提交中...",
     "commentSubmitted": "评论已提交，审核通过后将显示。",
-    "failedToSubmitComment": "提交评论失败"
+    "failedToSubmitComment": "提交评论失败",
+    "signInWithGithub": "使用 GitHub 登录",
+    "signedInAs": "已登录为 {name}",
+    "signOut": "退出登录",
+    "loginRequiredToComment": "请使用 GitHub 登录后才能发表评论。"
   },
   "admin": {
     "blogAdmin": "博客管理",
@@ -90,7 +113,7 @@
     "nothingToPreview": "暂无内容可预览。"
   },
   "footer": {
-    "copyright": "© {year} frostsalix blog"
+    "copyright": "Powered by Next.js"
   },
   "notFound": {
     "title": "页面未找到",

@@ -1,7 +1,9 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import GitHub from "next-auth/providers/github"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
+import { env } from "@/lib/env"
 import bcrypt from "bcryptjs"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -19,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!email || !password) return null
 
         const user = await prisma.user.findUnique({ where: { email } })
-        if (!user) return null
+        if (!user?.passwordHash) return null
 
         const isValid = await bcrypt.compare(password, user.passwordHash)
         if (!isValid) return null
@@ -27,14 +29,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return { id: user.id, name: user.name, email: user.email }
       },
     }),
+    ...(env.AUTH_GITHUB_ID && env.AUTH_GITHUB_SECRET
+      ? [
+          GitHub({
+            clientId: env.AUTH_GITHUB_ID,
+            clientSecret: env.AUTH_GITHUB_SECRET,
+          }),
+        ]
+      : []),
   ],
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   trustHost: true,
   callbacks: {
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.id = user.id as string
+      }
+      if (account?.provider === "github" && user?.image) {
+        token.picture = user.image as string
+      }
+      return token
+    },
     async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub
+      if (session.user && token.id) {
+        session.user.id = token.id as string
+      }
+      if (session.user && token.picture) {
+        session.user.image = token.picture as string
       }
       return session
     },
