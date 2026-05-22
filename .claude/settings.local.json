@@ -24,7 +24,10 @@
       "Bash(npm info *)",
       "Bash(python -c \"import sys,json; vs=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(vs[-20:]\\)\\)\")",
       "Bash(npm view *)",
-      "WebFetch(domain:next-intl.dev)"
+      "WebFetch(domain:next-intl.dev)",
+      "Bash(claude plugins *)",
+      "Bash(claude plugin *)",
+      "Bash(claude *)"
     ]
   }
 }
