@@ -2,9 +2,11 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { Search } from "lucide-react"
 
 export function SearchForm({ initialQuery = "" }: { initialQuery?: string }) {
+  const t = useTranslations("search")
   const [query, setQuery] = useState(initialQuery)
   const router = useRouter()
 
@@ -23,7 +25,7 @@ export function SearchForm({ initialQuery = "" }: { initialQuery?: string }) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search posts..."
+          placeholder={t("placeholder")}
           className="w-full h-9 pl-9 pr-3 rounded-md border border-input bg-background text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
       </div>

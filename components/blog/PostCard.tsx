@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import { formatDate } from "@/lib/utils"
 import { CategoryBadge } from "@/components/blog/CategoryBadge"
 import { TagList } from "@/components/blog/TagBadge"

@@ -1,5 +1,6 @@
 import { getPublishedPosts, getCategoryBySlug } from "@/lib/queries"
 import { notFound } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 import { PostCard } from "@/components/blog/PostCard"
 import { Pagination } from "@/components/blog/Pagination"
 
@@ -24,10 +25,12 @@ export default async function CategoryPage({
 
   if (!category) notFound()
 
+  const t = await getTranslations("categories")
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-2">Category: {category.name}</h1>
-      <p className="text-muted-foreground mb-8">{posts.length} post{posts.length !== 1 ? "s" : ""}</p>
+      <h1 className="text-3xl font-bold mb-2">{t("title", { name: category.name })}</h1>
+      <p className="text-muted-foreground mb-8">{t("postCount", { count: posts.length })}</p>
       <div className="space-y-8">
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />

@@ -281,7 +281,7 @@ CLOUDINARY_API_SECRET="..."
 - [x] ~~`prisma/seed.ts` — 管理员播种脚本~~ ✅
 - [x] ~~i18n 国际化（next-intl，zh/en 双语，10 个命名空间）~~ ✅
 - [x] ~~`middleware.ts` 重新引入（next-intl，无 Prisma 依赖，Edge 安全）~~ ✅
-- [ ] i18n 收尾：`app/error.tsx`、`app/not-found.tsx` 接入翻译
+- [x] i18n 收尾：`app/error.tsx`、`app/not-found.tsx` 接入翻译 ✅
 - [ ] 暗色模式完善
 - [ ] Phase 9：单元测试 + E2E 测试
 
@@ -319,11 +319,10 @@ CLOUDINARY_API_SECRET="..."
 | 优先级 | 问题 | 风险 | 状态 |
 |--------|------|------|------|
 | P2 | 无测试（单元 + E2E） | 重构风险高 | 待实现 |
-| P2 | `app/error.tsx`、`app/not-found.tsx` 硬编码英文，未接入翻译 | 国际化不完整 | 待修复 |
 | P3 | 无暗色模式切换 | 用户体验 | 可选 |
 | P3 | RSS feed 已移除（`f2390b4`），sitemap 保留 | 功能取舍 | 已决策 |
 
-> ✅ 已修复：Zod 接入 API routes、文章可见性、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time、env.ts 全链路接入（prisma/sitemap/RSS）。
+> ✅ 已修复：Zod 接入 API routes、文章可见性、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time、env.ts 全链路接入（prisma/sitemap/RSS）、error.tsx/not-found.tsx i18n。
 
 ---
 
@@ -769,7 +768,7 @@ test: 添加 createComment Server Action 的单元测试
 | **Week 3** | ⑩ ~~实现 MarkdownRenderer（Phase 3）~~ ✅<br>⑪ ~~搭建后台文章 CRUD（Phase 4）~~ ✅<br>⑫ ~~实现 Server Actions 表单提交~~ ✅<br>⑬ ~~添加 toast 反馈（sonner + PostForm 集成）~~ ✅ | Server Actions、UI 开发 |
 | **Week 4** | ⑭ ~~开发博客公开页面（Phase 5）~~ ✅<br>⑮ ~~实现评论系统（Phase 6）~~ ✅<br>⑯ ~~搜索 + RSS + sitemap（Phase 7-8）~~ ✅<br>⑰ 写第一批单元测试<br>⑱ `npm run build` 零警告 | 完整功能、测试习惯 |
 
-> **当前进度（2026-05-21）**：Phase 0-8 基本完成（仅缺暗色模式），seed 脚本已就绪。Phase 9 待开始。遗留：暗色模式、测试。
+> **当前进度（2026-05-22）**：Phase 0-8 基本完成（仅缺暗色模式），seed 脚本已就绪。i18n 国际化（next-intl, zh/en 双语, 10+ 命名空间）已完成，包括 error.tsx/not-found.tsx。Phase 9 待开始。遗留：暗色模式、测试。
 
 ---
 

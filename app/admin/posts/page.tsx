@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getAllPosts } from "@/lib/queries"
 import { formatDate } from "@/lib/utils"
@@ -5,18 +6,19 @@ import { Plus, Pencil, ExternalLink } from "lucide-react"
 import { DeletePostButton } from "./DeletePostButton"
 
 export default async function AdminPostsPage() {
+  const t = await getTranslations("admin")
   const posts = await getAllPosts()
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Posts</h1>
+        <h1 className="text-2xl font-bold">{t("posts")}</h1>
         <Link
           href="/admin/posts/new"
           className="inline-flex items-center gap-1.5 rounded-md bg-primary text-primary-foreground h-8 px-2.5 text-sm font-medium hover:bg-primary/80 transition-colors"
         >
           <Plus className="size-4" />
-          New Post
+          {t("newPost")}
         </Link>
       </div>
 
@@ -24,18 +26,18 @@ export default async function AdminPostsPage() {
         <table className="w-full">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">Title</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Status</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Category</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Date</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">Actions</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("title")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("status")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("category")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("date")}</th>
+              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
             {posts.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
-                  No posts yet. Create your first post!
+                  {t("noPosts")}
                 </td>
               </tr>
             ) : (
@@ -60,7 +62,7 @@ export default async function AdminPostsPage() {
                           : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
                       }`}
                     >
-                      {post.published ? "Published" : "Draft"}
+                      {post.published ? t("published") : t("draft")}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">
@@ -82,7 +84,7 @@ export default async function AdminPostsPage() {
                           href={`/posts/${post.slug}`}
                           target="_blank"
                           className="inline-flex items-center justify-center rounded-md h-7 w-7 text-sm hover:bg-muted transition-colors"
-                          title="View post"
+                          title={t("viewPost")}
                         >
                           <ExternalLink className="size-3.5" />
                         </Link>

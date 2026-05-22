@@ -1,7 +1,9 @@
+import { getTranslations } from "next-intl/server"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { prisma } from "@/lib/prisma"
 
 export default async function AdminDashboard() {
+  const t = await getTranslations("admin")
   const [postCount, categoryCount, tagCount, pendingComments] = await Promise.all([
     prisma.post.count(),
     prisma.category.count(),
@@ -10,15 +12,15 @@ export default async function AdminDashboard() {
   ])
 
   const stats = [
-    { label: "Posts", value: postCount },
-    { label: "Categories", value: categoryCount },
-    { label: "Tags", value: tagCount },
-    { label: "Pending Comments", value: pendingComments },
+    { label: t("posts"), value: postCount },
+    { label: t("categories"), value: categoryCount },
+    { label: t("tags"), value: tagCount },
+    { label: t("pendingComments"), value: pendingComments },
   ]
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("dashboard")}</h1>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s) => (
           <Card key={s.label}>
