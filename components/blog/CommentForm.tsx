@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
 export function CommentForm({ postId }: { postId: string }) {
+  const t = useTranslations("post")
   const [authorName, setAuthorName] = useState("")
   const [authorEmail, setAuthorEmail] = useState("")
   const [content, setContent] = useState("")
@@ -40,7 +42,7 @@ export function CommentForm({ postId }: { postId: string }) {
       router.refresh()
     } else {
       const data = await res.json()
-      setError(data.error || "Failed to submit comment")
+      setError(data.error || t("failedToSubmitComment"))
     }
 
     setSubmitting(false)
@@ -49,17 +51,17 @@ export function CommentForm({ postId }: { postId: string }) {
   if (success) {
     return (
       <p className="text-sm text-muted-foreground py-4">
-        Comment submitted. It will appear after approval.
+        {t("commentSubmitted")}
       </p>
     )
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 border-t pt-6 mt-6">
-      <h3 className="font-semibold">Leave a Comment</h3>
+      <h3 className="font-semibold">{t("leaveComment")}</h3>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="name">Name *</Label>
+          <Label htmlFor="name">{t("name")} *</Label>
           <Input
             id="name"
             value={authorName}
@@ -68,7 +70,7 @@ export function CommentForm({ postId }: { postId: string }) {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email (optional)</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             id="email"
             type="email"
@@ -78,7 +80,7 @@ export function CommentForm({ postId }: { postId: string }) {
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="content">Comment *</Label>
+        <Label htmlFor="content">{t("content")} *</Label>
         <Textarea
           id="content"
           value={content}
@@ -89,7 +91,7 @@ export function CommentForm({ postId }: { postId: string }) {
       </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
       <Button type="submit" disabled={submitting}>
-        {submitting ? "Submitting..." : "Submit"}
+        {submitting ? t("submitting") : t("submitComment")}
       </Button>
     </form>
   )

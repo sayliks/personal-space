@@ -18,7 +18,13 @@
       "Bash(curl -s -X POST http://localhost:3000/api/auth/callback/credentials -H 'Content-Type: application/x-www-form-urlencoded' -d 'email=admin@example.com&password=changeme123' -c /tmp/cookies.txt -w '\\\\nHTTP Status: %{http_code}\\\\n')",
       "Bash(curl *)",
       "Bash(taskkill /PID 3504 /F)",
-      "Bash(taskkill /F /IM \"node.exe\")"
+      "Bash(taskkill /F /IM \"node.exe\")",
+      "Bash(npm uninstall *)",
+      "Bash(taskkill //PID 19144 //F)",
+      "Bash(npm info *)",
+      "Bash(python -c \"import sys,json; vs=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(vs[-20:]\\)\\)\")",
+      "Bash(npm view *)",
+      "WebFetch(domain:next-intl.dev)"
     ]
   }
 }

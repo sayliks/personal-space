@@ -1,0 +1,125 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "search": "Search",
+    "admin": "Admin",
+    "signOut": "Sign out",
+    "backToHome": "Back to home",
+    "tryAgain": "Try again",
+    "loading": "Loading..."
+  },
+  "home": {
+    "title": "frostsalix blog",
+    "noPosts": "No posts yet."
+  },
+  "about": {
+    "title": "About",
+    "content": "Hi, I am frostsalix."
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search posts...",
+    "noQuery": "Enter a keyword to search.",
+    "noResults": "No posts found.",
+    "results": "{count} result{plural, select, 1 {} other {s}} for \"{query}\""
+  },
+  "post": {
+    "notFound": "Post not found",
+    "by": "by",
+    "draft": "Draft",
+    "comments": "Comments",
+    "leaveComment": "Leave a comment",
+    "reply": "Reply",
+    "submitComment": "Submit",
+    "name": "Name",
+    "email": "Email (optional)",
+    "content": "Your comment",
+    "submitting": "Submitting...",
+    "commentSubmitted": "Comment submitted. It will appear after approval.",
+    "failedToSubmitComment": "Failed to submit comment"
+  },
+  "admin": {
+    "blogAdmin": "Blog Admin",
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "categories": "Categories",
+    "tags": "Tags",
+    "comments": "Comments",
+    "newPost": "New Post",
+    "editPost": "Edit Post",
+    "title": "Title",
+    "content": "Content",
+    "summary": "Summary",
+    "coverImage": "Cover Image URL",
+    "category": "Category",
+    "published": "Published",
+    "draft": "Draft",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure?",
+    "postCreated": "Post created",
+    "postUpdated": "Post updated",
+    "failedToSave": "Failed to save post",
+    "status": "Status",
+    "date": "Date",
+    "actions": "Actions",
+    "name": "Name",
+    "author": "Author",
+    "post": "Post",
+    "pendingComments": "Pending Comments",
+    "noPosts": "No posts yet. Create your first post!",
+    "noPendingComments": "No pending comments.",
+    "add": "Add",
+    "approve": "Approve",
+    "viewPost": "View post",
+    "createPost": "Create Post",
+    "updatePost": "Update Post",
+    "saving": "Saving...",
+    "none": "None",
+    "contentMarkdown": "Content (Markdown)",
+    "summaryPlaceholder": "Brief description for SEO and previews",
+    "coverImagePlaceholder": "https://example.com/image.jpg",
+    "titlePlaceholder": "Post title",
+    "categoryNamePlaceholder": "Category name",
+    "tagNamePlaceholder": "Tag name",
+    "write": "Write",
+    "preview": "Preview",
+    "markdownPlaceholder": "Write your post in Markdown...",
+    "nothingToPreview": "Nothing to preview."
+  },
+  "footer": {
+    "copyright": "© {year} frostsalix blog"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again."
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {page} of {total}"
+  },
+  "categories": {
+    "title": "Category: {name}",
+    "postCount": "{count} post{plural, select, 1 {} other {s}}"
+  },
+  "tags": {
+    "title": "Tag: {name}",
+    "postCount": "{count} post{plural, select, 1 {} other {s}}"
+  },
+  "auth": {
+    "title": "Admin Login",
+    "description": "Sign in to manage your blog",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "invalidCredentials": "Invalid email or password"
+  }
+}

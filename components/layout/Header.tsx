@@ -1,31 +1,29 @@
+import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
+import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
-export function Header() {
+export async function Header() {
+  const t = await getTranslations("common")
+
   return (
     <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
       <div className="max-w-4xl mx-auto flex items-center justify-between h-14 px-4">
-        <Link href="/" className="font-bold text-lg">
-          My Blog
+        <Link href="/" className="font-bold text-lg italic">
+          frostsalix blog
         </Link>
         <nav className="flex items-center gap-4 text-sm text-muted-foreground">
           <Link href="/" className="hover:text-foreground transition-colors">
-            Home
-          </Link>
-          <Link href="/about" className="hover:text-foreground transition-colors">
-            About
+            {t("home")}
           </Link>
           <Link href="/search" className="hover:text-foreground transition-colors">
-            Search
+            {t("search")}
           </Link>
-          <Link href="/rss.xml" className="hover:text-foreground transition-colors">
-            RSS
+          <Link href="/about" className="hover:text-foreground transition-colors">
+            {t("about")}
           </Link>
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
-          >
-            Admin
-          </Link>
+          <LanguageToggle />
+          <ThemeToggle />
         </nav>
       </div>
     </header>
