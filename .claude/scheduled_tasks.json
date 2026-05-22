@@ -1,0 +1,26 @@
+{
+  "tasks": [
+    {
+      "id": "2592e1ff",
+      "cron": "*/30 * * * *",
+      "prompt": "Read the file `docs/PLAN.md` in the project. Check if there are any new phase completions, blockers, or important updates since the last review. Report a brief summary (under 100 words) of anything noteworthy — new TODOs, progress highlights, or items needing attention. If nothing changed, reply \"No changes in PLAN.md.\"",
+      "createdAt": 1779441847619,
+      "lastFiredAt": 1779460733154,
+      "recurring": true,
+      "createdBySessionId": "a77e3f33-17d9-4a50-b24b-03a911547758",
+      "createdByPid": 27176,
+      "createdByProcStart": "639150662510933880"
+    },
+    {
+      "id": "8b681ea5",
+      "cron": "3 * * * *",
+      "prompt": "Run `git status` and `git diff --stat` in the project. If there are uncommitted changes, create a commit with a descriptive message summarizing what changed. Use `git add` with specific files (not `git add -A`). Only commit if there are actual changes. Reply with the commit message or \"No changes to commit.\"",
+      "createdAt": 1779441847646,
+      "recurring": true,
+      "createdBySessionId": "a77e3f33-17d9-4a50-b24b-03a911547758",
+      "createdByPid": 27176,
+      "createdByProcStart": "639150662510933880",
+      "lastFiredAt": 1779460733154
+    }
+  ]
+}

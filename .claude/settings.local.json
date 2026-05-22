@@ -27,7 +27,11 @@
       "WebFetch(domain:next-intl.dev)",
       "Bash(claude plugins *)",
       "Bash(claude plugin *)",
-      "Bash(claude *)"
+      "Bash(claude *)",
+      "Bash(npx jest *)",
+      "Bash(npm test *)",
+      "Bash(npx playwright *)",
+      "Bash(npx tsx *)"
     ]
   }
 }
