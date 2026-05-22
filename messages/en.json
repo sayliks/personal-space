@@ -15,7 +15,20 @@
   },
   "about": {
     "title": "About",
-    "content": "Hi, I am frostsalix."
+    "bio": "A passionate full-stack developer building elegant solutions with code. I believe in creating impactful software that makes a difference. I enjoy working across the entire stack — from crafting pixel-perfect UIs to designing robust backend systems.",
+    "location": "Location",
+    "locationValue": "Wuhan, Hubei",
+    "projects": {
+      "title": "Projects",
+      "lumison": "A minimalist music player with immersive visuals, built with TypeScript.",
+      "ecommerceApi": "A Spring Boot e-commerce backend API with auth, cart, orders, and Alipay integration.",
+      "minotes": "A simple and elegant note-taking application for Android."
+    },
+    "skills": "Skills & Tools",
+    "links": {
+      "title": "Links",
+      "blog": "Blog"
+    }
   },
   "search": {
     "title": "Search",
