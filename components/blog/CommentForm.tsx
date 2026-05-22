@@ -97,7 +97,7 @@ export function CommentForm({ postId }: { postId: string }) {
               className="size-6 rounded-full"
             />
           )}
-          <span>{t("signedInAs", { name: session.user.name })}</span>
+          <span>{t("signedInAs", { name: session.user.name ?? "" })}</span>
           <button
             type="button"
             onClick={() => signOut()}
