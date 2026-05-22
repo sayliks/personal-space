@@ -7,7 +7,8 @@
     "signOut": "退出登录",
     "backToHome": "返回首页",
     "tryAgain": "重试",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "siteTitle": "文章"
   },
   "home": {
     "title": "frostsalix blog",
