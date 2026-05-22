@@ -192,11 +192,11 @@ post.content (Markdown) → react-markdown + remark-gfm + rehype-highlight
 - ✅ POST 接入 `createCommentSchema.safeParse` Zod 验证
 
 ### Phase 7：搜索 + RSS ✅（已完成）
-- ✅ 安装 `feed`
+- ✅ 安装 `feed`（后于 `f2390b4` 移除：RSS 功能取舍，保留搜索和 sitemap）
 - ✅ `/api/search/route.ts` — 搜索 API
-- ✅ `app/search/page.tsx` — 搜索页面（SSR 直查）
-- ✅ `app/rss.xml/route.ts` — RSS Feed（`/rss.xml`）
-- ✅ `components/blog/SearchForm.tsx` — 搜索表单
+- ✅ `app/search/page.tsx` — 搜索页面（i18n 已接入）
+- ✅ `app/rss.xml/route.ts` — 已移除
+- ✅ `components/blog/SearchForm.tsx` — 搜索表单（i18n 已接入）
 
 ### Phase 8：打磨 🔄（进行中）
 - ✅ SEO metadata（首页 + 文章详情 + About + Search 页已配置）
@@ -279,6 +279,9 @@ CLOUDINARY_API_SECRET="..."
 - [x] ~~`force-dynamic` 修复构建时数据库连接池耗尽~~
 - [x] ~~PostCard 空 `publishedAt` 时渲染空 `<time>` 元素~~ ✅
 - [x] ~~`prisma/seed.ts` — 管理员播种脚本~~ ✅
+- [x] ~~i18n 国际化（next-intl，zh/en 双语，10 个命名空间）~~ ✅
+- [x] ~~`middleware.ts` 重新引入（next-intl，无 Prisma 依赖，Edge 安全）~~ ✅
+- [ ] i18n 收尾：`app/error.tsx`、`app/not-found.tsx` 接入翻译
 - [ ] 暗色模式完善
 - [ ] Phase 9：单元测试 + E2E 测试
 
@@ -316,7 +319,9 @@ CLOUDINARY_API_SECRET="..."
 | 优先级 | 问题 | 风险 | 状态 |
 |--------|------|------|------|
 | P2 | 无测试（单元 + E2E） | 重构风险高 | 待实现 |
+| P2 | `app/error.tsx`、`app/not-found.tsx` 硬编码英文，未接入翻译 | 国际化不完整 | 待修复 |
 | P3 | 无暗色模式切换 | 用户体验 | 可选 |
+| P3 | RSS feed 已移除（`f2390b4`），sitemap 保留 | 功能取舍 | 已决策 |
 
 > ✅ 已修复：Zod 接入 API routes、文章可见性、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time、env.ts 全链路接入（prisma/sitemap/RSS）。
 
