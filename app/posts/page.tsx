@@ -1,0 +1,41 @@
+import { getTranslations } from "next-intl/server"
+import { getPublishedPosts } from "@/lib/queries"
+import { PostCard } from "@/components/blog/PostCard"
+import { Pagination } from "@/components/blog/Pagination"
+import type { Metadata } from "next"
+
+export const dynamic = "force-dynamic"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("posts")
+  return {
+    title: t("title"),
+    description: t("description"),
+  }
+}
+
+export default async function PostsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}) {
+  const t = await getTranslations("posts")
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam ?? "1", 10) || 1)
+  const { posts, totalPages } = await getPublishedPosts({ page })
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
+      <p className="text-muted-foreground mb-8">{t("description")}</p>
+      <div className="space-y-8">
+        {posts.length === 0 ? (
+          <p className="text-muted-foreground">{t("noPosts")}</p>
+        ) : (
+          posts.map((post) => <PostCard key={post.id} post={post} />)
+        )}
+      </div>
+      <Pagination page={page} totalPages={totalPages} baseUrl="/posts" />
+    </div>
+  )
+}

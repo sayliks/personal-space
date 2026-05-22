@@ -1,17 +1,22 @@
 {
   "common": {
-    "home": "首页",
+    "articles": "文章",
     "about": "关于",
     "search": "搜索",
     "admin": "管理",
     "signOut": "退出登录",
     "backToHome": "返回首页",
     "tryAgain": "重试",
-    "loading": "加载中...",
-    "siteTitle": "文章"
+    "loading": "加载中..."
   },
   "home": {
+    "siteTitle": "frostsalix",
+    "tagline": "全栈开发者，构建有价值的软件。",
+    "recentPosts": "最新文章"
+  },
+  "posts": {
     "title": "文章",
+    "description": "关于代码、设计与构建的思考。",
     "noPosts": "暂无文章。"
   },
   "about": {

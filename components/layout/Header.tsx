@@ -13,8 +13,8 @@ export async function Header() {
           frostsalix blog
         </Link>
         <nav className="flex items-center gap-4 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground transition-colors">
-            {t("home")}
+          <Link href="/posts" className="hover:text-foreground transition-colors">
+            {t("articles")}
           </Link>
           <Link href="/search" className="hover:text-foreground transition-colors">
             {t("search")}

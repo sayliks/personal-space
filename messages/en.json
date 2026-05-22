@@ -1,6 +1,6 @@
 {
   "common": {
-    "home": "Home",
+    "articles": "Articles",
     "about": "About",
     "search": "Search",
     "admin": "Admin",
@@ -10,7 +10,13 @@
     "loading": "Loading..."
   },
   "home": {
-    "title": "frostsalix blog",
+    "siteTitle": "frostsalix",
+    "tagline": "Full-stack developer. I build software that matters.",
+    "recentPosts": "Recent writing"
+  },
+  "posts": {
+    "title": "Articles",
+    "description": "Thoughts on code, design, and building things.",
     "noPosts": "No posts yet."
   },
   "about": {
