@@ -766,7 +766,7 @@ test: 添加 createComment Server Action 的单元测试
 | 周次 | 任务 | 技能收获 |
 |------|------|---------|
 | **Week 1** | ① ~~修复 prisma.config.ts 数据库连接配置~~ ✅<br>② ~~修复 prisma.ts 单例写法 + Prisma 7 adapter~~ ✅<br>③ ~~创建 `lib/env.ts` 环境变量验证~~ ✅<br>④ ~~创建 `lib/validations.ts` Zod schema~~ ✅<br>⑤ ~~完成 shadcn/ui 初始化~~ ✅ | 工程基础、Fail Fast |
-| **Week 2** | ⑥ ~~创建 `app/error.tsx`、`app/loading.tsx`、`app/not-found.tsx`~~ ✅<br>⑦ ~~实现 Auth.js 认证系统（Phase 2）~~ ✅<br>⑧ ~~middleware.ts 已评估移除（Edge Runtime 不兼容）~~ ✅<br>⑨ 创建 `prisma/seed.ts` 播种脚本 | Next.js App Router、认证 |
+| **Week 2** | ⑥ ~~创建 `app/error.tsx`、`app/loading.tsx`、`app/not-found.tsx`~~ ✅<br>⑦ ~~实现 Auth.js 认证系统（Phase 2）~~ ✅<br>⑧ ~~middleware.ts 已评估移除（Edge Runtime 不兼容）~~ ✅<br>⑨ ~~创建 `prisma/seed.ts` 播种脚本~~ ✅ | Next.js App Router、认证 |
 | **Week 3** | ⑩ ~~实现 MarkdownRenderer（Phase 3）~~ ✅<br>⑪ ~~搭建后台文章 CRUD（Phase 4）~~ ✅<br>⑫ ~~实现 Server Actions 表单提交~~ ✅<br>⑬ ~~添加 toast 反馈（sonner + PostForm 集成）~~ ✅ | Server Actions、UI 开发 |
 | **Week 4** | ⑭ ~~开发博客公开页面（Phase 5）~~ ✅<br>⑮ ~~实现评论系统（Phase 6）~~ ✅<br>⑯ ~~搜索 + RSS + sitemap（Phase 7-8）~~ ✅<br>⑰ 写第一批单元测试<br>⑱ `npm run build` 零警告 | 完整功能、测试习惯 |
 
