@@ -16,7 +16,20 @@
   },
   "about": {
     "title": "关于",
-    "content": "你好，我是 frostsalix。"
+    "bio": "一名热衷于用代码构建优雅解决方案的全栈开发者。我相信创造有影响力的软件可以改变世界。我享受在整个技术栈中工作——从打磨像素级完美的界面到设计稳健的后端系统。",
+    "location": "所在地",
+    "locationValue": "湖北 武汉",
+    "projects": {
+      "title": "项目",
+      "lumison": "一个极简风格的音乐播放器，具有沉浸式视觉效果，使用 TypeScript 构建。",
+      "ecommerceApi": "基于 Spring Boot 的电商后端 API，包含用户认证、购物车、订单管理和支付宝集成。",
+      "minotes": "一款简洁优雅的 Android 笔记应用。"
+    },
+    "skills": "技术栈与工具",
+    "links": {
+      "title": "链接",
+      "blog": "博客"
+    }
   },
   "search": {
     "title": "搜索",
