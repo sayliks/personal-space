@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import { prisma } from "@/lib/prisma"
 import { getAllCategories } from "@/lib/queries"
 import { revalidatePath } from "next/cache"
@@ -22,24 +23,25 @@ async function deleteCategory(formData: FormData) {
 }
 
 export default async function AdminCategoriesPage() {
+  const t = await getTranslations("admin")
   const categories = await getAllCategories()
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Categories</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("categories")}</h1>
 
       <form action={createCategory} className="flex gap-2 mb-6">
-        <Input name="name" placeholder="Category name" required className="max-w-xs" />
-        <Button type="submit">Add</Button>
+        <Input name="name" placeholder={t("categoryNamePlaceholder")} required className="max-w-xs" />
+        <Button type="submit">{t("add")}</Button>
       </form>
 
       <div className="border rounded-md max-w-md">
         <table className="w-full">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">Name</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Posts</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">Actions</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("name")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("posts")}</th>
+              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +53,7 @@ export default async function AdminCategoriesPage() {
                   <form action={deleteCategory}>
                     <input type="hidden" name="id" value={c.id} />
                     <Button variant="destructive" size="sm" type="submit">
-                      Delete
+                      {t("delete")}
                     </Button>
                   </form>
                 </td>

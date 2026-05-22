@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import { getPendingComments } from "@/lib/queries"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
@@ -20,28 +21,29 @@ async function deleteComment(formData: FormData) {
 }
 
 export default async function AdminCommentsPage() {
+  const t = await getTranslations("admin")
   const comments = await getPendingComments()
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Comments</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("comments")}</h1>
 
       <div className="border rounded-md">
         <table className="w-full">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">Author</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Content</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Post</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">Date</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">Actions</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("author")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("content")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("post")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("date")}</th>
+              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
             {comments.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
-                  No pending comments.
+                  {t("noPendingComments")}
                 </td>
               </tr>
             ) : (
@@ -72,13 +74,13 @@ export default async function AdminCommentsPage() {
                       <form action={approveComment}>
                         <input type="hidden" name="id" value={comment.id} />
                         <Button variant="outline" size="sm" type="submit">
-                          Approve
+                          {t("approve")}
                         </Button>
                       </form>
                       <form action={deleteComment}>
                         <input type="hidden" name="id" value={comment.id} />
                         <Button variant="destructive" size="sm" type="submit">
-                          Delete
+                          {t("delete")}
                         </Button>
                       </form>
                     </div>
