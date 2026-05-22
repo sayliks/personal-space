@@ -1,8 +1,10 @@
+import { getTranslations } from "next-intl/server"
 import { getPostById, getAllCategories, getAllTags } from "@/lib/queries"
 import { notFound } from "next/navigation"
 import { PostForm } from "@/components/admin/PostForm"
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const t = await getTranslations("admin")
   const { id } = await params
   const [post, categories, tags] = await Promise.all([
     getPostById(id),
@@ -14,7 +16,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Edit Post</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("editPost")}</h1>
       <PostForm
         post={{
           id: post.id,

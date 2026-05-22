@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
 import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,17 +11,19 @@ interface PostEditorProps {
 }
 
 export function PostEditor({ value, onChange }: PostEditorProps) {
+  const t = useTranslations("admin")
+
   return (
     <Tabs defaultValue="write" className="w-full">
       <TabsList>
-        <TabsTrigger value="write">Write</TabsTrigger>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
+        <TabsTrigger value="write">{t("write")}</TabsTrigger>
+        <TabsTrigger value="preview">{t("preview")}</TabsTrigger>
       </TabsList>
       <TabsContent value="write">
         <Textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Write your post in Markdown..."
+          placeholder={t("markdownPlaceholder")}
           className="min-h-[400px] font-mono text-sm"
         />
       </TabsContent>
@@ -28,7 +31,7 @@ export function PostEditor({ value, onChange }: PostEditorProps) {
         {value ? (
           <MarkdownRenderer content={value} />
         ) : (
-          <p className="text-muted-foreground">Nothing to preview.</p>
+          <p className="text-muted-foreground">{t("nothingToPreview")}</p>
         )}
       </TabsContent>
     </Tabs>

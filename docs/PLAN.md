@@ -198,13 +198,14 @@ post.content (Markdown) → react-markdown + remark-gfm + rehype-highlight
 - ✅ `app/rss.xml/route.ts` — 已移除
 - ✅ `components/blog/SearchForm.tsx` — 搜索表单（i18n 已接入）
 
-### Phase 8：打磨 🔄（进行中）
-- ✅ SEO metadata（首页 + 文章详情 + About + Search 页已配置）
-- ✅ loading.tsx / error.tsx / not-found.tsx（全局错误边界已实现）
+### Phase 8：打磨 ✅（已完成）
+- ✅ SEO metadata（首页 + 文章详情 + About + Search 页已配置，generateMetadata 已接入 i18n）
+- ✅ loading.tsx / error.tsx / not-found.tsx（全局错误边界已实现，全部接入 i18n 翻译）
 - ✅ sitemap.ts（静态路由 + 动态文章路由）
 - ✅ Toast 提示（sonner 已集成到 admin layout + PostForm success/error 反馈）
 - ✅ `npm run build` — 公开页面添加 `force-dynamic` 解决 PgBouncer 连接池耗尽（24 workers vs 15 pool limit）
-- ⬜ 暗色模式完善、响应式
+- ✅ 暗色模式（next-themes ThemeProvider + ThemeToggle，class 策略，system 默认，mounted 防 hydration 闪烁）
+- ✅ i18n 国际化（next-intl，zh/en 双语，13 个命名空间 ~80 keys，含 error/not-found/admin 全覆盖）
 
 ### Phase 9：测试
 - 单元测试（Jest）
@@ -233,7 +234,10 @@ npm install @tailwindcss/typography react-markdown remark-gfm rehype-highlight r
 npm install feed
 
 # Phase 8
-npm install sonner
+npm install sonner next-themes
+
+# i18n
+npm install next-intl
 
 # Phase 9：测试
 npm install -D jest @jest/globals @testing-library/react @testing-library/jest-dom
@@ -273,16 +277,15 @@ CLOUDINARY_API_SECRET="..."
 - [x] ~~`middleware.ts` 已评估并移除（Edge Runtime 不兼容，auth 走 layout 层）~~
 - [x] ~~`app/sitemap.ts`（静态 + 文章 + 分类 + 标签 + RSS）~~
 - [x] ~~Toast 提示（sonner）~~
-- [x] ~~API 路由接入 Zod 验证~~
-- [x] ~~文章可见性逻辑修复~~
-- [x] ~~搜索逻辑抽取到 `lib/queries.ts`~~
-- [x] ~~`force-dynamic` 修复构建时数据库连接池耗尽~~
+- [x] ~~API 路由接入 Zod 验证~~ ✅
+- [x] ~~文章可见性逻辑修复~~ ✅
+- [x] ~~搜索逻辑抽取到 `lib/queries.ts`~~ ✅
+- [x] ~~`force-dynamic` 修复构建时数据库连接池耗尽~~ ✅
 - [x] ~~PostCard 空 `publishedAt` 时渲染空 `<time>` 元素~~ ✅
 - [x] ~~`prisma/seed.ts` — 管理员播种脚本~~ ✅
-- [x] ~~i18n 国际化（next-intl，zh/en 双语，10 个命名空间）~~ ✅
+- [x] ~~i18n 国际化（next-intl，zh/en 双语，13 个命名空间）~~ ✅
+- [x] ~~暗色模式（next-themes ThemeProvider + ThemeToggle）~~ ✅
 - [x] ~~`middleware.ts` 重新引入（next-intl，无 Prisma 依赖，Edge 安全）~~ ✅
-- [x] i18n 收尾：`app/error.tsx`、`app/not-found.tsx` 接入翻译 ✅
-- [ ] 暗色模式完善
 - [ ] Phase 9：单元测试 + E2E 测试
 
 ---
@@ -292,8 +295,8 @@ CLOUDINARY_API_SECRET="..."
 - `npx prisma studio` — 检查数据库模型
 - `npm run dev` — 浏览器测试各路由
 - 完整体验：登录后台 → 创建文章 → 查看文章 → 评论 → 审核 → 首页展示
-- 验证 RSS `/rss.xml`
 - 验证搜索
+- 验证 sitemap `/sitemap.xml`
 - `npm run build` — 确保生产构建成功
 
 ---
@@ -319,7 +322,6 @@ CLOUDINARY_API_SECRET="..."
 | 优先级 | 问题 | 风险 | 状态 |
 |--------|------|------|------|
 | P2 | 无测试（单元 + E2E） | 重构风险高 | 待实现 |
-| P3 | 无暗色模式切换 | 用户体验 | 可选 |
 | P3 | RSS feed 已移除（`f2390b4`），sitemap 保留 | 功能取舍 | 已决策 |
 
 > ✅ 已修复：Zod 接入 API routes、文章可见性、搜索逻辑抽取、force-dynamic 构建修复、middleware 评估移除、PostCard 空 time、env.ts 全链路接入（prisma/sitemap/RSS）、error.tsx/not-found.tsx i18n。
@@ -768,7 +770,7 @@ test: 添加 createComment Server Action 的单元测试
 | **Week 3** | ⑩ ~~实现 MarkdownRenderer（Phase 3）~~ ✅<br>⑪ ~~搭建后台文章 CRUD（Phase 4）~~ ✅<br>⑫ ~~实现 Server Actions 表单提交~~ ✅<br>⑬ ~~添加 toast 反馈（sonner + PostForm 集成）~~ ✅ | Server Actions、UI 开发 |
 | **Week 4** | ⑭ ~~开发博客公开页面（Phase 5）~~ ✅<br>⑮ ~~实现评论系统（Phase 6）~~ ✅<br>⑯ ~~搜索 + RSS + sitemap（Phase 7-8）~~ ✅<br>⑰ 写第一批单元测试<br>⑱ `npm run build` 零警告 | 完整功能、测试习惯 |
 
-> **当前进度（2026-05-22）**：Phase 0-8 基本完成（仅缺暗色模式），seed 脚本已就绪。i18n 国际化（next-intl, zh/en 双语, 10+ 命名空间）已完成，包括 error.tsx/not-found.tsx。Phase 9 待开始。遗留：暗色模式、测试。
+> **当前进度（2026-05-22）**：Phase 0-8 全部完成。i18n 国际化（next-intl, zh/en 双语, 13 个命名空间）已完成，包括 error/not-found/admin/generateMetadata。暗色模式（next-themes）已完整实现。仅剩 Phase 9 测试。
 
 ---
 

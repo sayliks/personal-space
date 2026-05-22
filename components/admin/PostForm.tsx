@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -34,6 +35,7 @@ interface PostFormProps {
 }
 
 export function PostForm({ post, categories, tags }: PostFormProps) {
+  const t = useTranslations("admin")
   const router = useRouter()
   const isEdit = !!post
 
@@ -76,14 +78,14 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
     })
 
     if (res.ok) {
-      toast.success(isEdit ? "Post updated" : "Post created")
+      toast.success(isEdit ? t("postUpdated") : t("postCreated"))
       router.push("/admin/posts")
       router.refresh()
     } else {
       const data = await res.json()
       toast.error(data.error?.fieldErrors
         ? Object.values(data.error.fieldErrors).flat().join(", ")
-        : data.error || "Failed to save post")
+        : data.error || t("failedToSave"))
       setSaving(false)
     }
   }
@@ -91,26 +93,26 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
       <div className="space-y-2">
-        <Label htmlFor="title">Title</Label>
+        <Label htmlFor="title">{t("title")}</Label>
         <Input
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Post title"
+          placeholder={t("titlePlaceholder")}
           required
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
+          <Label htmlFor="category">{t("category")}</Label>
           <select
             id="category"
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
             className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
-            <option value="">None</option>
+            <option value="">{t("none")}</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
@@ -118,7 +120,7 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label>Published</Label>
+          <Label>{t("published")}</Label>
           <label className="flex items-center gap-2 h-9 cursor-pointer">
             <input
               type="checkbox"
@@ -127,14 +129,14 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
               className="size-4 rounded border-input"
             />
             <span className="text-sm text-muted-foreground">
-              {published ? "Published" : "Draft"}
+              {published ? t("published") : t("draft")}
             </span>
           </label>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label>Tags</Label>
+        <Label>{t("tags")}</Label>
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <button
@@ -154,36 +156,36 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="summary">Summary</Label>
+        <Label htmlFor="summary">{t("summary")}</Label>
         <Input
           id="summary"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
-          placeholder="Brief description for SEO and previews"
+          placeholder={t("summaryPlaceholder")}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="coverImage">Cover Image URL</Label>
+        <Label htmlFor="coverImage">{t("coverImage")}</Label>
         <Input
           id="coverImage"
           value={coverImage}
           onChange={(e) => setCoverImage(e.target.value)}
-          placeholder="https://example.com/image.jpg"
+          placeholder={t("coverImagePlaceholder")}
         />
       </div>
 
       <div className="space-y-2">
-        <Label>Content (Markdown)</Label>
+        <Label>{t("contentMarkdown")}</Label>
         <PostEditor value={content} onChange={setContent} />
       </div>
 
       <div className="flex gap-2">
         <Button type="submit" disabled={saving}>
-          {saving ? "Saving..." : isEdit ? "Update Post" : "Create Post"}
+          {saving ? t("saving") : isEdit ? t("updatePost") : t("createPost")}
         </Button>
         <Button type="button" variant="outline" onClick={() => router.back()}>
-          Cancel
+          {t("cancel")}
         </Button>
       </div>
     </form>
