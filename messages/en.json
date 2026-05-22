@@ -107,7 +107,7 @@
     "nothingToPreview": "Nothing to preview."
   },
   "footer": {
-    "copyright": "© {year} frostsalix blog"
+    "copyright": "Powered by Next.js"
   },
   "notFound": {
     "title": "Page not found",

@@ -108,7 +108,7 @@
     "nothingToPreview": "暂无内容可预览。"
   },
   "footer": {
-    "copyright": "© {year} frostsalix blog"
+    "copyright": "Powered by Next.js"
   },
   "notFound": {
     "title": "页面未找到",
