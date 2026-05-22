@@ -11,24 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AboutPage() {
   const t = await getTranslations("about")
 
-  const projects = [
-    {
-      name: "lumison",
-      url: "https://github.com/frostsalix/lumison",
-      desc: t("projects.lumison"),
-    },
-    {
-      name: "e-commerce-api",
-      url: "https://github.com/frostsalix/e-commerce-api",
-      desc: t("projects.ecommerceApi"),
-    },
-    {
-      name: "MiNotes",
-      url: "https://github.com/frostsalix/MiNotes",
-      desc: t("projects.minotes"),
-    },
-  ]
-
   const skills = [
     "HTML", "CSS", "JavaScript", "TypeScript", "Python", "Java", "C", "C++",
     "React", "Next.js", "Tailwind CSS", "Node.js", "FastAPI", "Spring Boot",
@@ -44,30 +26,6 @@ export default async function AboutPage() {
       <p className="text-muted-foreground leading-relaxed mb-8">
         {t("bio")}
       </p>
-
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">{t("location")}</h2>
-        <p className="text-muted-foreground">{t("locationValue")}</p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">{t("projects.title")}</h2>
-        <ul className="space-y-3">
-          {projects.map((p) => (
-            <li key={p.name}>
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium hover:underline"
-              >
-                {p.name}
-              </a>
-              <span className="text-muted-foreground"> — {p.desc}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       <section className="mb-8">
         <h2 className="text-lg font-semibold mb-3">{t("skills")}</h2>
