@@ -16,6 +16,7 @@ export const createCommentSchema = z.object({
   authorEmail: z.string().email().optional().or(z.literal("")),
   postId: z.string().cuid(),
   parentId: z.string().cuid().optional(),
+  userId: z.string().optional(),
 });
 
 export const createCategorySchema = z.object({

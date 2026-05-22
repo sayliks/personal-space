@@ -8,13 +8,16 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  name         String
-  email        String    @unique
-  passwordHash String
-  posts        Post[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  image         String?
+  posts         Post[]
+  comments      Comment[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Post {
@@ -78,6 +81,9 @@ model Comment {
   authorName  String
   authorEmail String?
 
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
   approved Boolean @default(false)
 
   postId String
@@ -91,4 +97,5 @@ model Comment {
   updatedAt DateTime @updatedAt
 
   @@index([postId])
+  @@index([userId])
 }

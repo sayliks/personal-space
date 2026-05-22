@@ -18,6 +18,13 @@ export async function CommentSection({ postId }: { postId: string }) {
           {comments.map((comment) => (
             <div key={comment.id} className="border-b pb-4 last:border-0">
               <div className="flex items-center gap-2 text-sm mb-1">
+                {comment.user?.image && (
+                  <img
+                    src={comment.user.image}
+                    alt=""
+                    className="size-5 rounded-full"
+                  />
+                )}
                 <span className="font-medium">{comment.authorName}</span>
                 <span className="text-muted-foreground">
                   {formatDate(comment.createdAt)}
@@ -29,6 +36,13 @@ export async function CommentSection({ postId }: { postId: string }) {
                   {comment.replies.map((reply) => (
                     <div key={reply.id}>
                       <div className="flex items-center gap-2 text-sm mb-1">
+                        {reply.user?.image && (
+                          <img
+                            src={reply.user.image}
+                            alt=""
+                            className="size-5 rounded-full"
+                          />
+                        )}
                         <span className="font-medium">{reply.authorName}</span>
                         <span className="text-muted-foreground">
                           {formatDate(reply.createdAt)}

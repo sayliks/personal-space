@@ -5,6 +5,8 @@ const envSchema = z.object({
   DIRECT_URL: z.string().url().optional(),
   AUTH_SECRET: z.string().min(32),
   AUTH_URL: z.string().url().default("http://localhost:3000"),
+  AUTH_GITHUB_ID: z.string().min(1).optional(),
+  AUTH_GITHUB_SECRET: z.string().min(1).optional(),
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
@@ -25,6 +27,8 @@ const fallback = {
   DIRECT_URL: process.env.DIRECT_URL,
   AUTH_SECRET: process.env.AUTH_SECRET ?? "",
   AUTH_URL: process.env.AUTH_URL ?? "http://localhost:3000",
+  AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
+  AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
   NODE_ENV: (process.env.NODE_ENV as "development" | "test" | "production") ?? "development",
 } as const;
 

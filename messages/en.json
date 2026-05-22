@@ -37,7 +37,10 @@
     "content": "Your comment",
     "submitting": "Submitting...",
     "commentSubmitted": "Comment submitted. It will appear after approval.",
-    "failedToSubmitComment": "Failed to submit comment"
+    "failedToSubmitComment": "Failed to submit comment",
+    "signInWithGithub": "Sign in with GitHub",
+    "signedInAs": "Signed in as {name}",
+    "signOut": "Sign out"
   },
   "admin": {
     "blogAdmin": "Blog Admin",

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
+import { SessionProviderWrapper } from "@/components/auth/SessionProviderWrapper"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import "./globals.css"
@@ -58,9 +59,11 @@ export default async function RootLayout({
       <body className="flex min-h-screen flex-col bg-background text-foreground">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <SessionProviderWrapper>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </SessionProviderWrapper>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

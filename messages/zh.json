@@ -38,7 +38,10 @@
     "content": "评论内容",
     "submitting": "提交中...",
     "commentSubmitted": "评论已提交，审核通过后将显示。",
-    "failedToSubmitComment": "提交评论失败"
+    "failedToSubmitComment": "提交评论失败",
+    "signInWithGithub": "使用 GitHub 登录",
+    "signedInAs": "已登录为 {name}",
+    "signOut": "退出登录"
   },
   "admin": {
     "blogAdmin": "博客管理",

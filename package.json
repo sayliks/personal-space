@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
+    "test:e2e": "playwright test",
     "postinstall": "prisma generate",
     "seed": "npx tsx prisma/seed.ts"
   },

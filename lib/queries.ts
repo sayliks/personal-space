@@ -92,9 +92,13 @@ export async function getCommentsByPostId(postId: string) {
   return prisma.comment.findMany({
     where: { postId, approved: true, parentId: null },
     include: {
+      user: { select: { id: true, name: true, image: true } },
       replies: {
         where: { approved: true },
         orderBy: { createdAt: "asc" },
+        include: {
+          user: { select: { id: true, name: true, image: true } },
+        },
       },
     },
     orderBy: { createdAt: "desc" },
