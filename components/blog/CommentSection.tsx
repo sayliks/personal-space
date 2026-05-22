@@ -1,14 +1,16 @@
 import { getCommentsByPostId } from "@/lib/queries"
+import { getTranslations } from "next-intl/server"
 import { CommentForm } from "@/components/blog/CommentForm"
 import { formatDate } from "@/lib/utils"
 
 export async function CommentSection({ postId }: { postId: string }) {
+  const t = await getTranslations("post")
   const comments = await getCommentsByPostId(postId)
 
   return (
     <section className="mt-12">
       <h2 className="text-xl font-bold mb-6">
-        Comments{comments.length > 0 && ` (${comments.length})`}
+        {t("comments")}{comments.length > 0 && ` (${comments.length})`}
       </h2>
 
       {comments.length > 0 && (

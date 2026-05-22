@@ -1,5 +1,6 @@
 import { getPostBySlug } from "@/lib/queries"
 import { notFound } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer"
 import { CategoryBadge } from "@/components/blog/CategoryBadge"
 import { TagList } from "@/components/blog/TagBadge"
@@ -31,6 +32,7 @@ export default async function PostPage({
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
   const post = await getPostBySlug(decodedSlug)
+  const t = await getTranslations("post")
 
   if (!post || !post.published) {
     notFound()
@@ -43,7 +45,7 @@ export default async function PostPage({
       <header className="mb-8 space-y-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <time dateTime={post.publishedAt?.toISOString()}>
-            {post.publishedAt ? formatDateLong(post.publishedAt) : "Draft"}
+            {post.publishedAt ? formatDateLong(post.publishedAt) : t("draft")}
           </time>
           {post.category && (
             <CategoryBadge name={post.category.name} slug={post.category.slug} />
@@ -55,7 +57,7 @@ export default async function PostPage({
         )}
         {tags.length > 0 && <TagList tags={tags} />}
         <div className="text-sm text-muted-foreground">
-          by {post.author.name}
+          {t("by")} {post.author.name}
         </div>
       </header>
 
