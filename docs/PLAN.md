@@ -212,8 +212,19 @@ post.content (Markdown) → react-markdown + remark-gfm + rehype-highlight
 - ✅ `__tests__/lib/slug.test.ts` — 7 tests（generateSlug）
 - ✅ `__tests__/lib/utils.test.ts` — 9 tests（formatDate, formatDateLong, cn）
 - ✅ `__tests__/lib/validations.test.ts` — 11 tests（4 schemas safeParse 全覆盖），全部 30 tests 通过
+- ✅ E2E 测试（Playwright + Chromium, `e2e/homepage.spec.ts` — 6 tests: zh/en 渲染, 导航, 语言切换, logo 链接）
 - ⬜ 组件测试（@testing-library/react）
-- ⬜ E2E 测试（Playwright）
+
+### Phase 10：GitHub OAuth + 评论增强 ✅（已完成）
+- ✅ `lib/auth.ts` — 添加 GitHub provider（条件启用，通过 env 配置）
+- ✅ `prisma/schema.prisma` — User 模型支持 OAuth（passwordHash 可选, image, emailVerified, Comment.userId）
+- ✅ `lib/env.ts` — AUTH_GITHUB_ID / AUTH_GITHUB_SECRET 可选 env
+- ✅ `components/auth/SessionProviderWrapper.tsx` — 客户端 session 访问
+- ✅ `types/next-auth.d.ts` — 扩展 Session/JWT 类型
+- ✅ `components/blog/CommentForm.tsx` — GitHub 登录按钮 + 认证状态显示 + 头像
+- ✅ `components/blog/CommentSection.tsx` — 显示评论者 GitHub 头像
+- ✅ `app/api/comments/route.ts` — 认证用户评论自动关联 userId
+- ✅ i18n keys：signInWithGithub, signedInAs, signOut
 
 ---
 
@@ -289,7 +300,7 @@ CLOUDINARY_API_SECRET="..."
 - [x] ~~i18n 国际化（next-intl，zh/en 双语，13 个命名空间）~~ ✅
 - [x] ~~暗色模式（next-themes ThemeProvider + ThemeToggle）~~ ✅
 - [x] ~~middleware.ts 重新引入后又移除（改用 cookie 驱动，`i18n/request.ts` 读取 `NEXT_LOCALE` cookie + accept-language 回退，LanguageToggle 写 cookie + router.refresh()，无需 URL 前缀）~~ ✅
-- [ ] Phase 9：单元测试 + E2E 测试
+- [ ] Phase 9：组件测试（@testing-library/react）
 
 ---
 
