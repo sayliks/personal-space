@@ -19,7 +19,12 @@
       "Bash(curl *)",
       "Bash(taskkill /PID 3504 /F)",
       "Bash(taskkill /F /IM \"node.exe\")",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(taskkill //PID 19144 //F)",
+      "Bash(npm info *)",
+      "Bash(python -c \"import sys,json; vs=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(vs[-20:]\\)\\)\")",
+      "Bash(npm view *)",
+      "WebFetch(domain:next-intl.dev)"
     ]
   }
 }
