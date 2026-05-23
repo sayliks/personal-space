@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "jest",
     "test:e2e": "playwright test",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && prisma db push --skip-generate",
     "seed": "npx tsx prisma/seed.ts"
   },
   "prisma": {
