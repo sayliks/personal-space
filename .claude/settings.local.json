@@ -34,7 +34,12 @@
       "Bash(npx tsx *)",
       "Bash(gh api *)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "mcp__plugin_vercel_vercel__list_teams",
+      "mcp__plugin_vercel_vercel__list_projects",
+      "mcp__plugin_vercel_vercel__get_runtime_logs",
+      "mcp__plugin_vercel_vercel__list_deployments",
+      "Bash(export DATABASE_URL=\"postgresql://postgres.cfpbrogsnsjtgwrnangw:qqappzWzj2006.@db.cfpbrogsnsjtgwrnangw.supabase.co:5432/postgres?connect_timeout=15\")"
     ]
   }
 }
