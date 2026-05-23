@@ -10,6 +10,7 @@ import { Toaster } from "sonner"
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
   if (!session?.user) redirect("/login")
+  if (session.user.role !== "admin") redirect("/login")
 
   const t = await getTranslations("admin")
   const tc = await getTranslations("common")

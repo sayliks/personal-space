@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (session?.user?.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const body = await request.json()
   const result = createPostSchema.safeParse(body)
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (session?.user?.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const body = await request.json()
   const { id, ...fields } = body
@@ -99,7 +99,7 @@ export async function PUT(request: Request) {
 
 export async function DELETE(request: Request) {
   const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (session?.user?.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const { searchParams } = new URL(request.url)
   const id = searchParams.get("id")
