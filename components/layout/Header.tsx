@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
-import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
 export async function Header() {
   const t = await getTranslations("common")
@@ -22,7 +21,6 @@ export async function Header() {
           <Link href="/about" className="hover:text-foreground transition-colors">
             {t("about")}
           </Link>
-          <LanguageToggle />
           <ThemeToggle />
         </nav>
       </div>
