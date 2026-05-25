@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
+import { SearchDialog } from "@/components/layout/SearchDialog"
 
 export async function Header() {
   const t = await getTranslations("common")
@@ -11,16 +12,14 @@ export async function Header() {
         <Link href="/" className="font-bold text-lg italic">
           frostsalix's blog
         </Link>
-        <nav className="flex items-center gap-4 text-sm text-muted-foreground">
-          <Link href="/posts" className="hover:text-foreground transition-colors">
+        <nav className="flex items-center gap-1 text-sm text-muted-foreground">
+          <Link href="/posts" className="hover:text-foreground transition-colors px-2">
             {t("articles")}
           </Link>
-          <Link href="/search" className="hover:text-foreground transition-colors">
-            {t("search")}
-          </Link>
-          <Link href="/about" className="hover:text-foreground transition-colors">
+          <Link href="/about" className="hover:text-foreground transition-colors px-2">
             {t("about")}
           </Link>
+          <SearchDialog />
           <ThemeToggle />
         </nav>
       </div>

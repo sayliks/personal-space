@@ -11,10 +11,10 @@ test("navigates to articles page", async ({ page }) => {
   await expect(page).toHaveURL("/posts")
 })
 
-test("navigates to search page", async ({ page }) => {
+test("opens search dialog", async ({ page }) => {
   await page.goto("/")
-  await page.getByRole("link", { name: "搜索" }).click()
-  await expect(page.locator("h1")).toContainText("搜索")
+  await page.getByRole("button", { name: "搜索" }).click()
+  await expect(page.getByPlaceholder("搜索文章...")).toBeVisible()
 })
 
 test("header logo links to home", async ({ page }) => {

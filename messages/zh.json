@@ -41,7 +41,9 @@
     "placeholder": "搜索文章...",
     "noQuery": "输入关键词开始搜索。",
     "noResults": "未找到相关文章。",
-    "results": "搜索 \"{query}\"，找到 {count} 篇结果"
+    "results": "搜索 \"{query}\"，找到 {count} 篇结果",
+    "loading": "搜索中...",
+    "hint": "按 Enter 打开首条结果，Esc 关闭"
   },
   "post": {
     "notFound": "文章不存在",
