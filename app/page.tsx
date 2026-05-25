@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server"
 import { RecentPosts } from "@/components/blog/RecentPosts"
 import type { Metadata } from "next"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("home")

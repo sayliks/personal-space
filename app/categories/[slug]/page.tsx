@@ -4,7 +4,13 @@ import { getTranslations } from "next-intl/server"
 import { PostCard } from "@/components/blog/PostCard"
 import { Pagination } from "@/components/blog/Pagination"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 300
+
+export async function generateStaticParams() {
+  const { getAllCategories } = await import("@/lib/queries")
+  const categories = await getAllCategories()
+  return categories.map((c) => ({ slug: c.slug }))
+}
 
 export default async function CategoryPage({
   params,

@@ -8,7 +8,13 @@ import { CommentSection } from "@/components/blog/CommentSection"
 import { formatDateLong } from "@/lib/utils"
 import type { Metadata } from "next"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const { getPublishedPosts } = await import("@/lib/queries")
+  const { posts } = await getPublishedPosts({ page: 1, pageSize: 5 })
+  return posts.map((post) => ({ slug: post.slug }))
+}
 
 export async function generateMetadata({
   params,

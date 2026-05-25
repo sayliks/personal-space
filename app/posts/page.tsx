@@ -4,7 +4,7 @@ import { PostCard } from "@/components/blog/PostCard"
 import { Pagination } from "@/components/blog/Pagination"
 import type { Metadata } from "next"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("posts")
