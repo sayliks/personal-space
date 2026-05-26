@@ -58,14 +58,12 @@ export default async function AboutPage() {
             </a>
           </li>
           <li>
-            {t("links.blog")}:{" "}
             <a
               href="https://blog.matsumae.top"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >
-              blog.matsumae.top
             </a>
           </li>
         </ul>
