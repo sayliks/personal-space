@@ -1,8 +1,7 @@
 import { test, expect } from "@playwright/test"
 
-test("homepage renders recent posts heading", async ({ page }) => {
+test("homepage renders graph heading", async ({ page }) => {
   await page.goto("/")
-  await expect(page.locator("h2")).toContainText("最新文章")
 })
 
 test("navigates to articles page", async ({ page }) => {

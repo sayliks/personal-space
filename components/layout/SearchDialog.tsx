@@ -89,7 +89,7 @@ export function SearchDialog() {
         <span className="ml-1.5">{t("title")}</span>
       </Button>
 
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg bg-popover/80 backdrop-blur-xl">
         <DialogHeader>
           <DialogTitle className="sr-only">{t("title")}</DialogTitle>
         </DialogHeader>

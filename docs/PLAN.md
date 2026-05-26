@@ -67,7 +67,7 @@ shadcn/ui 组件 → AI 改样式/逻辑 → 接 Prisma 数据 → 完成页面
 ```
 # 公开路由
 app/
-├── page.tsx                          # 首页：分页文章列表
+├── page.tsx                          # 首页：知识图谱（Obsidian Graph View）
 ├── posts/[slug]/page.tsx             # 文章详情 + 评论区
 ├── categories/[slug]/page.tsx        # 按分类筛选
 ├── tags/[slug]/page.tsx              # 按标签筛选
@@ -95,7 +95,8 @@ app/api/
 ├── auth/[...nextauth]/route.ts       # Auth.js
 ├── posts/route.ts                    # 文章 CRUD
 ├── comments/route.ts                 # 评论提交 & 审核
-└── search/route.ts                   # 搜索
+├── search/route.ts                   # 搜索
+└── graph/route.ts                    # 图谱数据 API
 ```
 
 ---
@@ -118,6 +119,7 @@ components/
 ├── layout/      # Header, Footer（用 shadcn + Tailwind 搭）
 ├── blog/        # PostCard, PostList, PostContent, MarkdownRenderer,
 │                # CommentSection, CommentForm, TagBadge, SearchForm, Pagination
+│                # KnowledgeGraph, Backlinks
 └── admin/       # PostEditor, PostForm, LoginForm,
                  # CategoryManager, TagManager, CommentManager
 ```
@@ -227,6 +229,19 @@ post.content (Markdown) → react-markdown + remark-gfm + rehype-highlight
 - ✅ `app/api/comments/route.ts` — 认证用户评论自动关联 userId
 - ✅ i18n keys：signInWithGithub, signedInAs, signOut
 
+### Phase 11：知识图谱（Obsidian Graph View）
+- ✅ 安装 `react-force-graph-2d`
+- ✅ `lib/graph.ts` — 双链解析（`[[wiki-link]]` 正则提取）+ 图谱数据构建（nodes/links）
+- ✅ `app/api/graph/route.ts` — 图谱 API 端点（Cache-Control 1h 缓存）
+- ✅ `components/blog/KnowledgeGraph.tsx` — 客户端力导向图谱可视化（深色发光、分类着色、hover 高亮邻居、点击跳转、ResizeObserver 自适应）
+- ✅ `components/blog/Backlinks.tsx` — 文章页反向链接（Server Component，Prisma contains 预筛选 + 正则精确匹配）
+- ✅ `lib/remark-wiki-link.ts` — remark 插件，将 `[[text]]` 转为可点击链接
+- ✅ `components/blog/MarkdownRenderer.tsx` — 集成 remark-wiki-link 插件
+- ✅ `app/page.tsx` — 首页渲染知识图谱
+- ✅ `app/posts/[slug]/page.tsx` — 文章详情页插入 Backlinks 组件
+- ✅ `app/globals.css` — wiki-link 样式（虚线下划线、hover 实线、深色适配）
+- ✅ `messages/zh.json` — graph 命名空间（title, subtitle, loading, backlinks）
+
 ---
 
 ## 六、依赖安装汇总
@@ -257,6 +272,9 @@ npm install next-intl
 
 # Phase 9：测试
 npm install -D jest @jest/globals @testing-library/react @testing-library/jest-dom jest-environment-jsdom
+
+# Phase 11：知识图谱
+npm install react-force-graph-2d
 ```
 
 ---
@@ -785,7 +803,7 @@ test: 添加 createComment Server Action 的单元测试
 | **Week 3** | ⑩ ~~实现 MarkdownRenderer（Phase 3）~~ ✅<br>⑪ ~~搭建后台文章 CRUD（Phase 4）~~ ✅<br>⑫ ~~实现 Server Actions 表单提交~~ ✅<br>⑬ ~~添加 toast 反馈（sonner + PostForm 集成）~~ ✅ | Server Actions、UI 开发 |
 | **Week 4** | ⑭ ~~开发博客公开页面（Phase 5）~~ ✅<br>⑮ ~~实现评论系统（Phase 6）~~ ✅<br>⑯ ~~搜索 + RSS + sitemap（Phase 7-8）~~ ✅<br>⑰ ~~写第一批单元测试~~ ✅（30 tests, lib/）<br>⑱ `npm run build` 零警告 | 完整功能、测试习惯 |
 
-> **当前进度（2026-05-22）**：Phase 0-10 全部完成。47 tests 全部通过（30 lib + 17 component），6 E2E tests，`npm run build` 成功。
+> **当前进度（2026-05-26）**：Phase 0-11 全部完成。知识图谱（Obsidian Graph View）已实现：首页图谱可视化、双链解析、反向链接、remark-wiki-link 插件。47 tests 全部通过，`npm run build` 成功。
 
 ---
 

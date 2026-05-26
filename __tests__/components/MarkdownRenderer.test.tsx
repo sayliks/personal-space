@@ -18,6 +18,7 @@ jest.mock("react-markdown", () => {
 jest.mock("remark-gfm", () => ({}))
 jest.mock("rehype-highlight", () => ({}))
 jest.mock("rehype-slug", () => ({}))
+jest.mock("@/lib/remark-wiki-link", () => ({ remarkWikiLink: () => (tree: unknown) => tree }))
 
 import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer"
 

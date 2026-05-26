@@ -10,7 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("posts")
   return {
     title: t("title"),
-    description: t("description"),
   }
 }
 
@@ -27,7 +26,6 @@ export default async function PostsPage({
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
-      <p className="text-muted-foreground mb-8">{t("description")}</p>
       <div className="space-y-8">
         {posts.length === 0 ? (
           <p className="text-muted-foreground">{t("noPosts")}</p>
