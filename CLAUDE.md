@@ -95,9 +95,9 @@ Public pages (home, posts, categories, tags, search) declare `export const dynam
 
 Wiki-link syntax (`[[target|alias]]`) is supported. The regex and `extractWikiLinks()` live in `lib/wiki-link.ts` — import from there (not redefined in other files). The remark plugin (`lib/remark-wiki-link.ts`) converts `[[text]]` to `<a class="wiki-link">` links. CSS for `.wiki-link` is in `app/globals.css`.
 
-### Knowledge graph (homepage)
+### Knowledge graph
 
-`components/blog/KnowledgeGraph.tsx` renders a force-directed graph using `react-force-graph-2d` (client-only, dynamic import). Data comes from `/api/graph` → `lib/graph.ts` which builds nodes/links from wiki-link references between posts. `components/blog/Backlinks.tsx` (server component) shows incoming wiki-links on each post page.
+`components/blog/KnowledgeGraph.tsx` renders a force-directed graph using `react-force-graph-2d` (client-only, dynamic import). Data comes from `/api/graph` → `lib/graph.ts` which builds nodes/links from wiki-link references between posts. `components/blog/Backlinks.tsx` (server component) shows incoming wiki-links on each post page. The graph is available at `/api/graph` but not currently displayed on the homepage.
 
 ## Conventions
 

@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test"
 
-test("homepage renders graph heading", async ({ page }) => {
+test("homepage renders", async ({ page }) => {
   await page.goto("/")
+  await expect(page.locator("h1")).toBeVisible()
 })
 
 test("navigates to articles page", async ({ page }) => {

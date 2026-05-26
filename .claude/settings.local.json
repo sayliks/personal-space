@@ -39,7 +39,17 @@
       "mcp__plugin_vercel_vercel__list_projects",
       "mcp__plugin_vercel_vercel__get_runtime_logs",
       "mcp__plugin_vercel_vercel__list_deployments",
-      "Bash(export DATABASE_URL=\"postgresql://postgres.cfpbrogsnsjtgwrnangw:qqappzWzj2006.@db.cfpbrogsnsjtgwrnangw.supabase.co:5432/postgres?connect_timeout=15\")"
+      "Bash(export DATABASE_URL=\"postgresql://postgres.cfpbrogsnsjtgwrnangw:qqappzWzj2006.@db.cfpbrogsnsjtgwrnangw.supabase.co:5432/postgres?connect_timeout=15\")",
+      "WebFetch(domain:antfu.me)",
+      "Bash(xxd)",
+      "Bash(python -c \"import sys,json,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")",
+      "Bash(python -c \"import sys,json; [print\\(x['name']\\) for x in json.load\\(sys.stdin\\)]\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:v for k,v in d.items\\(\\) if k in ['name','download_url','encoding','size']}, indent=2\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(x['path']\\) for x in d.get\\('items',[]\\)]\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(x['path']\\) for x in d.get\\('tree',[]\\) if 'graph' in x['path'].lower\\(\\)]\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\('message','no message'\\)\\); print\\('truncated:', d.get\\('truncated','?'\\)\\); print\\('tree count:', len\\(d.get\\('tree',[]\\)\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('default_branch:', d.get\\('default_branch','?'\\)\\); print\\('description:', d.get\\('description','?'\\)\\)\")",
+      "Bash(python -c ' *)"
     ]
   }
 }

@@ -10,7 +10,7 @@
     "loading": "加载中..."
   },
   "home": {
-    "siteTitle": "sayliks",
+    "siteTitle": "sayliks's blog",
     "tagline": "全栈开发者，构建有价值的软件。",
     "recentPosts": "最新文章"
   },
@@ -60,7 +60,7 @@
     "signInWithGithub": "使用 GitHub 登录",
     "signedInAs": "已登录为 {name}",
     "signOut": "退出登录",
-    "loginRequiredToComment": "请使用 GitHub 登录后才能发表评论。"
+    "loginRequiredToComment": "请使用 GitHub 登录后发表评论。"
   },
   "admin": {
     "blogAdmin": "博客管理",

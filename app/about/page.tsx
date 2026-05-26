@@ -57,15 +57,6 @@ export default async function AboutPage() {
               github.com/frostsalix
             </a>
           </li>
-          <li>
-            <a
-              href="https://blog.matsumae.top"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-            </a>
-          </li>
         </ul>
       </section>
     </div>

@@ -5,7 +5,7 @@
       "cron": "*/30 * * * *",
       "prompt": "Read the file `docs/PLAN.md` in the project. Check if there are any new phase completions, blockers, or important updates since the last review. Report a brief summary (under 100 words) of anything noteworthy — new TODOs, progress highlights, or items needing attention. If nothing changed, reply \"No changes in PLAN.md.\"",
       "createdAt": 1779441847619,
-      "lastFiredAt": 1779770043034,
+      "lastFiredAt": 1779771732993,
       "recurring": true,
       "createdBySessionId": "a77e3f33-17d9-4a50-b24b-03a911547758",
       "createdByPid": 27176,
