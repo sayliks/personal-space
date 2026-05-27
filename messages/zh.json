@@ -7,7 +7,9 @@
     "signOut": "退出登录",
     "backToHome": "返回首页",
     "tryAgain": "重试",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "toggleTheme": "切换主题",
+    "siteTitle": "sayliks's blog"
   },
 
   "about": {
@@ -132,7 +134,9 @@
   },
   "graph": {
     "backlinks": "反向链接",
-    "loading": "加载图谱中..."
+    "loading": "加载图谱中...",
+    "loadError": "加载图谱失败",
+    "stats": "{nodes} 个节点 · {links} 条连接"
   },
   "auth": {
     "title": "管理员登录",

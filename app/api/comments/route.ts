@@ -4,13 +4,21 @@ import { createCommentSchema } from "@/lib/validations"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
-  const body = await request.json()
+  const session = await auth()
+
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
+  }
+
   const result = createCommentSchema.safeParse(body)
   if (!result.success) {
     return NextResponse.json({ error: result.error.flatten() }, { status: 400 })
   }
 
-  const { content, authorName, authorEmail, postId, parentId, userId } = result.data
+  const { content, authorName, authorEmail, postId, parentId } = result.data
 
   const post = await prisma.post.findUnique({ where: { id: postId } })
   if (!post) {
@@ -24,22 +32,28 @@ export async function POST(request: Request) {
     }
   }
 
-  const session = await auth()
-  const isAuthenticated = session?.user?.id && userId === session.user.id
+  const userId = session?.user?.id
 
-  const comment = await prisma.comment.create({
-    data: {
-      content,
-      authorName: isAuthenticated ? (session.user.name ?? authorName) : authorName,
-      authorEmail: isAuthenticated ? (session.user.email ?? authorEmail ?? null) : (authorEmail || null),
-      userId: isAuthenticated ? session.user.id : null,
-      postId,
-      parentId: parentId || null,
-    },
-  })
+  try {
+    const comment = await prisma.comment.create({
+      data: {
+        content,
+        authorName: userId ? (session.user.name ?? authorName) : authorName,
+        authorEmail: userId ? (session.user.email ?? authorEmail ?? null) : (authorEmail || null),
+        userId: userId ?? null,
+        postId,
+        parentId: parentId || null,
+      },
+    })
 
-  return NextResponse.json(comment)
+    return NextResponse.json(comment)
+  } catch (error) {
+    console.error("Failed to create comment:", error)
+    return NextResponse.json({ error: "Failed to create comment" }, { status: 500 })
+  }
 }
+
+export const runtime = "nodejs"
 
 export async function GET(request: Request) {
   const session = await auth()
@@ -50,13 +64,18 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const approved = searchParams.get("approved")
 
-  const comments = await prisma.comment.findMany({
-    where: {
-      approved: approved === "false" ? false : true,
-    },
-    include: { post: { select: { id: true, title: true, slug: true } } },
-    orderBy: { createdAt: "desc" },
-  })
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        approved: approved === "false" ? false : true,
+      },
+      include: { post: { select: { id: true, title: true, slug: true } } },
+      orderBy: { createdAt: "desc" },
+    })
 
-  return NextResponse.json(comments)
+    return NextResponse.json(comments)
+  } catch (error) {
+    console.error("Failed to fetch comments:", error)
+    return NextResponse.json({ error: "Failed to fetch comments" }, { status: 500 })
+  }
 }

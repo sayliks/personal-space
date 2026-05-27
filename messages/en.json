@@ -7,7 +7,9 @@
     "signOut": "Sign Out",
     "backToHome": "Back to Home",
     "tryAgain": "Try Again",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "toggleTheme": "Toggle theme",
+    "siteTitle": "sayliks's blog"
   },
   "about": {
     "title": "About",
@@ -130,7 +132,9 @@
   },
   "graph": {
     "backlinks": "Backlinks",
-    "loading": "Loading graph..."
+    "loading": "Loading graph...",
+    "loadError": "Failed to load graph",
+    "stats": "{nodes} nodes · {links} links"
   },
   "auth": {
     "title": "Admin Login",

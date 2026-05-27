@@ -101,9 +101,9 @@ export function KnowledgeGraph() {
   }, [])
 
   useEffect(() => {
-    if (data && fgRef.current) {
-      setTimeout(() => fgRef.current?.zoomToFit(400), 500)
-    }
+    if (!data || !fgRef.current) return
+    const timer = setTimeout(() => fgRef.current?.zoomToFit(400), 500)
+    return () => clearTimeout(timer)
   }, [data])
 
   const neighbors = useMemo(() => {
@@ -197,7 +197,7 @@ export function KnowledgeGraph() {
   if (error) {
     return (
       <div className="w-full h-[60vh] min-h-[400px] max-h-[700px] rounded-lg bg-muted flex items-center justify-center">
-        <span className="text-muted-foreground text-sm">Failed to load graph</span>
+        <span className="text-muted-foreground text-sm">{t("loadError")}</span>
       </div>
     )
   }
@@ -253,7 +253,7 @@ export function KnowledgeGraph() {
       )}
 
       <div className="absolute bottom-3 right-3 text-xs text-muted-foreground">
-        {data.nodes.length} nodes · {data.links.length} links
+        {t("stats", { nodes: data.nodes.length, links: data.links.length })}
       </div>
     </div>
   )

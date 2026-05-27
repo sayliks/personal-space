@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { searchPosts } from "@/lib/queries"
 import { NextResponse } from "next/server"
 
 export async function GET(request: Request) {
@@ -9,26 +9,18 @@ export async function GET(request: Request) {
     return NextResponse.json({ results: [] })
   }
 
-  const results = await prisma.post.findMany({
-    where: {
-      published: true,
-      publishedAt: { lte: new Date() },
-      OR: [
-        { title: { contains: q, mode: "insensitive" } },
-        { content: { contains: q, mode: "insensitive" } },
-        { summary: { contains: q, mode: "insensitive" } },
-      ],
-    },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      summary: true,
-      publishedAt: true,
-    },
-    orderBy: { publishedAt: "desc" },
-    take: 20,
-  })
-
-  return NextResponse.json({ results })
+  try {
+    const posts = await searchPosts(q.trim())
+    const results = posts.map(({ id, title, slug, summary, publishedAt }) => ({
+      id,
+      title,
+      slug,
+      summary,
+      publishedAt,
+    }))
+    return NextResponse.json({ results })
+  } catch (error) {
+    console.error("Search failed:", error)
+    return NextResponse.json({ results: [] }, { status: 500 })
+  }
 }

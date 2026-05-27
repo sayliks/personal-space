@@ -19,7 +19,8 @@ export async function GET() {
     return NextResponse.json(graph, {
       headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
     })
-  } catch {
+  } catch (error) {
+    console.error("Failed to build graph data:", error)
     return NextResponse.json({ error: "Failed to build graph data" }, { status: 500 })
   }
 }

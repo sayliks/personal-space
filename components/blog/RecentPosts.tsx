@@ -1,5 +1,7 @@
+import Link from "next/link"
 import { getPublishedPosts } from "@/lib/queries"
 import { getTranslations } from "next-intl/server"
+import { formatDate } from "@/lib/utils"
 
 export async function RecentPosts() {
   const t = await getTranslations("home")
@@ -15,21 +17,17 @@ export async function RecentPosts() {
       <ul className="space-y-1">
         {posts.map((post) => (
           <li key={post.id}>
-            <a
+            <Link
               href={`/posts/${post.slug}`}
               className="inline-flex items-baseline gap-2 group"
             >
               <span className="text-muted-foreground text-sm tabular-nums shrink-0">
-                {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString("zh-CN", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })}
+                {formatDate(post.publishedAt ?? post.createdAt)}
               </span>
               <span className="group-hover:underline truncate">
                 {post.title}
               </span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

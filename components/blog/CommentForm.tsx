@@ -39,28 +39,31 @@ export function CommentForm({ postId }: { postId: string }) {
     setSubmitting(true)
     setError("")
 
-    const res = await fetch("/api/comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        postId,
-        authorName: session.user.name ?? "",
-        authorEmail: session.user.email ?? "",
-        userId: session.user.id,
-        content,
-      }),
-    })
+    try {
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          postId,
+          authorName: session.user.name ?? "",
+          authorEmail: session.user.email ?? "",
+          content,
+        }),
+      })
 
-    if (res.ok) {
-      setSuccess(true)
-      setContent("")
-      router.refresh()
-    } else {
-      const data = await res.json()
-      setError(data.error || t("failedToSubmitComment"))
+      if (res.ok) {
+        setSuccess(true)
+        setContent("")
+        router.refresh()
+      } else {
+        const data = await res.json().catch(() => null)
+        setError(data?.error || t("failedToSubmitComment"))
+      }
+    } catch {
+      setError(t("failedToSubmitComment"))
+    } finally {
+      setSubmitting(false)
     }
-
-    setSubmitting(false)
   }
 
   if (isLoading) {
@@ -97,7 +100,7 @@ export function CommentForm({ postId }: { postId: string }) {
           {session.user?.image && (
             <Image
               src={session.user.image}
-              alt=""
+              alt={session.user.name ?? ""}
               width={24}
               height={24}
               className="size-6 rounded-full"
@@ -118,7 +121,7 @@ export function CommentForm({ postId }: { postId: string }) {
         {session.user?.image && (
           <Image
             src={session.user.image}
-            alt=""
+            alt={session.user.name ?? ""}
             width={24}
             height={24}
             className="size-6 rounded-full"

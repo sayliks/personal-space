@@ -22,7 +22,7 @@ export async function CommentSection({ postId }: { postId: string }) {
                 {comment.user?.image && (
                   <Image
                     src={comment.user.image}
-                    alt=""
+                    alt={comment.authorName}
                     width={20}
                     height={20}
                     className="size-5 rounded-full"
@@ -42,7 +42,7 @@ export async function CommentSection({ postId }: { postId: string }) {
                         {reply.user?.image && (
                           <Image
                             src={reply.user.image}
-                            alt=""
+                            alt={reply.authorName}
                             width={20}
                             height={20}
                             className="size-5 rounded-full"

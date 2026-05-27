@@ -11,7 +11,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
   const targetPost = await prisma.post.findUnique({
     where: { id: postId },
     select: { title: true, slug: true },
-  }).catch(() => null)
+  }).catch((e) => { console.error("Backlinks: failed to find post:", e); return null })
   if (!targetPost) return null
 
   const candidates = await prisma.post.findMany({
@@ -24,7 +24,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
       ],
     },
     select: { id: true, title: true, slug: true, summary: true, content: true },
-  }).catch(() => [])
+  }).catch((e) => { console.error("Backlinks: failed to fetch candidates:", e); return [] })
 
   const wikiLinkPattern = new RegExp(
     `\\[\\[${escapeRegex(targetPost.title)}(\\|[^\\]]+)?\\]\\]`,

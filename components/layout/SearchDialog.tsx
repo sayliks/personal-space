@@ -31,9 +31,9 @@ export function SearchDialog() {
 
   // Focus input when dialog opens
   useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 100)
-    }
+    if (!open) return
+    const timer = setTimeout(() => inputRef.current?.focus(), 100)
+    return () => clearTimeout(timer)
   }, [open])
 
   // Debounced search
@@ -44,6 +44,7 @@ export function SearchDialog() {
       setLoading(true)
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         setResults(data.results ?? [])
       } catch {
@@ -115,7 +116,7 @@ export function SearchDialog() {
           <div className="min-h-[100px] max-h-[320px] overflow-y-auto">
             {loading ? (
               <p className="text-center text-sm text-muted-foreground py-8">
-                {t("loading") || "搜索中..."}
+                {t("loading")}
               </p>
             ) : results.length === 0 ? (
               <p className="text-center text-sm text-muted-foreground py-8">
