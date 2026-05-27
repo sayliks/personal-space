@@ -6,6 +6,7 @@ const createJestConfig = nextJest({ dir: "./" })
 const config = {
   testEnvironment: "node",
   testMatch: ["<rootDir>/__tests__/**/*.test.{ts,tsx}"],
+  setupFilesAfterEnv: ["<rootDir>/__tests__/setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
     "^github-slugger$": "<rootDir>/__mocks__/github-slugger.ts",
