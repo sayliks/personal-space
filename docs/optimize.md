@@ -1,6 +1,36 @@
 # 代码审查与文档优化记录
 
-> 每小时自动审查，只审查和提交文档，不修改业务代码。
+> 每 5 分钟自动审查，只审查和提交文档，不修改业务代码。
+
+---
+
+## 审查 #14 — 2026-05-27 22:30
+
+**分支**: master (ahead of origin by 15 commits)
+**未提交业务变更** (7 files, +75/-75):
+
+- 新增: `CommentForm.tsx`, `Header.tsx`, `SearchDialog.tsx`, `lib/auth.ts`
+- 沿用: `Backlinks.tsx`, `KnowledgeGraph.tsx`, `ThemeToggle.tsx`
+
+### 发现的问题
+
+**[高] Header.tsx:12-14 缩进损坏**
+
+- 文件: `components/layout/Header.tsx`
+- 问题: `<Link>` 标签缩进从 8 空格变为 0，文本内容和 `</Link>` 缩进也错位
+- 与周围 `<div>`（缩进 6 空格）和 `<nav>`（缩进 8 空格）不一致
+- 修复: 恢复 `<Link>` 行缩进为 8 空格，文本和 `</Link>` 对齐
+
+**[低] Header.tsx:13 `'` → `&apos;` 实体变更**
+
+- `sayliks's blog` → `sayliks&apos;s blog`，JSX 中两者均可接受
+
+### 无问题变更
+
+- CommentForm.tsx: 添加 eslint-disable 注释（`react-hooks/exhaustive-deps`），合理
+- SearchDialog.tsx: 添加 eslint-disable 注释，合理
+- lib/auth.ts: 添加 eslint-disable 注释（`@typescript-eslint/no-explicit-any`），合理
+- Backlinks/KnowledgeGraph/ThemeToggle: 与此前审查结论一致
 
 ---
 
@@ -8,7 +38,7 @@
 
 **范围**: CLAUDE.md + AGENTS.md 目录结构交叉验证
 
-### 发现的问题
+### 本次文档发现
 
 **~~[低] AGENTS.md:44 lib/ 文件列表缺失 5 个~~ → 已修复**
 
@@ -42,41 +72,3 @@
 - 未提交业务代码无变化，此前审查结论仍有效
 - refactoring.md DRAFT 问题已修复（审查 #10 待处理项已解决）
 - PLAN.md / refactoring.md 内容与代码一致
-
----
-
-## 审查 #11 — 2026-05-27 21:45
-
-**分支**: master (ahead of origin by 10 commits)
-**未提交业务变更**:
-
-- `components/blog/Backlinks.tsx` — try/catch → .catch()，新增 `getTranslations().catch()`
-- `components/blog/KnowledgeGraph.tsx` — GraphNodeData → GraphNode 类型别名
-- `components/layout/ThemeToggle.tsx` — useEffect 格式调整
-- `CLAUDE.md` — 仅 CRLF 换行符变更
-
-### 本次审查结果
-
-**本次代码变更合理，无安全/性能问题。**
-
-- Backlinks.tsx: `.catch()` 模式比原 try/catch 更精确，`getTranslations().catch(() => null)` 增加了 i18n 错误保护。缺少文件末尾换行符（EOF newline），不影响功能
-- KnowledgeGraph.tsx: 与审查 #10 一致，GraphNodeData 别名化
-- ESLint: 17 问题（9 errors, 8 warnings），均为既有问题，未引入新问题
-- PLAN.md / refactoring.md: 内容与代码一致
-
----
-
-## 审查 #10 — 2026-05-27 21:30（文档深度审查）
-
-**范围**: CLAUDE.md + AGENTS.md 交叉验证
-
-**已修复**:
-
-- ~~[中] CLAUDE.md 首页渲染策略描述错误~~ — ISR → force-dynamic
-- ~~[低] AGENTS.md 交叉引用过度承诺~~ — 已移除
-
-**待处理** → 全部已修复:
-
-- ~~[中] CLAUDE.md / AGENTS.md 引用 `docs/plan.md`（小写）~~ → 已修正为 `PLAN.md`
-- ~~[中] Markdown 渲染不支持 raw HTML~~ → 已安装 `rehype-raw` 并加入 MarkdownRenderer
-- ~~[低] refactoring.md DocumentType 中 DRAFT 语义冲突~~ → 已从 DocumentType 移除 DRAFT
