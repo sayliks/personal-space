@@ -157,6 +157,8 @@ feat / fix / refactor / perf / docs / test
 
 ## 八、待深入方向
 
+> 详见 `OPTIMIZE.md` — 全量性能审计与优化清单
+
 | 方向 | 说明 |
 |------|------|
 | Server Actions | 当前用 API Routes，可逐步迁移到 Server Actions 简化表单提交 |
