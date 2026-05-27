@@ -143,8 +143,6 @@
     "password": "密码",
     "signIn": "登录",
     "signingIn": "登录中...",
-    "invalidCredentials": "邮箱或密码错误",
-    "signInWithGithub": "使用 GitHub 登录",
-    "orSignInWithGithub": "或使用 GitHub 登录评论区"
+    "invalidCredentials": "邮箱或密码错误"
   }
 }
