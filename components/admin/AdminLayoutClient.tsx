@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
 import { useTranslations } from "next-intl"
@@ -20,7 +20,7 @@ export function AdminLayoutClient({ email, children }: AdminLayoutClientProps) {
   const t = useTranslations("admin")
   const tc = useTranslations("common")
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_WIDTH)
-  const isDragging = useRef(false)
+  const [isDragging, setIsDragging] = useState(false)
 
   const sidebarLinks = [
     { href: "/admin", label: t("dashboard"), icon: LayoutDashboard },
@@ -32,27 +32,33 @@ export function AdminLayoutClient({ email, children }: AdminLayoutClientProps) {
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
-    isDragging.current = true
+    setIsDragging(true)
     document.body.style.cursor = "col-resize"
     document.body.style.userSelect = "none"
+  }, [])
+
+  useEffect(() => {
+    if (!isDragging) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return
       const newWidth = Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, e.clientX))
       setSidebarWidth(newWidth)
     }
 
     const handleMouseUp = () => {
-      isDragging.current = false
+      setIsDragging(false)
       document.body.style.cursor = ""
       document.body.style.userSelect = ""
-      document.removeEventListener("mousemove", handleMouseMove)
-      document.removeEventListener("mouseup", handleMouseUp)
     }
 
     document.addEventListener("mousemove", handleMouseMove)
     document.addEventListener("mouseup", handleMouseUp)
-  }, [])
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [isDragging])
 
   return (
     <div className="fixed inset-0 top-14 flex">
@@ -91,7 +97,7 @@ export function AdminLayoutClient({ email, children }: AdminLayoutClientProps) {
         </div>
       </div>
       <div
-        className="w-1 hover:w-1.5 bg-border hover:bg-primary/50 cursor-col-resize shrink-0 transition-colors"
+        className="w-1.5 hover:w-2 bg-border hover:bg-primary/50 cursor-col-resize shrink-0 transition-all"
         onMouseDown={handleMouseDown}
       />
       <div className="flex-1 overflow-auto p-6">
