@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { getPostBySlug } from "@/lib/queries"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
@@ -70,9 +71,13 @@ export default async function PostPage({
 
       {post.content && <MarkdownRenderer content={post.content} />}
 
-      <Backlinks postId={post.id} />
+      <Suspense>
+        <Backlinks postId={post.id} />
+      </Suspense>
 
-      <CommentSection postId={post.id} />
+      <Suspense>
+        <CommentSection postId={post.id} />
+      </Suspense>
     </article>
   )
 }
