@@ -6,7 +6,7 @@ Evolving from personal blog to AI knowledge management system with unified Docum
 
 **Everything is a Document.** Posts, notes, and pages share one table with types.
 
-```text
+```
 User
  └─ Document
      ├─ Tag
@@ -51,30 +51,14 @@ model Document {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   publishedAt  DateTime?
-
   @@index([slug])
   @@index([type])
   @@index([status])
 }
 
-enum DocumentType {
-  POST   // Blog article
-  NOTE   // Knowledge note
-  PAGE   // About page
-  DRAFT  // Draft
-}
-
-enum DocumentStatus {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
-}
-
-enum Visibility {
-  PUBLIC   // Public
-  PRIVATE  // Private notes
-  UNLISTED // Accessible via link
-}
+enum DocumentType { POST, NOTE, PAGE, DRAFT }
+enum DocumentStatus { DRAFT, PUBLISHED, ARCHIVED }
+enum Visibility { PUBLIC, PRIVATE, UNLISTED }
 
 model Tag {
   id        String   @id @default(cuid())
@@ -93,7 +77,7 @@ model DocumentTag {
 }
 
 model DocumentRelation {
-  id             String @id @default(cuid())
+  id            String @id @default(cuid())
   fromDocumentId String
   toDocumentId   String
   relationType   RelationType
@@ -104,15 +88,10 @@ model DocumentRelation {
   @@index([toDocumentId])
 }
 
-enum RelationType {
-  BACKLINK
-  REFERENCE
-  RELATED
-  QUOTE
-}
+enum RelationType { BACKLINK, REFERENCE, RELATED, QUOTE }
 
 model DocumentEmbedding {
-  id         String @id @default(cuid())
+  id        String @id @default(cuid())
   documentId String
   document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
   chunkIndex Int
@@ -124,32 +103,24 @@ model DocumentEmbedding {
 }
 
 model AISummary {
-  id         String @id @default(cuid())
+  id        String @id @default(cuid())
   documentId String @unique
   document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
-  summary    String @db.Text
-  model      String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  summary   String @db.Text
+  model     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 ```
 
 ## Wiki-link Relations
 
-Wiki-link syntax (`[[target|alias]]`) parses to `DocumentRelation` records, enabling:
-
-- Knowledge graph visualization
-- Backlinks panel
-- Related posts
-
-## AI Pipeline
-
-```text
-User question → embedding → vector search → chunk recall → LLM answer
-```
+Wiki-link syntax (`[[target|alias]]`) parses to `DocumentRelation` records, enabling knowledge graph, backlinks, and related posts.
 
 ## Implementation Phases
 
 **Phase 1 (Core):** Document model, Tag system, Relations, document tree, Markdown, search
 
 **Phase 2 (AI):** Embeddings + pgvector, RAG search, AI summary, Q&A
+
+**Phase 3 (Workspace):** AI chat, recommendations, enhanced editor

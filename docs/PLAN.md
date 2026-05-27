@@ -1,10 +1,10 @@
 # my-blog Development Plan
 
-Personal full-stack blog. Phases 0-11 complete, 47 tests passing.
+Personal full-stack blog. Phases 0-11 complete, 48 tests passing.
 
 ## Tech Stack
 
-Next.js 16 (App Router) / React 19 / Tailwind 4 / Prisma 7 / Auth.js v5 / shadcn/ui
+Next.js 16 (App Router) / React 19 / Tailwind 4 / Prisma 7 / Auth.js v5 (Credentials + GitHub OAuth) / shadcn/ui
 
 ## Data Model
 

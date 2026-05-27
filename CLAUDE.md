@@ -28,7 +28,7 @@ npx prisma generate       # Runs automatically via `postinstall`
 
 - **Framework**: Next.js 16 App Router, React 19
 - **DB**: PostgreSQL on Supabase via Prisma 7 + `@prisma/adapter-pg`
-- **Auth**: Auth.js v5 (next-auth beta) with Credentials provider + bcryptjs
+- **Auth**: Auth.js v5 (next-auth beta) with Credentials provider + bcryptjs, optional GitHub OAuth (conditional on env vars)
 - **UI**: shadcn/ui (`base-nova` style, neutral base color), Tailwind CSS v4
 - **Validation**: Zod 4
 - **i18n**: next-intl 4 (zh default, en)

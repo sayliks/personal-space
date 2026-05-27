@@ -63,4 +63,41 @@
 ### 2026-05-27
 
 - 修正文件名 typo: `optmize.md` → `optimize.md`
-- 清理空文件 `docs/refactoring.md`
+- 修复 CLAUDE.md Auth 描述遗漏 GitHub OAuth
+- 修复 PLAN.md 测试数量（47→48）和 Auth 描述
+- 删除重复的 `docs/plan.md`，保留 `docs/PLAN.md`
+- 添加缺失的 `messages/en.json`
+- 在 zh.json 添加 `posts`、`home`、`graph` 命名空间
+- 修复构建错误 `MISSING_MESSAGE: posts (zh)`
+
+---
+
+## 审查 #4 — 2026-05-27 20:00（文档专项审查）
+
+**范围**: `docs/` + `CLAUDE.md` + `AGENTS.md` 全部文档
+
+### 发现的问题
+
+**~~[高] CLAUDE.md Auth 描述遗漏 GitHub OAuth~~ → 已修复**
+
+- CLAUDE.md:31 已改为 "Credentials provider + bcryptjs, optional GitHub OAuth (conditional on env vars)"
+
+**~~[高] PLAN.md Phase 10 描述不准确~~ → 已修复**
+
+- 删除了 plan.md（旧版），保留 PLAN.md 并更新为准确描述
+
+**~~[中] PLAN.md 测试数量不准确~~ → 已修复**
+
+- "47 tests" → "48 tests"
+
+**~~[中] PLAN.md 与 plan.md 文件共存~~ → 已修复**
+
+- 删除了未跟踪的 `docs/plan.md`，保留 git 跟踪的 `docs/PLAN.md`
+
+**[低] 审查 #2 "[中] 残留未使用资源" 已过时**
+
+- `resizable.tsx` 和 `react-resizable-panels` 已清除，审查 #2 已标注已修复
+
+**[低] 审查 #1 "refactoring.md 为空文件" 已过时**
+
+- 该文件已有完整内容，此记录不再适用
