@@ -79,3 +79,28 @@
 - 文档说 client 生成到 `app/generated/prisma/`，实际 `schema.prisma` 写 `output = "../app/generated/prisma"`（相对 prisma/ 目录）
 - 说法正确但容易误解
 - 修复: 加注 "(relative to prisma/ directory)"
+
+---
+
+## 审查 #10 — 2026-05-27 21:30（文档深度审查，第四轮）
+
+**范围**: CLAUDE.md + AGENTS.md 交叉验证
+
+### 发现的问题
+
+**~~[中] CLAUDE.md:78 首页渲染策略描述错误~~ → 已修复**
+
+- 现文曾写 "homepage uses revalidate = 60 (ISR)"
+- 实际 `app/page.tsx` 用 `export const dynamic = "force-dynamic"`（纯动态渲染）
+- 已修正：将 homepage 归入 force-dynamic 列表，移除 ISR 描述
+
+**~~[低] CLAUDE.md:7 AGENTS.md 交叉引用过度承诺~~ → 已修复**
+
+- "(See AGENTS.md.)" 指向无补充内容的文件
+- 已移除该交叉引用
+
+**[低] AGENTS.md:23 Stack Auth 描述精简但已覆盖**
+
+- Stack 只写 "JWT sessions"，关键约束在 Critical Constraints 段落
+- PrismaAdapter 附带但不用数据库 session 的反直觉设计仅 CLAUDE.md 有说明
+- 当前结构可接受，Critical Constraints 段落已包含 middleware.ts 信息

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Important: Next.js version warning
 
-This project uses **Next.js 16.2.6** — APIs, conventions, and file structure may differ from training data. Before writing any Next.js code, consult the docs bundled in `node_modules/next/dist/docs/`. Heed deprecation notices. (See `AGENTS.md`.)
+This project uses **Next.js 16.2.6** — APIs, conventions, and file structure may differ from training data. Before writing any Next.js code, consult the docs bundled in `node_modules/next/dist/docs/`. Heed deprecation notices.
 
 ## Commands
 
@@ -75,7 +75,7 @@ Pages **do not call Prisma directly**. All read queries live in `lib/queries.ts`
 
 ### Public pages and build-time DB connections
 
-Most public pages (categories, tags, search) declare `export const dynamic = "force-dynamic"`. **Why**: at build time, Next.js spawns ~24 workers prerendering pages — each opens a Prisma connection, exhausting the Supabase PgBouncer pool (limit 15). `force-dynamic` skips prerendering and avoids the pool exhaustion. The homepage uses `revalidate = 60` (ISR) and post detail uses `revalidate = 3600` with `generateStaticParams` for SSG fallback.
+Most public pages (categories, tags, search, homepage) declare `export const dynamic = "force-dynamic"`. **Why**: at build time, Next.js spawns ~24 workers prerendering pages — each opens a Prisma connection, exhausting the Supabase PgBouncer pool (limit 15). `force-dynamic` skips prerendering and avoids the pool exhaustion. Post detail uses `revalidate = 3600` with `generateStaticParams` for SSG fallback.
 
 ### Routes
 
