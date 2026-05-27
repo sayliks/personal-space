@@ -75,7 +75,7 @@ Pages **do not call Prisma directly**. All read queries live in `lib/queries.ts`
 
 ### Public pages and build-time DB connections
 
-Public pages (home, posts, categories, tags, search) declare `export const dynamic = "force-dynamic"`. **Why**: at build time, Next.js spawns ~24 workers prerendering pages — each opens a Prisma connection, exhausting the Supabase PgBouncer pool (limit 15). `force-dynamic` skips prerendering and avoids the pool exhaustion. Removing it will break `npm run build`.
+Most public pages (categories, tags, search) declare `export const dynamic = "force-dynamic"`. **Why**: at build time, Next.js spawns ~24 workers prerendering pages — each opens a Prisma connection, exhausting the Supabase PgBouncer pool (limit 15). `force-dynamic` skips prerendering and avoids the pool exhaustion. The homepage uses `revalidate = 60` (ISR) and post detail uses `revalidate = 3600` with `generateStaticParams` for SSG fallback.
 
 ### Routes
 
@@ -97,7 +97,7 @@ Wiki-link syntax (`[[target|alias]]`) is supported. The regex and `extractWikiLi
 
 ### Knowledge graph
 
-`components/blog/KnowledgeGraph.tsx` renders a force-directed graph using `react-force-graph-2d` (client-only, dynamic import). Data comes from `/api/graph` → `lib/graph.ts` which builds nodes/links from wiki-link references between posts. `components/blog/Backlinks.tsx` (server component) shows incoming wiki-links on each post page. The graph is available at `/api/graph` but not currently displayed on the homepage.
+`components/blog/KnowledgeGraph.tsx` renders a force-directed graph using `react-force-graph-2d` (client-only, dynamic import). Data comes from `/api/graph` → `lib/graph.ts` which builds nodes/links from wiki-link references between posts. `components/blog/Backlinks.tsx` (server component, wrapped in try/catch) shows incoming wiki-links on each post page. The graph API is available at `/api/graph`.
 
 ## Conventions
 
@@ -109,4 +109,4 @@ Wiki-link syntax (`[[target|alias]]`) is supported. The regex and `extractWikiLi
 
 ## Reference
 
-- `docs/PLAN.md` — full project roadmap with phase status (Phase 0–8 done, Phase 9 testing pending) and the senior-engineer learning notes the project follows.
+- `docs/PLAN.md` — full project roadmap and architecture reference (Phase 0–11 completed).

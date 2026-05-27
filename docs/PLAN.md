@@ -41,7 +41,7 @@
 ```
 # 公开路由
 app/
-├── page.tsx                          # 首页：知识图谱（Obsidian Graph View）
+├── page.tsx                          # 首页：文章列表 + 分页
 ├── posts/[slug]/page.tsx             # 文章详情 + 评论区
 ├── categories/[slug]/page.tsx        # 按分类筛选
 ├── tags/[slug]/page.tsx              # 按标签筛选
