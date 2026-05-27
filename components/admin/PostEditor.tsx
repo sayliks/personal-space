@@ -2,8 +2,13 @@
 
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer"
+import dynamic from "next/dynamic"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+const MarkdownRenderer = dynamic(
+  () => import("@/components/blog/MarkdownRenderer").then((mod) => ({ default: mod.MarkdownRenderer })),
+  { ssr: false, loading: () => <div className="animate-pulse h-48 rounded bg-muted" /> }
+)
 
 interface PostEditorProps {
   value: string

@@ -7,6 +7,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import Image from "next/image"
 
 export function CommentForm({ postId }: { postId: string }) {
   const t = useTranslations("post")
@@ -92,10 +93,12 @@ export function CommentForm({ postId }: { postId: string }) {
       <div className="border-t pt-6 mt-6">
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
           {session.user?.image && (
-            <img
+            <Image
               src={session.user.image}
               alt=""
-              className="size-6 rounded-full"
+              width={24}
+              height={24}
+              className="rounded-full"
             />
           )}
           <span>{t("signedInAs", { name: session.user?.name ?? "" })}</span>
@@ -118,10 +121,12 @@ export function CommentForm({ postId }: { postId: string }) {
 
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         {session.user?.image && (
-          <img
+          <Image
             src={session.user.image}
             alt=""
-            className="size-6 rounded-full"
+            width={24}
+            height={24}
+            className="rounded-full"
           />
         )}
         <span>{t("signedInAs", { name: session.user?.name ?? "" })}</span>

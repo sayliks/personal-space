@@ -1,45 +1,27 @@
 import { prisma } from "@/lib/prisma"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { escapeRegex } from "@/lib/utils"
+import { getCachedGraphData, getBacklinksFromGraph } from "@/lib/graph"
 
 interface BacklinksProps {
   postId: string
 }
 
 export async function Backlinks({ postId }: BacklinksProps) {
-  const targetPost = await prisma.post.findUnique({
-    where: { id: postId },
-    select: { title: true, slug: true },
-  })
-  if (!targetPost) return null
-
-  const candidates = await prisma.post.findMany({
-    where: {
-      published: true,
-      id: { not: postId },
-      OR: [
-        { content: { contains: targetPost.title, mode: "insensitive" } },
-        { content: { contains: `[[${targetPost.slug}]]`, mode: "insensitive" } },
-      ],
+  const posts = await prisma.post.findMany({
+    where: { published: true, publishedAt: { lte: new Date() } },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      summary: true,
+      content: true,
+      category: { select: { name: true } },
     },
-    select: { id: true, title: true, slug: true, summary: true, content: true },
   })
 
-  const wikiLinkPattern = new RegExp(
-    `\\[\\[${escapeRegex(targetPost.title)}(\\|[^\\]]+)?\\]\\]`,
-    "i"
-  )
-  const slugPattern = new RegExp(
-    `\\[\\[${escapeRegex(targetPost.slug)}(\\|[^\\]]+)?\\]\\]`,
-    "i"
-  )
-
-  const backlinks = candidates.filter(
-    (c) =>
-      c.content &&
-      (wikiLinkPattern.test(c.content) || slugPattern.test(c.content))
-  )
+  const { data: graph } = getCachedGraphData(posts)
+  const backlinks = getBacklinksFromGraph(postId, graph, posts)
 
   if (backlinks.length === 0) return null
 

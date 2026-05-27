@@ -2,6 +2,7 @@ import { getCommentsByPostId } from "@/lib/queries"
 import { getTranslations } from "next-intl/server"
 import { CommentForm } from "@/components/blog/CommentForm"
 import { formatDate } from "@/lib/utils"
+import Image from "next/image"
 
 export async function CommentSection({ postId }: { postId: string }) {
   const t = await getTranslations("post")
@@ -19,10 +20,12 @@ export async function CommentSection({ postId }: { postId: string }) {
             <div key={comment.id} className="border-b pb-4 last:border-0">
               <div className="flex items-center gap-2 text-sm mb-1">
                 {comment.user?.image && (
-                  <img
+                  <Image
                     src={comment.user.image}
                     alt=""
-                    className="size-5 rounded-full"
+                    width={20}
+                    height={20}
+                    className="rounded-full"
                   />
                 )}
                 <span className="font-medium">{comment.authorName}</span>
@@ -37,10 +40,12 @@ export async function CommentSection({ postId }: { postId: string }) {
                     <div key={reply.id}>
                       <div className="flex items-center gap-2 text-sm mb-1">
                         {reply.user?.image && (
-                          <img
+                          <Image
                             src={reply.user.image}
                             alt=""
-                            className="size-5 rounded-full"
+                            width={20}
+                            height={20}
+                            className="rounded-full"
                           />
                         )}
                         <span className="font-medium">{reply.authorName}</span>
