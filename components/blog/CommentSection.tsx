@@ -6,7 +6,10 @@ import { formatDate } from "@/lib/utils"
 
 export async function CommentSection({ postId }: { postId: string }) {
   const t = await getTranslations("post")
-  const comments = await getCommentsByPostId(postId)
+  const comments = await getCommentsByPostId(postId).catch((e) => {
+    console.error("CommentSection: failed to fetch comments:", e)
+    return []
+  })
 
   return (
     <section className="mt-12">

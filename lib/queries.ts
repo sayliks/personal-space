@@ -122,6 +122,24 @@ export async function searchPosts(q: string) {
   });
 }
 
+export async function getBacklinkCandidates(params: {
+  postId: string
+  title: string
+  slug: string
+}) {
+  return prisma.post.findMany({
+    where: {
+      published: true,
+      id: { not: params.postId },
+      OR: [
+        { content: { contains: params.title, mode: "insensitive" } },
+        { content: { contains: `[[${params.slug}]]`, mode: "insensitive" } },
+      ],
+    },
+    select: { id: true, title: true, slug: true, summary: true, content: true },
+  })
+}
+
 export async function getPendingComments() {
   return prisma.comment.findMany({
     where: { approved: false },

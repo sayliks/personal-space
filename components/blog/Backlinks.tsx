@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { getPostById, getBacklinkCandidates } from "@/lib/queries"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { escapeRegex } from "@/lib/utils"
@@ -8,23 +8,20 @@ interface BacklinksProps {
 }
 
 export async function Backlinks({ postId }: BacklinksProps) {
-  const targetPost = await prisma.post.findUnique({
-    where: { id: postId },
-    select: { title: true, slug: true },
-  }).catch((e) => { console.error("Backlinks: failed to find post:", e); return null })
+  const targetPost = await getPostById(postId).catch((e) => {
+    console.error("Backlinks: failed to find post:", e)
+    return null
+  })
   if (!targetPost) return null
 
-  const candidates = await prisma.post.findMany({
-    where: {
-      published: true,
-      id: { not: postId },
-      OR: [
-        { content: { contains: targetPost.title, mode: "insensitive" } },
-        { content: { contains: `[[${targetPost.slug}]]`, mode: "insensitive" } },
-      ],
-    },
-    select: { id: true, title: true, slug: true, summary: true, content: true },
-  }).catch((e) => { console.error("Backlinks: failed to fetch candidates:", e); return [] })
+  const candidates = await getBacklinkCandidates({
+    postId,
+    title: targetPost.title,
+    slug: targetPost.slug,
+  }).catch((e) => {
+    console.error("Backlinks: failed to fetch candidates:", e)
+    return []
+  })
 
   const wikiLinkPattern = new RegExp(
     `\\[\\[${escapeRegex(targetPost.title)}(\\|[^\\]]+)?\\]\\]`,

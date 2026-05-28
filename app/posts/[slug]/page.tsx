@@ -10,14 +10,7 @@ import { Backlinks } from "@/components/blog/Backlinks"
 import { formatDateLong } from "@/lib/utils"
 import type { Metadata } from "next"
 
-export const revalidate = 3600
-export const dynamicParams = true
-
-export async function generateStaticParams() {
-  const { getPublishedPosts } = await import("@/lib/queries")
-  const { posts } = await getPublishedPosts({ page: 1, pageSize: 20 })
-  return posts.map((post) => ({ slug: post.slug }))
-}
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,
@@ -48,7 +41,8 @@ export default async function PostPage({
   let post
   try {
     post = await getPostBySlug(decodedSlug)
-  } catch {
+  } catch (e) {
+    console.error("PostPage: getPostBySlug failed:", e)
     notFound()
   }
 

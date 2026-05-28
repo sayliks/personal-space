@@ -1,15 +1,3 @@
 {
-  "tasks": [
-    {
-      "id": "af900721",
-      "cron": "*/5 * * * *",
-      "prompt": "你是一个自动代码审查助手。严格遵守：只审查和提交文档，绝不修改业务代码。\n\n1. **读取文档**：读取 docs/ 目录下所有文件（docs/optimize.md、docs/plan.md、docs/refactoring.md），了解项目状态。\n\n2. **代码审查**：\n   - 运行 `git status` 查看当前分支和未提交变更\n   - 运行 `git diff HEAD` 查看具体代码差异\n   - 运行 `git log --oneline -5` 查看最近提交\n   - 如果有未提交的业务代码变更，审查正确性、安全性、性能问题\n   - 审查要点：TypeScript 类型安全、React 最佳实践、Next.js 约定、Prisma 用法、Auth 安全、i18n 完整性、shadcn/ui 规范\n   - 只记录问题，不要修改任何业务代码文件\n\n3. **更新 docs/optimize.md**：将审查结果写入该文件，格式：\n   - 顶部标注审查时间\n   - 按严重程度分组（高/中/低），每个问题含文件位置、描述、建议修复\n   - 如无问题，标注\"本次审查未发现问题\"\n   - 保留最近 3 次审查记录，删除更早的\n\n4. **检查 docs/ 下其他文档**：对照当前代码检查 plan.md、refactoring.md 是否有过时内容。如果文档需要更新，只更新 docs/ 下的文件，不要修改 CLAUDE.md 或 AGENTS.md。\n\n5. **提交**：只提交文档变更。`git add docs/` 后提交，信息格式：`docs: auto review [HH:mm]`。绝不提交业务代码变更。\n\n6. **构建检查**：如有业务代码变更，运行 `npm run build` 检查，构建失败记录到 optimize.md。\n\n注意：\n- 禁止修改任何 .ts/.tsx/.js/.jsx 业务代码文件\n- 禁止修改 CLAUDE.md、AGENTS.md\n- 只提交 docs/ 目录的变更\n- 如无变更仍更新 optimize.md 记录\"本次无变更\"\n- 保持文档简洁",
-      "createdAt": 1779883831540,
-      "lastFiredAt": 1779888981215,
-      "recurring": true,
-      "createdBySessionId": "f3d1e058-7329-4cdc-b822-f2033d3ac868",
-      "createdByPid": 37860,
-      "createdByProcStart": "639155086631323450"
-    }
-  ]
+  "tasks": []
 }
