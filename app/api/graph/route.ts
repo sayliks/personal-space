@@ -4,18 +4,23 @@ import { buildGraphData } from "@/lib/graph"
 
 export async function GET() {
   try {
-    const posts = await prisma.post.findMany({
-      where: { published: true, publishedAt: { lte: new Date() } },
+    const posts = await prisma.document.findMany({
+      where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
       select: {
         id: true,
         title: true,
         slug: true,
         content: true,
-        category: { select: { name: true } },
+        category: { select: { title: true } },
       },
     })
 
-    const graph = buildGraphData(posts)
+    const graph = buildGraphData(
+      posts.map((p) => ({
+        ...p,
+        category: p.category ? { name: p.category.title } : null,
+      }))
+    )
     return NextResponse.json(graph, {
       headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
     })
