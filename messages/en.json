@@ -1,15 +1,15 @@
 {
   "common": {
-    "articles": "Articles",
+    "articles": "Writing",
     "about": "About",
-    "search": "Search",
+    "search": "Explore",
     "admin": "Admin",
     "signOut": "Sign Out",
     "backToHome": "Back to Home",
     "tryAgain": "Try Again",
     "loading": "Loading...",
     "toggleTheme": "Toggle theme",
-    "siteTitle": "sayliks's blog"
+    "siteTitle": "sayliks's garden"
   },
   "about": {
     "title": "About",
@@ -20,10 +20,10 @@
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search articles...",
-    "noQuery": "Enter a keyword to search.",
-    "noResults": "No articles found.",
+    "title": "Explore",
+    "placeholder": "Search notes and ideas...",
+    "noQuery": "Enter a keyword to explore.",
+    "noResults": "No notes found.",
     "results": "Found {count} results for \"{query}\"",
     "loading": "Searching...",
     "hint": "Press Enter to open first result, Esc to close"
@@ -122,8 +122,8 @@
     "postCount": "{count} posts"
   },
   "posts": {
-    "title": "Posts",
-    "noPosts": "No posts yet"
+    "title": "Writing",
+    "noPosts": "No notes yet"
   },
   "home": {
     "siteTitle": "sayliks's blog",

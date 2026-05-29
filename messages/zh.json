@@ -1,15 +1,15 @@
 {
   "common": {
-    "articles": "文章",
+    "articles": "写作",
     "about": "关于",
-    "search": "搜索",
+    "search": "探索",
     "admin": "管理",
     "signOut": "退出登录",
     "backToHome": "返回首页",
     "tryAgain": "重试",
     "loading": "加载中...",
     "toggleTheme": "切换主题",
-    "siteTitle": "sayliks's blog"
+    "siteTitle": "sayliks 的花园"
   },
 
   "about": {
@@ -22,10 +22,10 @@
     }
   },
   "search": {
-    "title": "搜索",
-    "placeholder": "搜索文章...",
-    "noQuery": "输入关键词开始搜索。",
-    "noResults": "未找到相关文章。",
+    "title": "探索",
+    "placeholder": "搜索笔记和想法...",
+    "noQuery": "输入关键词开始探索。",
+    "noResults": "未找到相关笔记。",
     "results": "搜索 \"{query}\"，找到 {count} 篇结果",
     "loading": "搜索中...",
     "hint": "按 Enter 打开首条结果，Esc 关闭"
@@ -124,8 +124,8 @@
     "postCount": "{count} 篇文章"
   },
   "posts": {
-    "title": "文章",
-    "noPosts": "暂无文章"
+    "title": "写作",
+    "noPosts": "还没有笔记"
   },
   "home": {
     "siteTitle": "sayliks's blog",
