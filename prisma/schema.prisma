@@ -8,19 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String
-  email         String    @unique
+  email         String     @unique
   emailVerified DateTime?
   passwordHash  String?
   image         String?
-  role          String    @default("user")
-  posts         Post[]
+  role          String     @default("user")
+  documents     Document[]
   comments      Comment[]
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }
 
 model Account {
@@ -51,59 +51,89 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Post {
-  id          String     @id @default(cuid())
+model Document {
+  id          String       @id @default(cuid())
   title       String
-  slug        String     @unique
+  slug        String       @unique
   summary     String?
   content     String?
   coverImage  String?
-  published   Boolean    @default(false)
+  published   Boolean      @default(false)
   publishedAt DateTime?
-  views       Int        @default(0)
+  views       Int          @default(0)
+  type        DocumentType
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id])
 
   categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  category   Document? @relation("DocumentCategory", fields: [categoryId], references: [id], onDelete: SetNull)
+  documents  Document[] @relation("DocumentCategory")
 
-  tags     PostTag[]
-  comments Comment[]
+  parentId String?
+  parent   Document?   @relation("DocumentTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Document[]  @relation("DocumentTree")
+
+  tags                  DocumentTag[]
+  comments              Comment[]
+  outgoingRelations     DocumentRelation[] @relation("OutgoingRelations")
+  incomingRelations     DocumentRelation[] @relation("IncomingRelations")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([type])
   @@index([published, createdAt(sort: Desc)])
   @@index([categoryId])
+  @@index([parentId])
 }
 
-model Category {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum DocumentType {
+  POST
+  NOTE
+  PAGE
+  CATEGORY
 }
 
 model Tag {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  slug      String    @unique
-  posts     PostTag[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id        String        @id @default(cuid())
+  name      String        @unique
+  slug      String        @unique
+  documents DocumentTag[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
-model PostTag {
-  postId String
-  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  tagId  String
-  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+model DocumentTag {
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  tagId      String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  @@id([postId, tagId])
+  @@id([documentId, tagId])
   @@index([tagId])
+}
+
+model DocumentRelation {
+  id             String       @id @default(cuid())
+  fromDocumentId String
+  toDocumentId   String
+  relationType   RelationType @default(BACKLINK)
+
+  fromDocument Document @relation("OutgoingRelations", fields: [fromDocumentId], references: [id], onDelete: Cascade)
+  toDocument   Document @relation("IncomingRelations", fields: [toDocumentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([fromDocumentId])
+  @@index([toDocumentId])
+}
+
+enum RelationType {
+  BACKLINK
+  REFERENCE
+  RELATED
+  QUOTE
 }
 
 model Comment {
@@ -117,8 +147,8 @@ model Comment {
 
   approved Boolean @default(false)
 
-  postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
 
   parentId String?
   parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
@@ -127,6 +157,6 @@ model Comment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([postId])
+  @@index([documentId])
   @@index([userId])
 }
