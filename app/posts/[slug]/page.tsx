@@ -62,7 +62,7 @@ export default async function PostPage({
             {post.publishedAt ? formatDateLong(post.publishedAt) : t("draft")}
           </time>
           {post.category && (
-            <CategoryBadge name={post.category.name} slug={post.category.slug} />
+            <CategoryBadge name={post.category.title} slug={post.category.slug} />
           )}
         </div>
         <h1 className="text-3xl font-bold">{post.title}</h1>

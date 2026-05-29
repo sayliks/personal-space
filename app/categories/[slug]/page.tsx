@@ -29,7 +29,7 @@ export default async function CategoryPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-2">{t("title", { name: category.name })}</h1>
+      <h1 className="text-3xl font-bold mb-2">{t("title", { name: category.title })}</h1>
       <p className="text-muted-foreground mb-8">{t("postCount", { count: posts.length })}</p>
       <div className="space-y-8">
         {posts.map((post) => (

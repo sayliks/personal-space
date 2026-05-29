@@ -29,8 +29,8 @@ export default async function AdminCategoriesPage() {
           <tbody>
             {categories.map((c) => (
               <tr key={c.id} className="border-b last:border-0">
-                <td className="px-4 py-3 text-sm">{c.name}</td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">{c._count.posts}</td>
+                <td className="px-4 py-3 text-sm">{c.title}</td>
+                <td className="px-4 py-3 text-sm text-muted-foreground">{c._count.documents}</td>
                 <td className="px-4 py-3 text-right">
                   <form action={deleteCategory}>
                     <input type="hidden" name="id" value={c.id} />

@@ -30,7 +30,7 @@ export default async function AdminTagsPage() {
             {tags.map((x) => (
               <tr key={x.id} className="border-b last:border-0">
                 <td className="px-4 py-3 text-sm">{x.name}</td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">{x._count.posts}</td>
+                <td className="px-4 py-3 text-sm text-muted-foreground">{x._count.documents}</td>
                 <td className="px-4 py-3 text-right">
                   <form action={deleteTag}>
                     <input type="hidden" name="id" value={x.id} />

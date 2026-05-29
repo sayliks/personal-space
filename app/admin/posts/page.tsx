@@ -66,7 +66,7 @@ export default async function AdminPostsPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">
-                    {post.category?.name ?? "-"}
+                    {post.category?.title ?? "-"}
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">
                     {formatDate(post.publishedAt ?? post.createdAt)}

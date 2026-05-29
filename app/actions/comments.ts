@@ -28,14 +28,14 @@ export async function createComment(formData: FormData): Promise<ActionResult> {
 
     const { content, authorName, authorEmail, postId, parentId } = result.data
 
-    const post = await prisma.post.findUnique({ where: { id: postId } })
+    const post = await prisma.document.findFirst({ where: { id: postId, type: "POST" } })
     if (!post) {
       return { success: false, error: "Post not found" }
     }
 
     if (parentId) {
       const parent = await prisma.comment.findUnique({ where: { id: parentId } })
-      if (!parent || parent.postId !== postId) {
+      if (!parent || parent.documentId !== postId) {
         return { success: false, error: "Invalid parent comment" }
       }
     }
@@ -48,7 +48,7 @@ export async function createComment(formData: FormData): Promise<ActionResult> {
         authorName: userId ? (session.user.name ?? authorName) : authorName,
         authorEmail: userId ? (session.user.email ?? authorEmail ?? null) : (authorEmail || null),
         userId: userId ?? null,
-        postId,
+        documentId: postId,
         parentId: parentId || null,
       },
     })

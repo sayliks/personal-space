@@ -12,7 +12,7 @@ import { createPost, updatePost } from "@/app/actions/posts"
 
 interface Category {
   id: string
-  name: string
+  title: string
 }
 
 interface Tag {
@@ -109,7 +109,7 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
           >
             <option value="">{t("none")}</option>
             {categories.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+              <option key={c.id} value={c.id}>{c.title}</option>
             ))}
           </select>
         </div>

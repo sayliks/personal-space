@@ -5,8 +5,8 @@ import { prisma } from "@/lib/prisma"
 export default async function AdminDashboard() {
   const t = await getTranslations("admin")
   const [postCount, categoryCount, tagCount, pendingComments] = await Promise.all([
-    prisma.post.count(),
-    prisma.category.count(),
+    prisma.document.count({ where: { type: "POST" } }),
+    prisma.document.count({ where: { type: "CATEGORY" } }),
     prisma.tag.count(),
     prisma.comment.count({ where: { approved: false } }),
   ])

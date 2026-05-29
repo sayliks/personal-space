@@ -1,14 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/app/generated/prisma/client";
 
-const POST_INCLUDES = {
+const DOCUMENT_INCLUDES = {
   author: { select: { id: true, name: true } },
   category: true,
   tags: { include: { tag: true } },
-} satisfies Prisma.PostInclude;
+} satisfies Prisma.DocumentInclude;
 
-export type PostWithRelations = Prisma.PostGetPayload<{
-  include: typeof POST_INCLUDES;
+export type PostWithRelations = Prisma.DocumentGetPayload<{
+  include: typeof DOCUMENT_INCLUDES;
 }>;
 
 export async function getPublishedPosts(params: {
@@ -18,13 +18,14 @@ export async function getPublishedPosts(params: {
   tagSlug?: string;
 }) {
   const { page = 1, pageSize = 10, categorySlug, tagSlug } = params;
-  const where: Prisma.PostWhereInput = {
+  const where: Prisma.DocumentWhereInput = {
+    type: "POST",
     published: true,
     publishedAt: { lte: new Date() },
   };
 
   if (categorySlug) {
-    where.category = { slug: categorySlug };
+    where.category = { slug: categorySlug, type: "CATEGORY" };
   }
 
   if (tagSlug) {
@@ -32,54 +33,58 @@ export async function getPublishedPosts(params: {
   }
 
   const [posts, total] = await Promise.all([
-    prisma.post.findMany({
+    prisma.document.findMany({
       where,
-      include: POST_INCLUDES,
+      include: DOCUMENT_INCLUDES,
       orderBy: { publishedAt: "desc" },
       skip: (page - 1) * pageSize,
       take: pageSize,
     }),
-    prisma.post.count({ where }),
+    prisma.document.count({ where }),
   ]);
 
   return { posts, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
 }
 
 export async function getPostBySlug(slug: string) {
-  return prisma.post.findUnique({
-    where: { slug },
-    include: POST_INCLUDES,
+  return prisma.document.findUnique({
+    where: { slug, type: "POST" },
+    include: DOCUMENT_INCLUDES,
   });
 }
 
 export async function getAllPosts() {
-  return prisma.post.findMany({
-    include: POST_INCLUDES,
+  return prisma.document.findMany({
+    where: { type: "POST" },
+    include: DOCUMENT_INCLUDES,
     orderBy: { createdAt: "desc" },
   });
 }
 
 export async function getPostById(id: string) {
-  return prisma.post.findUnique({
-    where: { id },
-    include: { ...POST_INCLUDES, comments: true },
+  return prisma.document.findUnique({
+    where: { id, type: "POST" },
+    include: { ...DOCUMENT_INCLUDES, comments: true },
   });
 }
 
 export async function getAllCategories() {
-  return prisma.category.findMany({
-    include: { _count: { select: { posts: true } } },
-    orderBy: { name: "asc" },
+  return prisma.document.findMany({
+    where: { type: "CATEGORY" },
+    include: { _count: { select: { documents: true } } },
+    orderBy: { title: "asc" },
   });
 }
 
 export async function getCategoryBySlug(slug: string) {
-  return prisma.category.findUnique({ where: { slug } });
+  return prisma.document.findFirst({
+    where: { slug, type: "CATEGORY" },
+  });
 }
 
 export async function getAllTags() {
   return prisma.tag.findMany({
-    include: { _count: { select: { posts: true } } },
+    include: { _count: { select: { documents: true } } },
     orderBy: { name: "asc" },
   });
 }
@@ -90,7 +95,7 @@ export async function getTagBySlug(slug: string) {
 
 export async function getCommentsByPostId(postId: string) {
   return prisma.comment.findMany({
-    where: { postId, approved: true, parentId: null },
+    where: { documentId: postId, approved: true, parentId: null },
     include: {
       user: { select: { id: true, name: true, image: true } },
       replies: {
@@ -106,8 +111,9 @@ export async function getCommentsByPostId(postId: string) {
 }
 
 export async function searchPosts(q: string) {
-  return prisma.post.findMany({
+  return prisma.document.findMany({
     where: {
+      type: "POST",
       published: true,
       publishedAt: { lte: new Date() },
       OR: [
@@ -116,7 +122,7 @@ export async function searchPosts(q: string) {
         { summary: { contains: q, mode: "insensitive" } },
       ],
     },
-    include: POST_INCLUDES,
+    include: DOCUMENT_INCLUDES,
     orderBy: { publishedAt: "desc" },
     take: 20,
   });
@@ -127,8 +133,9 @@ export async function getBacklinkCandidates(params: {
   title: string
   slug: string
 }) {
-  return prisma.post.findMany({
+  return prisma.document.findMany({
     where: {
+      type: "POST",
       published: true,
       id: { not: params.postId },
       OR: [
@@ -143,7 +150,7 @@ export async function getBacklinkCandidates(params: {
 export async function getPendingComments() {
   return prisma.comment.findMany({
     where: { approved: false },
-    include: { post: { select: { id: true, title: true, slug: true } } },
+    include: { document: { select: { id: true, title: true, slug: true } } },
     orderBy: { createdAt: "desc" },
   });
 }

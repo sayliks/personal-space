@@ -8,11 +8,14 @@ const SITE_URL = env.AUTH_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, categories, tags] = await Promise.all([
-    prisma.post.findMany({
-      where: { published: true, publishedAt: { lte: new Date() } },
+    prisma.document.findMany({
+      where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
       select: { slug: true, updatedAt: true },
     }),
-    prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
+    prisma.document.findMany({
+      where: { type: "CATEGORY" },
+      select: { slug: true, updatedAt: true },
+    }),
     prisma.tag.findMany({ select: { slug: true, updatedAt: true } }),
   ])
 

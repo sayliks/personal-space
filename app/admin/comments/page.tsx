@@ -45,10 +45,10 @@ export default async function AdminCommentsPage() {
                   </td>
                   <td className="px-4 py-3 text-sm">
                     <Link
-                      href={`/posts/${comment.post.slug}`}
+                      href={`/posts/${comment.document.slug}`}
                       className="text-primary hover:underline"
                     >
-                      {comment.post.title}
+                      {comment.document.title}
                     </Link>
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">

@@ -41,12 +41,12 @@ export async function createPost(formData: FormData): Promise<ActionResult> {
     const { title, content, summary, coverImage, published, categoryId, tags } = result.data
 
     let slug = generateSlug(title)
-    const existing = await prisma.post.findUnique({ where: { slug } })
+    const existing = await prisma.document.findFirst({ where: { slug, type: "POST" } })
     if (existing) {
       slug = `${slug}-${Date.now().toString(36)}`
     }
 
-    await prisma.post.create({
+    await prisma.document.create({
       data: {
         title,
         slug,
@@ -55,6 +55,7 @@ export async function createPost(formData: FormData): Promise<ActionResult> {
         coverImage: coverImage ?? null,
         published: published ?? false,
         publishedAt: published ? new Date() : null,
+        type: "POST",
         authorId: session.user.id,
         categoryId: categoryId ?? null,
         tags: tags?.length
@@ -102,7 +103,7 @@ export async function updatePost(formData: FormData): Promise<ActionResult> {
 
     const { title, content, summary, coverImage, published, categoryId, tags } = result.data
 
-    const existing = await prisma.post.findUnique({ where: { id: postId } })
+    const existing = await prisma.document.findFirst({ where: { id: postId, type: "POST" } })
     if (!existing) {
       return { success: false, error: "Post not found" }
     }
@@ -110,7 +111,7 @@ export async function updatePost(formData: FormData): Promise<ActionResult> {
     let slug = existing.slug
     if (title && title !== existing.title) {
       slug = generateSlug(title)
-      const duplicate = await prisma.post.findUnique({ where: { slug } })
+      const duplicate = await prisma.document.findFirst({ where: { slug, type: "POST" } })
       if (duplicate && duplicate.id !== postId) {
         slug = `${slug}-${Date.now().toString(36)}`
       }
@@ -119,9 +120,9 @@ export async function updatePost(formData: FormData): Promise<ActionResult> {
     const publishedAt = published && !existing.publishedAt ? new Date() : existing.publishedAt
 
     await prisma.$transaction(async (tx) => {
-      await tx.postTag.deleteMany({ where: { postId } })
+      await tx.documentTag.deleteMany({ where: { documentId: postId } })
 
-      await tx.post.update({
+      await tx.document.update({
         where: { id: postId },
         data: {
           title: title ?? existing.title,
@@ -160,7 +161,7 @@ export async function deletePost(id: string): Promise<ActionResult> {
       return { success: false, error: "Valid ID is required" }
     }
 
-    await prisma.post.delete({ where: { id: idResult.data } })
+    await prisma.document.delete({ where: { id: idResult.data, type: "POST" } })
 
     revalidatePath("/admin/posts")
     revalidatePath("/admin")

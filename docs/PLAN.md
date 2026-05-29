@@ -8,7 +8,7 @@ Next.js 16 (App Router) / React 19 / Tailwind 4 / Prisma 7 / Auth.js v5 (Credent
 
 ## Data Model
 
-User, Post, Category, Tag, Comment (with replies). Post→Category, Post↔Tag, Post→Comment.
+User, Document (POST/NOTE/PAGE/CATEGORY), Tag, DocumentTag, DocumentRelation, Comment (with replies). Document→Category (self), Document↔Tag, Document→Comment.
 
 ## Routes
 
@@ -16,7 +16,7 @@ User, Post, Category, Tag, Comment (with replies). Post→Category, Post↔Tag, 
 
 **Admin:** `/admin/*` (guarded by `app/admin/layout.tsx`), `/login` (independent layout)
 
-**API:** `/api/posts`, `/api/comments`, `/api/search`, `/api/graph`, `/api/auth/[...nextauth]`
+**API:** `/api/search`, `/api/graph`, `/api/auth/[...nextauth]` (writes use Server Actions)
 
 ## Architecture
 
@@ -24,6 +24,14 @@ User, Post, Category, Tag, Comment (with replies). Post→Category, Post↔Tag, 
 - Auth: JWT sessions, no middleware.ts (Edge Runtime incompatible with Prisma), runtime="nodejs" on auth routes
 - i18n: next-intl 4, no URL prefix, cookie-driven (NEXT_LOCALE)
 - Build: `export const dynamic = "force-dynamic"` on most public pages to avoid PgBouncer pool exhaustion
+
+## Migration Runbook (Post/Category → Document)
+
+1. Backup the database and test on a copy first.
+2. Ensure the Document tables exist while old Post/Category/PostTag tables are still present.
+3. Run `npx tsx prisma/migrate-to-documents.ts` to copy data into Document/DocumentTag and update Comment references.
+4. Apply the final schema to drop old tables, then run `npx prisma generate`.
+5. Verify the app and data before deploying.
 
 ## Status
 

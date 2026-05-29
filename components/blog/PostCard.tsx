@@ -17,7 +17,7 @@ export function PostCard({ post }: { post: PostWithRelations }) {
             </time>
           )}
           {post.category && (
-            <CategoryBadge name={post.category.name} slug={post.category.slug} />
+            <CategoryBadge name={post.category.title} slug={post.category.slug} />
           )}
         </div>
         <Link href={`/posts/${post.slug}`} className="group">

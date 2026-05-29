@@ -24,7 +24,21 @@ export async function createCategory(formData: FormData) {
   if (!result.success) return
 
   const slug = generateSlug(result.data.name)
-  await prisma.category.create({ data: { name: result.data.name, slug } })
+
+  // Get admin user for authorId
+  const session = await auth()
+  if (!session?.user?.id) return
+
+  await prisma.document.create({
+    data: {
+      title: result.data.name,
+      slug,
+      type: "CATEGORY",
+      published: true,
+      publishedAt: new Date(),
+      authorId: session.user.id,
+    },
+  })
   revalidatePath("/admin/categories")
 }
 
@@ -34,7 +48,7 @@ export async function deleteCategory(formData: FormData) {
   const idResult = cuidSchema.safeParse(formData.get("id"))
   if (!idResult.success) return
 
-  await prisma.category.delete({ where: { id: idResult.data } })
+  await prisma.document.delete({ where: { id: idResult.data, type: "CATEGORY" } })
   revalidatePath("/admin/categories")
 }
 
