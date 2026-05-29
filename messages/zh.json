@@ -133,21 +133,23 @@
     "recentPosts": "最新文章",
     "heroName": "Sayliks",
     "heroIntro": "开发者，写作者。在这里记录技术探索、思考笔记和日常观察。",
-    "currentlyExploring": "当前正在探索：大语言模型、知识管理系统、以及如何构建更好的思考工具。",
-    "navWriting": "写作",
+    "currentlyLabel": "当前",
+    "currentlyExploring": "正在探索大语言模型的能力边界，思考知识管理系统的本质，以及如何构建更好的思考工具。",
+    "navThinking": "思考",
     "navAbout": "关于",
-    "navSearch": "搜索",
-    "knowledgeAreas": "知识领域",
-    "featuredWriting": "精选文章",
-    "noPostsYet": "还没有文章",
-    "viewAllWriting": "查看所有文章",
+    "navExplore": "探索",
+    "gardenPaths": "知识路径",
+    "recentThinking": "近期思考",
+    "noPostsYet": "还没有内容",
+    "exploreGarden": "探索花园",
     "categoryDescDefault": "探索这个领域的想法和笔记",
     "categoryDesc": {
       "分享": "技术分享、工具推荐和实践经验",
       "随笔": "日常思考、观察和随想",
       "说说": "简短的想法和碎片化思考"
     },
-    "footerNote": "这是我的数字花园 — 一个思考、学习和创作的空间。内容会持续更新和演化。"
+    "footerNote": "这是我的数字花园 — 一个思考、学习和创作的空间。想法在这里生长、连接、演化。",
+    "footerMeta": "持续更新中 · 永远未完成"
   },
   "graph": {
     "backlinks": "反向链接",

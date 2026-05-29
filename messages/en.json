@@ -131,21 +131,23 @@
     "recentPosts": "Recent Posts",
     "heroName": "Sayliks",
     "heroIntro": "Developer and writer. I document technical explorations, thinking notes, and daily observations here.",
-    "currentlyExploring": "Currently exploring: large language models, knowledge management systems, and how to build better thinking tools.",
-    "navWriting": "Writing",
+    "currentlyLabel": "Currently",
+    "currentlyExploring": "Exploring the boundaries of large language models, thinking about the essence of knowledge management systems, and how to build better thinking tools.",
+    "navThinking": "Thinking",
     "navAbout": "About",
-    "navSearch": "Search",
-    "knowledgeAreas": "Knowledge Areas",
-    "featuredWriting": "Featured Writing",
-    "noPostsYet": "No posts yet",
-    "viewAllWriting": "View all writing",
+    "navExplore": "Explore",
+    "gardenPaths": "Garden Paths",
+    "recentThinking": "Recent Thinking",
+    "noPostsYet": "No content yet",
+    "exploreGarden": "Explore the garden",
     "categoryDescDefault": "Explore ideas and notes in this area",
     "categoryDesc": {
       "分享": "Technical sharing, tool recommendations, and practical experience",
       "随笔": "Daily thoughts, observations, and reflections",
       "说说": "Short thoughts and fragmented thinking"
     },
-    "footerNote": "This is my digital garden — a space for thinking, learning, and creating. Content evolves continuously."
+    "footerNote": "This is my digital garden — a space for thinking, learning, and creating. Ideas grow, connect, and evolve here.",
+    "footerMeta": "Continuously updated · Forever unfinished"
   },
   "graph": {
     "backlinks": "Backlinks",
