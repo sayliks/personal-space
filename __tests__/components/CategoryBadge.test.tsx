@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from "@testing-library/react"
+import { render, within } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { CategoryBadge } from "@/components/blog/CategoryBadge"
 

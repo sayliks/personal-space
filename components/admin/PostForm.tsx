@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { PostEditor } from "@/components/admin/PostEditor"
+import { createPost, updatePost } from "@/app/actions/posts"
 
 interface Category {
   id: string
@@ -60,32 +61,26 @@ export function PostForm({ post, categories, tags }: PostFormProps) {
     e.preventDefault()
     setSaving(true)
 
-    const body = {
-      ...(isEdit ? { id: post!.id } : {}),
-      title,
-      content,
-      summary: summary || null,
-      coverImage: coverImage || null,
-      published,
-      categoryId: categoryId || null,
-      tags: selectedTags,
+    const formData = new FormData()
+    if (isEdit) formData.set("id", post!.id)
+    formData.set("title", title)
+    formData.set("content", content)
+    if (summary) formData.set("summary", summary)
+    if (coverImage) formData.set("coverImage", coverImage)
+    formData.set("published", String(published))
+    if (categoryId) formData.set("categoryId", categoryId)
+    for (const tagId of selectedTags) {
+      formData.append("tags", tagId)
     }
 
-    const res = await fetch("/api/posts", {
-      method: isEdit ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
+    const result = isEdit ? await updatePost(formData) : await createPost(formData)
 
-    if (res.ok) {
+    if (result.success) {
       toast.success(isEdit ? t("postUpdated") : t("postCreated"))
       router.push("/admin/posts")
       router.refresh()
     } else {
-      const data = await res.json()
-      toast.error(data.error?.fieldErrors
-        ? Object.values(data.error.fieldErrors).flat().join(", ")
-        : data.error || t("failedToSave"))
+      toast.error(result.error || t("failedToSave"))
       setSaving(false)
     }
   }

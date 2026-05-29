@@ -1,26 +1,8 @@
 import { getTranslations } from "next-intl/server"
-import { prisma } from "@/lib/prisma"
 import { getAllTags } from "@/lib/queries"
-import { revalidatePath } from "next/cache"
+import { createTag, deleteTag } from "@/app/actions/admin"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { generateSlug } from "@/lib/slug"
-
-async function createTag(formData: FormData) {
-  "use server"
-  const name = formData.get("name") as string
-  if (!name) return
-  const slug = generateSlug(name)
-  await prisma.tag.create({ data: { name, slug } })
-  revalidatePath("/admin/tags")
-}
-
-async function deleteTag(formData: FormData) {
-  "use server"
-  const id = formData.get("id") as string
-  await prisma.tag.delete({ where: { id } })
-  revalidatePath("/admin/tags")
-}
 
 export default async function AdminTagsPage() {
   const t = await getTranslations("admin")

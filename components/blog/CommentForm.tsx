@@ -8,6 +8,7 @@ import { useSession, signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { createComment } from "@/app/actions/comments"
 
 export function CommentForm({ postId }: { postId: string }) {
   const t = useTranslations("post")
@@ -39,31 +40,23 @@ export function CommentForm({ postId }: { postId: string }) {
     setSubmitting(true)
     setError("")
 
-    try {
-      const res = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          postId,
-          authorName: session.user.name ?? "",
-          authorEmail: session.user.email ?? "",
-          content,
-        }),
-      })
+    const formData = new FormData()
+    formData.set("postId", postId)
+    formData.set("authorName", session.user.name ?? "")
+    formData.set("authorEmail", session.user.email ?? "")
+    formData.set("content", content)
 
-      if (res.ok) {
-        setSuccess(true)
-        setContent("")
-        router.refresh()
-      } else {
-        const data = await res.json().catch(() => null)
-        setError(data?.error || t("failedToSubmitComment"))
-      }
-    } catch {
-      setError(t("failedToSubmitComment"))
-    } finally {
-      setSubmitting(false)
+    const result = await createComment(formData)
+
+    if (result.success) {
+      setSuccess(true)
+      setContent("")
+      router.refresh()
+    } else {
+      setError(result.error || t("failedToSubmitComment"))
     }
+
+    setSubmitting(false)
   }
 
   if (isLoading) {

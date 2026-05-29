@@ -1,24 +1,9 @@
 import { getTranslations } from "next-intl/server"
 import { getPendingComments } from "@/lib/queries"
-import { prisma } from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
+import { approveComment, deleteComment } from "@/app/actions/admin"
 import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
 import Link from "next/link"
-
-async function approveComment(formData: FormData) {
-  "use server"
-  const id = formData.get("id") as string
-  await prisma.comment.update({ where: { id }, data: { approved: true } })
-  revalidatePath("/admin/comments")
-}
-
-async function deleteComment(formData: FormData) {
-  "use server"
-  const id = formData.get("id") as string
-  await prisma.comment.delete({ where: { id } })
-  revalidatePath("/admin/comments")
-}
 
 export default async function AdminCommentsPage() {
   const t = await getTranslations("admin")

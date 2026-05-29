@@ -1,26 +1,8 @@
 import { getTranslations } from "next-intl/server"
-import { prisma } from "@/lib/prisma"
 import { getAllCategories } from "@/lib/queries"
-import { revalidatePath } from "next/cache"
+import { createCategory, deleteCategory } from "@/app/actions/admin"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { generateSlug } from "@/lib/slug"
-
-async function createCategory(formData: FormData) {
-  "use server"
-  const name = formData.get("name") as string
-  if (!name) return
-  const slug = generateSlug(name)
-  await prisma.category.create({ data: { name, slug } })
-  revalidatePath("/admin/categories")
-}
-
-async function deleteCategory(formData: FormData) {
-  "use server"
-  const id = formData.get("id") as string
-  await prisma.category.delete({ where: { id } })
-  revalidatePath("/admin/categories")
-}
 
 export default async function AdminCategoriesPage() {
   const t = await getTranslations("admin")
