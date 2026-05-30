@@ -132,9 +132,9 @@
 
   .dark body {
     background:
-      radial-gradient(circle at 18% 4%, oklch(0.28 0.08 292 / 16%), transparent 32rem),
-      radial-gradient(circle at 82% 14%, oklch(0.28 0.075 225 / 12%), transparent 34rem),
-      linear-gradient(180deg, oklch(0.11 0.017 260), var(--background) 34rem);
+      radial-gradient(circle at 18% 4%, oklch(0.24 0.065 292 / 12%), transparent 32rem),
+      radial-gradient(circle at 82% 14%, oklch(0.24 0.06 225 / 9%), transparent 34rem),
+      linear-gradient(180deg, oklch(0.105 0.016 260), var(--background) 34rem);
     background-attachment: fixed;
   }
   html {
@@ -162,6 +162,35 @@
   }
 }
 
+/* Article title: restrained editorial scale with word-aware wrapping. */
+.article-title {
+  font-size: 2.2rem;
+  line-height: 1.18;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+@media (min-width: 481px) {
+  .article-title {
+    font-size: 2.8rem;
+    line-height: 1.16;
+  }
+}
+
+@media (min-width: 769px) {
+  .article-title {
+    font-size: 3.65rem;
+    line-height: 1.14;
+  }
+}
+
+@media (min-width: 1024px) {
+  .article-title {
+    font-size: 4rem;
+    line-height: 1.13;
+  }
+}
+
 /* Article prose: refined reading experience */
 .prose {
   font-family: var(--font-serif);
@@ -171,13 +200,13 @@
 }
 
 .dark .prose {
-  color: oklch(0.88 0.018 260 / 86%);
+  color: rgba(210, 222, 240, 0.84);
 }
 
 @media (min-width: 640px) {
   .article-prose {
     font-size: 1.125rem;
-    line-height: 2.02;
+    line-height: 1.94;
   }
 }
 
@@ -223,7 +252,7 @@
 /* Paragraphs - comfortable rhythm */
 .prose p {
   margin-top: 0;
-  margin-bottom: 1.62rem;
+  margin-bottom: 1.48rem;
 }
 
 .prose p:last-child {
@@ -251,6 +280,16 @@
 .dark .prose a:hover {
   color: oklch(0.94 0.025 235);
   border-bottom-color: oklch(0.94 0.025 235 / 75%);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: oklch(0.22 0 0);
+}
+
+.dark .prose strong {
+  color: rgba(232, 239, 252, 0.88);
+  font-weight: 600;
 }
 
 /* Code blocks - calm and readable */
@@ -292,7 +331,7 @@
 .prose blockquote {
   border-left: 2px solid oklch(0.55 0 0 / 35%);
   padding-left: 1.5rem;
-  margin: 2.6rem 0;
+  margin: 2.75rem 0;
   font-style: italic;
   color: oklch(0.32 0 0);
   font-size: 1.22em;
@@ -308,16 +347,38 @@
   margin-bottom: 0;
 }
 
+.prose blockquote.pull-quote {
+  margin: 3rem 0;
+  padding-left: 1.6rem;
+  border-left-width: 2px;
+  font-size: 1.35rem;
+  line-height: 1.58;
+}
+
+.dark .prose blockquote.pull-quote {
+  border-left-color: rgba(180, 200, 255, 0.28);
+  color: rgba(245, 248, 255, 0.9);
+}
+
+@media (min-width: 640px) {
+  .prose blockquote.pull-quote {
+    margin: 3.25rem 0;
+    padding-left: 1.75rem;
+    font-size: 1.55rem;
+    line-height: 1.56;
+  }
+}
+
 /* Lists - proper spacing */
 .prose ul,
 .prose ol {
-  margin: 1.55rem 0 1.8rem;
-  padding-left: 1.35rem;
+  margin: 1.45rem 0 1.65rem;
+  padding-left: 1.25rem;
 }
 
 .prose li {
-  margin: 0.42rem 0;
-  padding-left: 0.2rem;
+  margin: 0.35rem 0;
+  padding-left: 0.18rem;
 }
 
 .prose li::marker {

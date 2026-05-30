@@ -476,18 +476,18 @@ export function KnowledgeGraph() {
             const source = typeof link.source === "string" ? null : link.source
             const target = typeof link.target === "string" ? null : link.target
             const importance = Math.max(source?.val ?? 0, target?.val ?? 0)
-            return Math.max(84, 132 - importance * 6)
+            return Math.max(96, 150 - importance * 7)
           })
-          .strength(0.16)
+          .strength(0.14)
       )
       .force(
         "charge",
-        d3.forceManyBody<GraphNode>().strength((node) => -105 - Math.min(node.val, 8) * 14)
+        d3.forceManyBody<GraphNode>().strength((node) => -122 - Math.min(node.val, 8) * 15)
       )
-      .force("collide", d3.forceCollide<GraphNode>().radius((node) => getNodeRadius(node) + 14))
-      .force("center", d3.forceCenter(centerX, centerY).strength(0.38))
-      .force("x", d3.forceX<GraphNode>(centerX).strength(0.018))
-      .force("y", d3.forceY<GraphNode>(centerY).strength(0.018))
+      .force("collide", d3.forceCollide<GraphNode>().radius((node) => getNodeRadius(node) + 16))
+      .force("center", d3.forceCenter(centerX, centerY).strength(0.34))
+      .force("x", d3.forceX<GraphNode>(centerX).strength(0.014))
+      .force("y", d3.forceY<GraphNode>(centerY).strength(0.014))
       .alpha(0.92)
       .alphaDecay(0.04)
       .velocityDecay(0.46)
@@ -601,12 +601,12 @@ export function KnowledgeGraph() {
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
           placeholder={t("searchPlaceholder")}
-          className="h-8 w-52 rounded-full border border-white/[0.07] bg-[#0c1220]/35 px-3.5 font-mono text-[11px] text-slate-300 outline-none backdrop-blur-xl transition placeholder:text-slate-600 focus:border-cyan-200/25 focus:bg-[#101827]/45"
+          className="h-8 w-52 rounded-full border border-white/[0.045] bg-[#0c1220]/20 px-3.5 font-mono text-[11px] text-slate-400/80 opacity-65 outline-none backdrop-blur-xl transition placeholder:text-slate-700 hover:border-white/[0.09] hover:bg-[#101827]/30 hover:opacity-100 focus:border-cyan-200/20 focus:bg-[#101827]/38 focus:opacity-100"
         />
         <button
           type="button"
           onClick={resetFilters}
-          className="h-8 rounded-full border border-white/[0.06] bg-white/[0.025] px-3.5 font-mono text-[10px] lowercase tracking-[0.14em] text-slate-500 backdrop-blur-xl transition hover:border-white/[0.14] hover:text-slate-300"
+          className="h-8 rounded-full border border-white/[0.04] bg-white/[0.015] px-3.5 font-mono text-[10px] lowercase tracking-[0.14em] text-slate-600 opacity-70 backdrop-blur-xl transition hover:border-white/[0.1] hover:text-slate-400 hover:opacity-100"
         >
           {t("allGroups")}
         </button>
@@ -620,12 +620,16 @@ export function KnowledgeGraph() {
               key={group}
               type="button"
               onClick={() => toggleGroup(group)}
-              className="inline-flex h-7 items-center gap-2 rounded-full border border-transparent bg-transparent px-0 font-mono text-[10px] lowercase tracking-[0.12em] text-slate-500 transition hover:text-slate-300"
-              style={{ opacity: active ? 1 : 0.38 }}
+              className="inline-flex h-7 items-center gap-2 rounded-full border border-transparent bg-transparent px-0 font-mono text-[10px] lowercase tracking-[0.12em] text-slate-600 transition hover:text-slate-400"
+              style={{ opacity: active ? 0.78 : 0.24 }}
             >
               <span
                 className="h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: getNodeTone(group), boxShadow: `0 0 10px ${getNodeTone(group)}` }}
+                style={{
+                  backgroundColor: getNodeTone(group),
+                  boxShadow: active ? `0 0 8px ${getNodeTone(group)}` : "none",
+                  opacity: active ? 0.9 : 0.45,
+                }}
               />
               {group}
             </button>
@@ -639,14 +643,14 @@ export function KnowledgeGraph() {
 
       {tooltip && (
         <div
-          className="pointer-events-none absolute z-20 min-w-44 rounded-md border border-white/[0.07] bg-[#0b1020]/58 px-3 py-2 text-xs text-slate-400 shadow-xl shadow-black/30 backdrop-blur-2xl"
+          className="pointer-events-none absolute z-20 min-w-36 rounded-md border border-white/[0.045] bg-[#0b1020]/42 px-2.5 py-1.5 text-xs text-slate-500 shadow-lg shadow-black/20 backdrop-blur-2xl"
           style={{
             left: Math.min(tooltip.x + 14, dimensions.width - 210),
             top: Math.min(tooltip.y + 14, dimensions.height - 92),
           }}
         >
-          <div className="text-sm text-slate-200">{tooltip.title}</div>
-          <div className="mt-1 font-mono text-[11px] text-slate-500">
+          <div className="text-xs text-slate-300">{tooltip.title}</div>
+          <div className="mt-1 font-mono text-[10px] text-slate-600">
             {tooltip.group} · {t("linkCount", { count: tooltip.links })}
           </div>
         </div>

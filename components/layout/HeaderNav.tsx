@@ -23,7 +23,7 @@ export function HeaderNav({ labels }: HeaderNavProps) {
   const pathname = usePathname()
 
   return (
-    <nav className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground/55 sm:gap-4">
+    <nav className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground/48 sm:gap-4">
       {links.map((link) => {
         const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
         return (
@@ -31,11 +31,11 @@ export function HeaderNav({ labels }: HeaderNavProps) {
             key={link.href}
             href={link.href}
             aria-current={active ? "page" : undefined}
-            className="relative py-1 transition-colors hover:text-foreground/80 aria-[current=page]:text-foreground/80"
+            className="relative py-1 transition-colors hover:text-foreground/72 aria-[current=page]:text-foreground/68"
           >
             {labels[link.key]}
             {active && (
-              <span className="absolute -bottom-1 left-0 h-px w-full bg-foreground/30" />
+              <span className="absolute -bottom-1 left-1/2 h-px w-5 -translate-x-1/2 bg-foreground/18" />
             )}
           </Link>
         )

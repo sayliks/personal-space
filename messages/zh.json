@@ -222,7 +222,7 @@
     "searchPlaceholder": "查找笔记...",
     "allGroups": "全部",
     "details": "当前选择",
-    "selectHint": "选择一个节点以固定它，并查看附近的笔记。",
+    "selectHint": "选择一个节点，查看它与哪些笔记相连。",
     "clearSelection": "清除选择",
     "openNote": "打开笔记",
     "connectedNodes": "{count} 篇相关笔记",

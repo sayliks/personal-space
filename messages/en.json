@@ -220,7 +220,7 @@
     "searchPlaceholder": "Find a note...",
     "allGroups": "all",
     "details": "selection",
-    "selectHint": "Select a node to pin it and inspect nearby notes.",
+    "selectHint": "Choose a node to see which notes it connects to.",
     "clearSelection": "Clear selection",
     "openNote": "open note",
     "connectedNodes": "{count} linked notes",

@@ -13,6 +13,35 @@ import type { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
 
+function renderTitle(title: string) {
+  if (typeof Intl.Segmenter === "undefined") {
+    return title.split(/(人生)/).map((part, index) =>
+      part === "人生" ? (
+        <span key={index} className="inline-block whitespace-nowrap">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    )
+  }
+
+  const segments = Array.from(new Intl.Segmenter("zh", { granularity: "word" }).segment(title))
+
+  return segments.map((segment, index) => {
+    const text = segment.segment
+    if (!text.trim()) return text
+
+    return segment.isWordLike || text === "人生" ? (
+      <span key={index} className="inline-block whitespace-nowrap">
+        {text}
+      </span>
+    ) : (
+      text
+    )
+  })
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -57,8 +86,8 @@ export default async function PostPage({
 
   return (
     <article className="relative">
-      <header className="mx-auto max-w-[760px] px-5 pb-12 pt-16 sm:px-6 sm:pb-14 sm:pt-24">
-        <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] uppercase text-muted-foreground/55">
+      <header className="mx-auto max-w-[760px] px-5 pb-9 pt-[72px] sm:px-6 sm:pb-11 sm:pt-24 lg:pt-[112px]">
+        <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] uppercase text-muted-foreground/38">
           <time dateTime={post.publishedAt?.toISOString()}>
             {post.publishedAt ? formatDateLong(post.publishedAt) : t("draft")}
           </time>
@@ -85,8 +114,8 @@ export default async function PostPage({
           <span>{post.author.name}</span>
         </div>
 
-        <h1 className="max-w-[720px] text-balance font-serif text-[2.25rem] font-medium leading-[1.18] text-foreground/95 sm:text-[3.6rem] sm:leading-[1.12]">
-          {post.title}
+        <h1 className="article-title max-w-[720px] font-serif font-medium text-foreground/95">
+          {renderTitle(post.title)}
         </h1>
 
         {post.summary && (
@@ -110,24 +139,24 @@ export default async function PostPage({
         )}
       </header>
 
-      <div className="mx-auto max-w-[760px] px-5 pb-16 sm:px-6">
-        <div className="mb-12 h-px bg-gradient-to-r from-transparent via-border/45 to-transparent" />
+      <div className="mx-auto max-w-[728px] px-5 pb-16 sm:px-6">
+        <div className="mb-9 h-px bg-gradient-to-r from-transparent via-border/28 to-transparent" />
         {post.content && <MarkdownRenderer content={post.content} />}
       </div>
 
-      <div className="mx-auto max-w-[760px] px-5 pb-10 sm:px-6">
+      <div className="mx-auto max-w-[728px] px-5 pb-10 sm:px-6">
         <Suspense>
           <Backlinks postId={post.id} />
         </Suspense>
       </div>
 
-      <div className="mx-auto max-w-[760px] px-5 pb-10 sm:px-6">
+      <div className="mx-auto max-w-[728px] px-5 pb-10 sm:px-6">
         <Suspense>
           <RelatedNotes postId={post.id} tags={tags} categoryId={post.categoryId} />
         </Suspense>
       </div>
 
-      <div className="mx-auto max-w-[760px] px-5 pb-16 sm:px-6 sm:pb-20">
+      <div className="mx-auto max-w-[728px] px-5 pb-16 sm:px-6 sm:pb-20">
         <Suspense>
           <CommentSection postId={post.id} />
         </Suspense>
