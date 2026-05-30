@@ -85,7 +85,7 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <SessionProviderWrapper>
               <Header />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 min-h-0">{children}</main>
               <Footer />
             </SessionProviderWrapper>
           </ThemeProvider>
