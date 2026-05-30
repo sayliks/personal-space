@@ -3,6 +3,7 @@
     "articles": "Writing",
     "about": "About",
     "search": "Explore",
+    "graph": "Graph",
     "admin": "Admin",
     "signOut": "Sign Out",
     "backToHome": "Back to Home",
@@ -209,9 +210,22 @@
     "untitled": "Untitled"
   },
   "graph": {
+    "title": "knowledge graph",
+    "description": "A map of notes connected by wiki-links. Each point is a published post; each line is a reference from one note to another.",
     "backlinks": "Backlinks",
     "loading": "Loading graph...",
+    "empty": "No linked notes yet.",
     "loadError": "Failed to load graph",
+    "searchLabel": "Search graph",
+    "searchPlaceholder": "Find a note...",
+    "allGroups": "all",
+    "details": "selection",
+    "selectHint": "Choose a node to see which notes it connects to.",
+    "clearSelection": "Clear selection",
+    "openNote": "open note",
+    "connectedNodes": "{count} linked notes",
+    "noConnections": "No direct links.",
+    "linkCount": "{count} links",
     "stats": "{nodes} nodes · {links} links"
   },
   "auth": {

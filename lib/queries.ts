@@ -11,6 +11,50 @@ export type PostWithRelations = Prisma.DocumentGetPayload<{
   include: typeof DOCUMENT_INCLUDES;
 }>;
 
+function isTransientPrismaError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    (error.message.includes("Connection terminated unexpectedly") ||
+      error.message.includes("Operation has timed out") ||
+      error.message.includes("P1001"))
+  );
+}
+
+async function withTransientRetry<T>(label: string, query: () => Promise<T>): Promise<T> {
+  try {
+    return await query();
+  } catch (error) {
+    if (!isTransientPrismaError(error)) throw error;
+
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`Queries: ${label} retrying after transient Prisma error`, error);
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    return query();
+  }
+}
+
+export async function getHomePosts(limit = 14) {
+  return prisma.document.findMany({
+    where: {
+      type: "POST",
+      published: true,
+      publishedAt: { lte: new Date() },
+    },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      updatedAt: true,
+      category: { select: { title: true } },
+    },
+    orderBy: { publishedAt: "desc" },
+    take: limit,
+  });
+}
+
 export async function getPublishedPosts(params: {
   page?: number;
   pageSize?: number;
@@ -32,7 +76,7 @@ export async function getPublishedPosts(params: {
     where.tags = { some: { tag: { slug: tagSlug } } };
   }
 
-  const [posts, total] = await Promise.all([
+  const posts = await withTransientRetry("published posts list", () =>
     prisma.document.findMany({
       where,
       include: DOCUMENT_INCLUDES,
@@ -40,8 +84,20 @@ export async function getPublishedPosts(params: {
       skip: (page - 1) * pageSize,
       take: pageSize,
     }),
-    prisma.document.count({ where }),
-  ]);
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: published posts list fell back after failure", error);
+    }
+    return [];
+  });
+
+  const total = await withTransientRetry("published posts count", () => prisma.document.count({ where }))
+    .catch((error) => {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("Queries: published posts count fell back after failure", error);
+      }
+      return posts.length;
+    });
 
   return { posts, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
 }

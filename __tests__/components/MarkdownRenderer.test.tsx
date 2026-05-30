@@ -15,7 +15,9 @@ jest.mock("react-markdown", () => {
   return { __esModule: true, default: MockReactMarkdown }
 })
 jest.mock("remark-gfm", () => ({}))
+jest.mock("remark-math", () => ({}))
 jest.mock("rehype-highlight", () => ({}))
+jest.mock("rehype-katex", () => ({}))
 jest.mock("rehype-slug", () => ({}))
 jest.mock("rehype-raw", () => ({}))
 jest.mock("@/lib/remark-wiki-link", () => ({ remarkWikiLink: () => (tree: unknown) => tree }))

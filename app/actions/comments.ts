@@ -56,7 +56,7 @@ export async function createComment(formData: FormData): Promise<ActionResult> {
     }
 
     // Advisory moderation — never throws; null/failure -> flag-for-review.
-    const outcome = await moderateComment(content, accountAgeDays)
+    const outcome = await moderateComment(content, accountAgeDays, userId)
 
     await prisma.comment.create({
       data: {

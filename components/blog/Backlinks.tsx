@@ -46,7 +46,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
   return (
     <section className="border-t border-border/20 pt-12 mt-16">
       <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
-        Connected Notes
+        连接的笔记
       </h2>
       <div className="space-y-6">
         {backlinks.map((bl) => (
@@ -66,7 +66,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
               )}
               <div className="flex items-center gap-2 text-xs text-muted-foreground/50 font-mono">
                 <span>→</span>
-                <span>References this note</span>
+                <span>引用了这篇笔记</span>
               </div>
             </article>
           </Link>

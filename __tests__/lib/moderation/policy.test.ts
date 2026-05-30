@@ -34,7 +34,7 @@ describe("decideModeration", () => {
     expect(out.reason).toBeNull()
   })
 
-  it("rejects at or above REJECT_SCORE", () => {
+  it("rejects at REJECT_SCORE", () => {
     const out = decideModeration({
       preFilter: clean,
       verdict: verdict(REJECT_SCORE, "spam"),
@@ -44,19 +44,46 @@ describe("decideModeration", () => {
     expect(out.label).toBe("spam")
   })
 
-  it("flags between FLAG_SCORE and REJECT_SCORE", () => {
+  it("rejects above REJECT_SCORE", () => {
     const out = decideModeration({
       preFilter: clean,
-      verdict: verdict(0.5),
+      verdict: verdict(REJECT_SCORE + 0.001, "spam"),
+      accountAgeDays: null,
+    })
+    expect(out.action).toBe("reject")
+  })
+
+  it("flags just below REJECT_SCORE", () => {
+    const out = decideModeration({
+      preFilter: clean,
+      verdict: verdict(REJECT_SCORE - 0.001),
       accountAgeDays: null,
     })
     expect(out.action).toBe("flag-for-review")
   })
 
-  it("approves below FLAG_SCORE", () => {
+  it("flags at FLAG_SCORE", () => {
     const out = decideModeration({
       preFilter: clean,
-      verdict: verdict(FLAG_SCORE - 0.1),
+      verdict: verdict(FLAG_SCORE),
+      accountAgeDays: null,
+    })
+    expect(out.action).toBe("flag-for-review")
+  })
+
+  it("flags above FLAG_SCORE", () => {
+    const out = decideModeration({
+      preFilter: clean,
+      verdict: verdict(FLAG_SCORE + 0.001),
+      accountAgeDays: null,
+    })
+    expect(out.action).toBe("flag-for-review")
+  })
+
+  it("approves just below FLAG_SCORE", () => {
+    const out = decideModeration({
+      preFilter: clean,
+      verdict: verdict(FLAG_SCORE - 0.001),
       accountAgeDays: null,
     })
     expect(out.action).toBe("approve")

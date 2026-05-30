@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server"
-import { getPublishedPosts } from "@/lib/queries"
-import { isTended } from "@/lib/tended"
-import { formatDateShort } from "@/lib/utils"
 import { Pagination } from "@/components/blog/Pagination"
+import { isPostRevisited } from "@/lib/posts/revision-status"
+import { getPublishedPosts } from "@/lib/queries"
+import { formatDateShort } from "@/lib/utils"
 import Link from "next/link"
 import type { Metadata } from "next"
 
@@ -61,7 +61,7 @@ export default async function PostsPage({
                   <span className="flex-1 text-sm leading-snug text-foreground/85 decoration-border underline-offset-4 group-hover:text-foreground group-hover:underline">
                     {post.title}
                   </span>
-                  {isTended(post) && (
+                  {isPostRevisited(post) && (
                     <span className="shrink-0 self-start pt-0.5 font-mono text-[11px] text-muted-foreground/30">
                       {tCommon("tended")} {formatDateShort(post.updatedAt)}
                     </span>

@@ -1,5 +1,5 @@
-import { getPublishedPosts, getAllCategories, getAllTags } from "@/lib/queries"
-import { isTended } from "@/lib/tended"
+import { getAllCategories, getAllTags, getHomePosts } from "@/lib/queries"
+import { isPostRevisited } from "@/lib/posts/revision-status"
 import { formatDateShort } from "@/lib/utils"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -22,15 +22,49 @@ function noteDate(d: Date | null) {
     .replace(/-/g, ".")
 }
 
+function isTransientPrismaError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false
+  return (
+    error.message.includes("Connection terminated unexpectedly") ||
+    error.message.includes("Operation has timed out") ||
+    error.message.includes("P1001")
+  )
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function safeHomeQuery<T>(label: string, query: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await query()
+  } catch (error) {
+    if (isTransientPrismaError(error)) {
+      await delay(100)
+      try {
+        return await query()
+      } catch (retryError) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(`HomePage: ${label} query retry failed:`, retryError)
+        }
+        return fallback
+      }
+    }
+
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`HomePage: ${label} query failed:`, error)
+    }
+    return fallback
+  }
+}
+
 export default async function HomePage() {
   const t = await getTranslations("home")
   const tCommon = await getTranslations("common")
 
-  const [{ posts }, categories, tags] = await Promise.all([
-    getPublishedPosts({ page: 1, pageSize: 14 }),
-    getAllCategories(),
-    getAllTags(),
-  ])
+  const posts = await safeHomeQuery("posts", () => getHomePosts(14), [])
+  const categories = await safeHomeQuery("categories", () => getAllCategories(), [])
+  const tags = await safeHomeQuery("tags", () => getAllTags(), [])
 
   const sortedTags = [...tags]
     .sort((a, b) => b._count.documents - a._count.documents)
@@ -75,7 +109,7 @@ export default async function HomePage() {
                   <span className="flex-1 text-sm leading-snug text-foreground/85 group-hover:text-foreground decoration-border underline-offset-4 group-hover:underline">
                     {post.title}
                   </span>
-                  {isTended(post) && (
+                  {isPostRevisited(post) && (
                     <span className="shrink-0 self-start pt-0.5 font-mono text-[11px] text-muted-foreground/30">
                       {tCommon("tended")} {formatDateShort(post.updatedAt)}
                     </span>

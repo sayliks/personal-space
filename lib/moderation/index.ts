@@ -23,6 +23,7 @@ const FAIL_OPEN: ModerationOutcome = {
 export async function moderateComment(
   content: string,
   accountAgeDays: number | null,
+  userId?: string | null,
 ): Promise<ModerationOutcome> {
   try {
     const pf = preFilter(content);
@@ -32,7 +33,7 @@ export async function moderateComment(
       return decideModeration({ preFilter: pf, verdict: null, accountAgeDays });
     }
 
-    const verdict = await getLlmVerdict(content);
+    const verdict = await getLlmVerdict(content, userId);
     return decideModeration({ preFilter: pf, verdict, accountAgeDays });
   } catch (error) {
     console.error("[moderation] pipeline error, falling back to manual review:", error);
