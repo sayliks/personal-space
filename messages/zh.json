@@ -83,6 +83,16 @@
     "pendingComments": "待审核评论",
     "noPosts": "暂无文章，创建你的第一篇文章！",
     "noPendingComments": "暂无待审核评论。",
+    "mod": {
+      "aiVerdict": "AI 判定",
+      "spam": "垃圾信息",
+      "toxic": "不当内容",
+      "normal": "正常",
+      "flag-for-review": "需人工复核",
+      "approve": "看起来安全",
+      "reject": "建议拦截",
+      "unmoderated": "未检测"
+    },
     "add": "添加",
     "approve": "通过",
     "viewPost": "查看文章",
