@@ -147,6 +147,13 @@ model Comment {
 
   approved Boolean @default(false)
 
+  // AI moderation annotations (advisory; null when unmoderated / fail-open)
+  moderationLabel  String?   // "spam" | "toxic" | "normal"
+  moderationScore  Float?    // risk 0..1
+  moderationReason String?
+  moderationAction String?   // policy recommendation: approve | flag-for-review | reject
+  moderatedAt      DateTime?
+
   documentId String
   document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
 

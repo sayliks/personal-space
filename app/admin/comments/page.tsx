@@ -19,6 +19,7 @@ export default async function AdminCommentsPage() {
             <tr className="border-b bg-muted/50">
               <th className="text-left px-4 py-3 text-sm font-medium">{t("author")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium">{t("content")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium">{t("mod.aiVerdict")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium">{t("post")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium">{t("date")}</th>
               <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
@@ -27,7 +28,7 @@ export default async function AdminCommentsPage() {
           <tbody>
             {comments.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
                   {t("noPendingComments")}
                 </td>
               </tr>
@@ -42,6 +43,30 @@ export default async function AdminCommentsPage() {
                   </td>
                   <td className="px-4 py-3 text-sm max-w-xs truncate">
                     {comment.content}
+                  </td>
+                  <td className="px-4 py-3 text-sm max-w-xs">
+                    {comment.moderationLabel ? (
+                      <>
+                        <span
+                          className={
+                            comment.moderationAction === "reject"
+                              ? "font-medium text-destructive"
+                              : comment.moderationAction === "flag-for-review"
+                                ? "font-medium text-amber-600 dark:text-amber-500"
+                                : "font-medium text-emerald-600 dark:text-emerald-500"
+                          }
+                        >
+                          {t(`mod.${comment.moderationLabel}`)} · {Math.round((comment.moderationScore ?? 0) * 100)}%
+                        </span>
+                        {comment.moderationReason && (
+                          <div className="text-muted-foreground text-xs mt-1 line-clamp-2">
+                            {comment.moderationReason}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground text-xs">{t("mod.unmoderated")}</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-sm">
                     <Link

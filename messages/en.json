@@ -81,6 +81,16 @@
     "pendingComments": "Pending Comments",
     "noPosts": "No posts yet. Create your first post!",
     "noPendingComments": "No pending comments.",
+    "mod": {
+      "aiVerdict": "AI verdict",
+      "spam": "Spam",
+      "toxic": "Toxic",
+      "normal": "Normal",
+      "flag-for-review": "Needs review",
+      "approve": "Looks safe",
+      "reject": "Likely block",
+      "unmoderated": "Not checked"
+    },
     "add": "Add",
     "approve": "Approve",
     "viewPost": "View Post",

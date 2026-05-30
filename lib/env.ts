@@ -7,6 +7,9 @@ const envSchema = z.object({
   AUTH_URL: z.string().url().default("http://localhost:3000"),
   AUTH_GITHUB_ID: z.string().min(1).optional(),
   AUTH_GITHUB_SECRET: z.string().min(1).optional(),
+  MODERATION_API_KEY: z.string().min(1).optional(),
+  MODERATION_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
+  MODERATION_MODEL: z.string().min(1).optional(),
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
@@ -29,6 +32,9 @@ const fallback = {
   AUTH_URL: process.env.AUTH_URL ?? "http://localhost:3000",
   AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
   AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
+  MODERATION_API_KEY: process.env.MODERATION_API_KEY,
+  MODERATION_BASE_URL: process.env.MODERATION_BASE_URL ?? "https://api.openai.com/v1",
+  MODERATION_MODEL: process.env.MODERATION_MODEL,
   NODE_ENV: (process.env.NODE_ENV as "development" | "test" | "production") ?? "development",
 } as const;
 

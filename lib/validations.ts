@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const COMMENT_MAX_LENGTH = 2000;
+
 export const createPostSchema = z.object({
   title: z.string().min(1).max(200),
   content: z.string().nullish(),
@@ -11,7 +13,7 @@ export const createPostSchema = z.object({
 });
 
 export const createCommentSchema = z.object({
-  content: z.string().min(1).max(2000),
+  content: z.string().min(1).max(COMMENT_MAX_LENGTH),
   authorName: z.string().min(1).max(50),
   authorEmail: z.string().email().optional().or(z.literal("")),
   postId: z.string().cuid(),
