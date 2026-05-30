@@ -11,6 +11,26 @@ export type PostWithRelations = Prisma.DocumentGetPayload<{
   include: typeof DOCUMENT_INCLUDES;
 }>;
 
+export async function getHomePosts(limit = 14) {
+  return prisma.document.findMany({
+    where: {
+      type: "POST",
+      published: true,
+      publishedAt: { lte: new Date() },
+    },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      updatedAt: true,
+      category: { select: { title: true } },
+    },
+    orderBy: { publishedAt: "desc" },
+    take: limit,
+  });
+}
+
 export async function getPublishedPosts(params: {
   page?: number;
   pageSize?: number;

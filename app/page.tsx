@@ -1,4 +1,4 @@
-import { getAllCategories, getAllTags, getPublishedPosts } from "@/lib/queries"
+import { getAllCategories, getAllTags, getHomePosts } from "@/lib/queries"
 import { isPostRevisited } from "@/lib/posts/revision-status"
 import { formatDateShort } from "@/lib/utils"
 import { getTranslations } from "next-intl/server"
@@ -22,15 +22,22 @@ function noteDate(d: Date | null) {
     .replace(/-/g, ".")
 }
 
+async function safeHomeQuery<T>(label: string, query: Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await query
+  } catch (error) {
+    console.error(`HomePage: ${label} query failed:`, error)
+    return fallback
+  }
+}
+
 export default async function HomePage() {
   const t = await getTranslations("home")
   const tCommon = await getTranslations("common")
 
-  const [{ posts }, categories, tags] = await Promise.all([
-    getPublishedPosts({ page: 1, pageSize: 14 }),
-    getAllCategories(),
-    getAllTags(),
-  ])
+  const posts = await safeHomeQuery("posts", getHomePosts(14), [])
+  const categories = await safeHomeQuery("categories", getAllCategories(), [])
+  const tags = await safeHomeQuery("tags", getAllTags(), [])
 
   const sortedTags = [...tags]
     .sort((a, b) => b._count.documents - a._count.documents)

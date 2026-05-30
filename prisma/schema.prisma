@@ -84,6 +84,7 @@ model Document {
 
   @@index([type])
   @@index([published, createdAt(sort: Desc)])
+  @@index([type, published, publishedAt(sort: Desc)])
   @@index([categoryId])
   @@index([parentId])
 }
