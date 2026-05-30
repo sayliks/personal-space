@@ -1,15 +1,10 @@
 import { getTranslations } from "next-intl/server"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { prisma } from "@/lib/prisma"
+import { getStudioStats } from "@/lib/queries"
 
 export default async function AdminDashboard() {
   const t = await getTranslations("admin")
-  const [postCount, categoryCount, tagCount, pendingComments] = await Promise.all([
-    prisma.document.count({ where: { type: "POST" } }),
-    prisma.document.count({ where: { type: "CATEGORY" } }),
-    prisma.tag.count(),
-    prisma.comment.count({ where: { approved: false } }),
-  ])
+  const { postCount, categoryCount, tagCount, pendingComments } = await getStudioStats()
 
   const stats = [
     { label: t("posts"), value: postCount },

@@ -10,7 +10,8 @@
     "test": "jest",
     "test:e2e": "playwright test",
     "postinstall": "prisma generate",
-    "seed": "npx tsx prisma/seed.ts"
+    "seed": "npx tsx prisma/seed.ts",
+    "seed:demo": "npx tsx prisma/seed-demo.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

@@ -1,9 +1,5 @@
 # A Personal Knowledge Space
 
-<!-- TODO: this project still needs a name. Decide a project/brand name and
-     replace this heading. package.json is "my-blog"; the app calls itself a
-     "garden". Pick one identity for the open-source release. -->
-
 A personal knowledge space — a quiet, long-term place where notes, essays, and
 half-formed questions accumulate, link to each other, and get revisited over
 time. It is built for **continuous refinement**, not one-shot publishing.
@@ -70,14 +66,21 @@ npm run dev          # http://localhost:3000
 Sign in at `/login` with the admin credentials you set, then write your first
 note from the studio at `/admin`.
 
+**Want to see it populated first?** Run `npm run seed:demo` (after `npm run
+seed`) to load a small set of interlinked example notes. They demonstrate
+wiki-links, backlinks, the tended/revision-aware marker, and how paths and
+connections differ — and reading them is the fastest way to understand how the
+space is meant to be used. The command is idempotent and only touches its own
+demo notes, so it's safe to run on an existing database.
+
 ## Environment
 
 Copy `.env.example` to `.env` and fill in:
 
 | Variable | Required | Notes |
 | --- | --- | --- |
-| `DATABASE_URL` | yes | PostgreSQL connection string. For poolers (Supabase/PgBouncer) use the pooled port. |
-| `DIRECT_URL` | no | Direct (non-pooled) connection, used as a fallback. |
+| `DATABASE_URL` | yes | PostgreSQL connection string. A plain local or hosted Postgres needs only this one. |
+| `DIRECT_URL` | no | Only needed behind a connection pooler (Supabase/PgBouncer): point `DATABASE_URL` at the pooled port and `DIRECT_URL` at the direct port. Leave unset for plain Postgres. |
 | `AUTH_SECRET` | yes | Session encryption key, min 32 chars. Generate with `openssl rand -base64 32`. |
 | `AUTH_URL` | no | Defaults to `http://localhost:3000`. |
 | `ADMIN_EMAIL` | for seed | Login email created by `npm run seed`. |
@@ -97,6 +100,7 @@ npm run lint       # ESLint (flat config)
 npm run test       # Jest unit/component tests
 npm run test:e2e   # Playwright end-to-end tests
 npm run seed       # create/update the admin user
+npm run seed:demo  # load interlinked demo notes (run after seed)
 ```
 
 Prisma: `npx prisma db push` (schema → DB), `npx prisma studio` (GUI),
@@ -114,15 +118,27 @@ messages/         # i18n strings (zh.json, en.json)
 prisma/           # schema, seed
 ```
 
+**Important:** The Prisma client is generated to `app/generated/prisma/` (not
+`@prisma/client`). Always import from the generated path:
+```typescript
+import { PrismaClient } from "@/app/generated/prisma/client"
+import type { Prisma } from "@/app/generated/prisma/client"
+```
+
 Reads go through `lib/queries.ts`; mutations are server actions in
 `app/actions/`. See `CLAUDE.md` for the full architecture notes.
 
 ## Deployment
 
-Designed for Vercel: connect the repo, set the environment variables above in
-the project settings, and deploy. Any Node host that can reach your PostgreSQL
-database works too. Run `npx prisma db push` against your production database
+The app runs anywhere Node can reach PostgreSQL: Vercel, Docker, systemd,
+a VPS, or anywhere else. No vendor lock-in.
+
+**Quick Vercel:** Connect the repo, set environment variables in project
+settings, deploy. Run `npx prisma db push` against your production database
 before the first deploy.
+
+**Self-hosting?** See [DEPLOY.md](DEPLOY.md) for Docker Compose and systemd
+examples, plus verification steps.
 
 ## License
 

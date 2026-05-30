@@ -173,3 +173,75 @@ export async function getRecentPosts(limit = 5) {
     select: { id: true, title: true, published: true, updatedAt: true },
   });
 }
+
+export async function getRelatedPosts(params: {
+  postId: string;
+  tagIds?: string[];
+  categoryId?: string | null;
+  limit?: number;
+}) {
+  const { postId, tagIds = [], categoryId, limit = 3 } = params;
+
+  return prisma.document.findMany({
+    where: {
+      type: "POST",
+      published: true,
+      id: { not: postId },
+      OR: [
+        ...(tagIds.length
+          ? [
+              {
+                tags: {
+                  some: {
+                    tagId: { in: tagIds },
+                  },
+                },
+              },
+            ]
+          : []),
+        ...(categoryId
+          ? [
+              {
+                categoryId,
+              },
+            ]
+          : []),
+      ],
+    },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      summary: true,
+      tags: { include: { tag: true } },
+    },
+    take: limit,
+    orderBy: { publishedAt: "desc" },
+  }).catch(() => []);
+}
+
+export async function getSitemapEntries() {
+  const [posts, categories, tags] = await Promise.all([
+    prisma.document.findMany({
+      where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
+      select: { slug: true, updatedAt: true },
+    }),
+    prisma.document.findMany({ where: { type: "CATEGORY" }, select: { slug: true, updatedAt: true } }),
+    prisma.tag.findMany({ select: { slug: true, updatedAt: true } }),
+  ]);
+
+  return { posts, categories, tags };
+}
+
+export async function getGraphPosts() {
+  return prisma.document.findMany({
+    where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      content: true,
+      category: { select: { title: true } },
+    },
+  });
+}

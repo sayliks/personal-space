@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { getRelatedPosts } from "@/lib/queries"
 import Link from "next/link"
 
 interface RelatedNotesProps {
@@ -11,44 +11,9 @@ export async function RelatedNotes({ postId, tags, categoryId }: RelatedNotesPro
   if (tags.length === 0 && !categoryId) return null
 
   // Find posts with shared tags or same category
-  const tagIds = tags.map(t => t.id)
+  const tagIds = tags.map((t) => t.id)
 
-  const relatedPosts = await prisma.document.findMany({
-    where: {
-      type: "POST",
-      published: true,
-      id: { not: postId },
-      OR: [
-        // Posts with shared tags
-        tagIds.length > 0 ? {
-          tags: {
-            some: {
-              tagId: { in: tagIds }
-            }
-          }
-        } : {},
-        // Posts in same category
-        categoryId ? {
-          categoryId: categoryId
-        } : {}
-      ]
-    },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      summary: true,
-      tags: {
-        include: {
-          tag: true
-        }
-      }
-    },
-    take: 3,
-    orderBy: {
-      publishedAt: "desc"
-    }
-  }).catch(() => [])
+  const relatedPosts = await getRelatedPosts({ postId, tagIds, categoryId, limit: 3 })
 
   if (relatedPosts.length === 0) return null
 

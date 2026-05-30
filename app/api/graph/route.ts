@@ -1,19 +1,10 @@
-import { prisma } from "@/lib/prisma"
+import { getGraphPosts } from "@/lib/queries"
 import { NextResponse } from "next/server"
 import { buildGraphData } from "@/lib/graph"
 
 export async function GET() {
   try {
-    const posts = await prisma.document.findMany({
-      where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        content: true,
-        category: { select: { title: true } },
-      },
-    })
+    const posts = await getGraphPosts()
 
     const graph = buildGraphData(
       posts.map((p) => ({

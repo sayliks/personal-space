@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { getSitemapEntries } from "@/lib/queries"
 import { env } from "@/lib/env"
 import type { MetadataRoute } from "next"
 
@@ -7,17 +7,7 @@ export const dynamic = "force-dynamic"
 const SITE_URL = env.AUTH_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, categories, tags] = await Promise.all([
-    prisma.document.findMany({
-      where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
-      select: { slug: true, updatedAt: true },
-    }),
-    prisma.document.findMany({
-      where: { type: "CATEGORY" },
-      select: { slug: true, updatedAt: true },
-    }),
-    prisma.tag.findMany({ select: { slug: true, updatedAt: true } }),
-  ])
+  const { posts, categories, tags } = await getSitemapEntries()
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
