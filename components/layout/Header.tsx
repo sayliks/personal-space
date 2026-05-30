@@ -14,7 +14,14 @@ export async function Header() {
         >
           {t("siteTitle")}
         </Link>
-        <HeaderNav labels={{ articles: t("articles"), graph: t("graph"), about: t("about") }} />
+        <HeaderNav
+          labels={{
+            articles: t("articles"),
+            graph: t("graph"),
+            about: t("about"),
+            search: t("search"),
+          }}
+        />
       </div>
     </header>
   )

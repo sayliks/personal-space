@@ -11,7 +11,11 @@
     "loading": "Loading...",
     "toggleTheme": "Toggle theme",
     "siteTitle": "sayliks's Corner",
-    "tended": "tended"
+    "tended": "tended",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "navigation": "Navigation",
+    "appearance": "Appearance"
   },
   "about": {
     "title": "About",
@@ -48,7 +52,8 @@
     "signInWithGithub": "Sign in with GitHub",
     "signedInAs": "Signed in as {name}",
     "signOut": "Sign Out",
-    "loginRequiredToComment": "Please sign in with GitHub to comment."
+    "loginRequiredToComment": "Please sign in with GitHub to comment.",
+    "tableOfContents": "Table of contents"
   },
   "admin": {
     "blogAdmin": "Blog Admin",

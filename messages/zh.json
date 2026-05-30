@@ -11,7 +11,11 @@
     "loading": "加载中...",
     "toggleTheme": "切换主题",
     "siteTitle": "sayliks's Corner",
-    "tended": "已修订"
+    "tended": "已修订",
+    "menu": "菜单",
+    "closeMenu": "关闭菜单",
+    "navigation": "导航",
+    "appearance": "外观"
   },
 
   "about": {
@@ -50,7 +54,8 @@
     "signInWithGithub": "使用 GitHub 登录",
     "signedInAs": "已登录为 {name}",
     "signOut": "退出登录",
-    "loginRequiredToComment": "请使用 GitHub 登录后发表评论。"
+    "loginRequiredToComment": "请使用 GitHub 登录后发表评论。",
+    "tableOfContents": "本文目录"
   },
   "admin": {
     "blogAdmin": "博客管理",

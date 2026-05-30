@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 import { Backlinks } from "@/components/blog/Backlinks"
+import { ArticleToc } from "@/components/blog/ArticleToc"
 import { CommentSection } from "@/components/blog/CommentSection"
 import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer"
 import { RelatedNotes } from "@/components/blog/RelatedNotes"
@@ -138,6 +139,8 @@ export default async function PostPage({
           </div>
         )}
       </header>
+
+      <ArticleToc />
 
       <div className="mx-auto max-w-[728px] px-5 pb-16 sm:px-6">
         <div className="mb-9 h-px bg-gradient-to-r from-transparent via-border/28 to-transparent" />
