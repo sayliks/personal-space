@@ -1,49 +1,61 @@
 import { getTranslations } from "next-intl/server"
 import { getAllTags } from "@/lib/queries"
 import { createTag, deleteTag } from "@/app/actions/admin"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { InlineAddForm } from "@/components/admin/InlineAddForm"
+import { InlineRemoveForm } from "@/components/admin/InlineRemoveForm"
 
-export default async function AdminTagsPage() {
-  const t = await getTranslations("admin")
+export default async function StudioConnectionsPage() {
+  const t = await getTranslations("studio")
   const tags = await getAllTags()
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">{t("tags")}</h1>
+    <div className="space-y-16">
+      {/* Header */}
+      <header>
+        <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+          {t("tagsTitle")}
+        </h1>
+        <p className="text-muted-foreground/70 leading-relaxed max-w-xl">
+          {t("tagsSubtitle")}
+        </p>
+      </header>
 
-      <form action={createTag} className="flex gap-2 mb-6">
-        <Input name="name" placeholder={t("tagNamePlaceholder")} required className="max-w-xs" />
-        <Button type="submit">{t("add")}</Button>
-      </form>
+      {/* Add form */}
+      <section>
+        <InlineAddForm
+          action={createTag}
+          placeholder={t("connectionPlaceholder")}
+          label={t("addConnection")}
+        />
+      </section>
 
-      <div className="border rounded-md max-w-md">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("name")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("posts")}</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tags.map((x) => (
-              <tr key={x.id} className="border-b last:border-0">
-                <td className="px-4 py-3 text-sm">{x.name}</td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">{x._count.documents}</td>
-                <td className="px-4 py-3 text-right">
-                  <form action={deleteTag}>
-                    <input type="hidden" name="id" value={x.id} />
-                    <Button variant="destructive" size="sm" type="submit">
-                      {t("delete")}
-                    </Button>
-                  </form>
-                </td>
-              </tr>
+      {/* List — connections flow as a woven field of tags */}
+      <section className="pt-8 border-t border-border/20">
+        {tags.length === 0 ? (
+          <p className="text-sm text-muted-foreground/50 italic">
+            {t("noConnections")}
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-x-8 gap-y-6">
+            {tags.map((tag) => (
+              <div
+                key={tag.id}
+                className="group flex items-baseline gap-3"
+              >
+                <span className="text-base font-mono text-muted-foreground/70 group-hover:text-foreground transition-colors duration-300">
+                  #{tag.name}
+                </span>
+                <span className="text-xs text-muted-foreground/40 font-mono">
+                  {tag._count.documents}
+                </span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <InlineRemoveForm action={deleteTag} id={tag.id} />
+                </span>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        )}
+      </section>
     </div>
   )
 }

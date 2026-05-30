@@ -4,12 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
-import { Trash2 } from "lucide-react"
 import { deletePost } from "@/app/actions/posts"
 
 export function DeletePostButton({ postId }: { postId: string }) {
   const t = useTranslations("admin")
+  const ts = useTranslations("studio")
   const [confirming, setConfirming] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const router = useRouter()
@@ -29,20 +28,31 @@ export function DeletePostButton({ postId }: { postId: string }) {
 
   if (!confirming) {
     return (
-      <Button variant="ghost" size="sm" onClick={() => setConfirming(true)}>
-        <Trash2 className="size-4 text-destructive" />
-      </Button>
+      <button
+        onClick={() => setConfirming(true)}
+        className="text-xs text-muted-foreground/40 hover:text-destructive/80 font-mono transition-colors duration-300"
+      >
+        {ts("remove")}
+      </button>
     )
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
-        {deleting ? t("deleting") : t("confirmDelete")}
-      </Button>
-      <Button variant="ghost" size="sm" onClick={() => setConfirming(false)} disabled={deleting}>
-        {t("cancel")}
-      </Button>
-    </div>
+    <span className="inline-flex items-center gap-3">
+      <button
+        onClick={handleDelete}
+        disabled={deleting}
+        className="text-xs text-destructive/80 hover:text-destructive font-mono transition-colors disabled:opacity-50"
+      >
+        {deleting ? "…" : ts("confirmRemove")}
+      </button>
+      <button
+        onClick={() => setConfirming(false)}
+        disabled={deleting}
+        className="text-xs text-muted-foreground/40 hover:text-muted-foreground font-mono transition-colors"
+      >
+        {ts("cancel")}
+      </button>
+    </span>
   )
 }

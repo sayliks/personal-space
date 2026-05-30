@@ -1,103 +1,110 @@
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getAllPosts } from "@/lib/queries"
-import { formatDate } from "@/lib/utils"
-import { Plus, Pencil, ExternalLink } from "lucide-react"
 import { DeletePostButton } from "./DeletePostButton"
 
-export default async function AdminPostsPage() {
-  const t = await getTranslations("admin")
+export default async function StudioWritingPage() {
+  const t = await getTranslations("studio")
   const posts = await getAllPosts()
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t("posts")}</h1>
+    <div className="space-y-16">
+      {/* Header */}
+      <header className="flex items-start justify-between gap-6">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+            {t("writingTitle")}
+          </h1>
+          <p className="text-muted-foreground/70 leading-relaxed max-w-xl">
+            {t("writingSubtitle")}
+          </p>
+        </div>
         <Link
           href="/admin/posts/new"
-          className="inline-flex items-center gap-1.5 rounded-md bg-primary text-primary-foreground h-8 px-2.5 text-sm font-medium hover:bg-primary/80 transition-colors"
+          className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-foreground/5 hover:bg-foreground/10 border border-border/20 hover:border-border/40 rounded-lg text-sm font-medium transition-all duration-300"
         >
-          <Plus className="size-4" />
-          {t("newPost")}
+          <span>+</span>
+          <span>{t("newWriting")}</span>
         </Link>
-      </div>
+      </header>
 
-      <div className="border rounded-md">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("title")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("status")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("category")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("date")}</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
-                  {t("noPosts")}
-                </td>
-              </tr>
-            ) : (
-              posts.map((post) => (
-                <tr key={post.id} className="border-b last:border-0">
-                  <td className="px-4 py-3">
-                    <div>
-                      <Link
-                        href={`/admin/posts/${post.id}/edit`}
-                        className="font-medium hover:underline"
-                      >
-                        {post.title}
-                      </Link>
-                      <div className="text-xs text-muted-foreground">{post.slug}</div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
+      {/* Timeline */}
+      <section className="pt-8 border-t border-border/20">
+        {posts.length === 0 ? (
+          <p className="text-sm text-muted-foreground/50 italic">
+            {t("noWritings")}
+          </p>
+        ) : (
+          <div className="space-y-10">
+            {posts.map((post) => (
+              <article key={post.id} className="group flex items-baseline gap-6">
+                {/* Hanging date */}
+                <time className="text-xs text-muted-foreground/40 font-mono shrink-0 w-20 pt-1">
+                  {(post.publishedAt ?? post.createdAt)
+                    .toLocaleDateString("zh-CN", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\//g, ".")}
+                </time>
+
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-3 mb-1.5">
+                    <Link
+                      href={`/admin/posts/${post.id}/edit`}
+                      className="text-lg font-serif tracking-tight group-hover:text-muted-foreground transition-colors duration-300 truncate"
+                    >
+                      {post.title || t("untitled")}
+                    </Link>
                     <span
-                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                      className={`shrink-0 text-xs font-mono ${
                         post.published
-                          ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                          : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                          ? "text-muted-foreground/40"
+                          : "text-primary/60"
                       }`}
                     >
                       {post.published ? t("published") : t("draft")}
                     </span>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">
-                    {post.category?.title ?? "-"}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">
-                    {formatDate(post.publishedAt ?? post.createdAt)}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex items-center justify-end gap-1">
+                  </div>
+
+                  {/* Meta line: slug + category */}
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground/40 font-mono">
+                    <span className="truncate">{post.slug}</span>
+                    {post.category && (
+                      <>
+                        <span className="text-border/40">·</span>
+                        <span className="shrink-0">{post.category.title}</span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Actions — appear on hover */}
+                  <div className="flex items-center gap-4 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Link
+                      href={`/admin/posts/${post.id}/edit`}
+                      className="text-xs text-muted-foreground/50 hover:text-foreground font-mono transition-colors"
+                    >
+                      {t("edit")}
+                    </Link>
+                    {post.published && (
                       <Link
-                        href={`/admin/posts/${post.id}/edit`}
-                        className="inline-flex items-center justify-center rounded-md h-7 w-7 text-sm hover:bg-muted transition-colors"
+                        href={`/posts/${post.slug}`}
+                        target="_blank"
+                        className="text-xs text-muted-foreground/50 hover:text-foreground font-mono transition-colors"
                       >
-                        <Pencil className="size-4" />
+                        {t("view")}
                       </Link>
-                      {post.published && (
-                        <Link
-                          href={`/posts/${post.slug}`}
-                          target="_blank"
-                          className="inline-flex items-center justify-center rounded-md h-7 w-7 text-sm hover:bg-muted transition-colors"
-                          title={t("viewPost")}
-                        >
-                          <ExternalLink className="size-3.5" />
-                        </Link>
-                      )}
-                      <DeletePostButton postId={post.id} />
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+                    )}
+                    <DeletePostButton postId={post.id} />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   )
 }
