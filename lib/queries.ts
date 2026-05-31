@@ -211,6 +211,16 @@ export async function getPendingComments() {
   });
 }
 
+export async function getAllComments() {
+  return prisma.comment.findMany({
+    include: {
+      document: { select: { id: true, title: true, slug: true } },
+      user: { select: { name: true, email: true } }
+    },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
 export async function getStudioStats() {
   const [postCount, categoryCount, tagCount, pendingComments] = await Promise.all([
     prisma.document.count({ where: { type: "POST" } }),

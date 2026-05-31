@@ -100,6 +100,7 @@
     },
     "add": "添加",
     "approve": "通过",
+    "approved": "已通过",
     "viewPost": "查看文章",
     "createPost": "创建文章",
     "updatePost": "更新文章",
