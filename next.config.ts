@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "tg.matsumae.top",
+      },
+      {
+        protocol: "https",
+        hostname: "tg.salix.eu.org",
+      },
     ],
   },
 };

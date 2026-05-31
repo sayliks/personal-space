@@ -140,7 +140,8 @@
   },
   "posts": {
     "title": "Writing",
-    "noPosts": "No notes yet"
+    "noPosts": "No notes yet",
+    "gallery": "gallery"
   },
   "home": {
     "siteTitle": "sayliks's Corner",

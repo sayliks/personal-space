@@ -86,7 +86,7 @@ export default async function HomePage() {
           <>
             <header className="pt-8 pb-6">
               <h2 className="font-mono text-xs lowercase tracking-wide text-muted-foreground/50">
-                gallery
+                {tPosts("gallery")}
               </h2>
             </header>
 

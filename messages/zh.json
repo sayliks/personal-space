@@ -142,7 +142,8 @@
   },
   "posts": {
     "title": "写作",
-    "noPosts": "还没有笔记"
+    "noPosts": "还没有笔记",
+    "gallery": "相册"
   },
   "home": {
     "siteTitle": "sayliks's Corner",

@@ -4,7 +4,8 @@ import { PhotoForm } from "@/components/admin/PhotoForm"
 import { getPhotoById } from "@/lib/queries"
 import { prisma } from "@/lib/prisma"
 
-export default async function EditPhotoPage({ params }: { params: { id: string } }) {
+export default async function EditPhotoPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   const t = await getTranslations("studio")
   const photo = await getPhotoById(params.id)
   const allTags = await prisma.tag.findMany({ orderBy: { name: "asc" } })
