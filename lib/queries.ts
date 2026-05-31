@@ -288,3 +288,46 @@ export async function getSitemapEntries() {
 
   return { posts, categories, tags };
 }
+
+export async function getPublishedPhotos() {
+  return await prisma.photo.findMany({
+    where: { published: true },
+    include: {
+      tags: {
+        include: { tag: true }
+      }
+    },
+    orderBy: [
+      { order: 'asc' },
+      { createdAt: 'desc' }
+    ]
+  });
+}
+
+export async function getAllPhotos() {
+  return await prisma.photo.findMany({
+    include: {
+      tags: {
+        include: { tag: true }
+      },
+      author: {
+        select: { name: true, email: true }
+      }
+    },
+    orderBy: [
+      { order: 'asc' },
+      { createdAt: 'desc' }
+    ]
+  });
+}
+
+export async function getPhotoById(id: string) {
+  return await prisma.photo.findUnique({
+    where: { id },
+    include: {
+      tags: {
+        include: { tag: true }
+      }
+    }
+  });
+}

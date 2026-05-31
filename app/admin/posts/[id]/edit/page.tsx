@@ -15,8 +15,8 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
   if (!post) notFound()
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">{t("editPost")}</h1>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-medium">{t("editPost")}</h1>
       <PostForm
         post={{
           id: post.id,

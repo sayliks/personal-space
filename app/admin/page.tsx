@@ -9,120 +9,102 @@ export default async function StudioDashboard() {
     await Promise.all([getStudioStats(), getRecentPosts(5)])
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-12">
       {/* Header */}
       <header>
-        <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+        <h1 className="text-2xl font-medium mb-2">
           {t("welcome")}
         </h1>
-        <p className="text-muted-foreground/70 leading-relaxed max-w-2xl">
-          {t("welcomeMessage")}
-        </p>
       </header>
 
-      {/* Currently section */}
-      <section className="pt-8 border-t border-border/20">
-        <div className="flex items-baseline gap-3 mb-6">
-          <span className="text-xs uppercase tracking-widest text-muted-foreground/40 font-mono">
-            {t("currentlyLabel")}
-          </span>
-          <div className="h-1.5 w-1.5 rounded-full bg-primary/40 animate-pulse" />
-        </div>
-        <p className="text-sm text-muted-foreground/60 leading-relaxed max-w-2xl">
-          {t("currentlyMessage")}
-        </p>
-      </section>
-
-      {/* Garden overview - subtle metrics */}
+      {/* Garden overview */}
       <section>
-        <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
+        <h2 className="text-xs text-muted-foreground mb-6">
           {t("gardenOverview")}
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <Link
             href="/admin/posts"
-            className="group block space-y-2 hover:translate-x-1 transition-transform duration-300"
+            className="group block space-y-1 hover:translate-x-0.5 transition-transform"
           >
-            <div className="text-3xl font-serif text-muted-foreground/80 group-hover:text-foreground transition-colors">
+            <div className="text-2xl font-medium text-foreground/80 group-hover:text-foreground transition-colors">
               {postCount}
             </div>
-            <div className="text-sm text-muted-foreground/50 font-mono">
+            <div className="text-xs text-muted-foreground">
               {t("writings")}
             </div>
           </Link>
 
           <Link
             href="/admin/categories"
-            className="group block space-y-2 hover:translate-x-1 transition-transform duration-300"
+            className="group block space-y-1 hover:translate-x-0.5 transition-transform"
           >
-            <div className="text-3xl font-serif text-muted-foreground/80 group-hover:text-foreground transition-colors">
+            <div className="text-2xl font-medium text-foreground/80 group-hover:text-foreground transition-colors">
               {categoryCount}
             </div>
-            <div className="text-sm text-muted-foreground/50 font-mono">
+            <div className="text-xs text-muted-foreground">
               {t("knowledgePaths")}
             </div>
           </Link>
 
           <Link
             href="/admin/tags"
-            className="group block space-y-2 hover:translate-x-1 transition-transform duration-300"
+            className="group block space-y-1 hover:translate-x-0.5 transition-transform"
           >
-            <div className="text-3xl font-serif text-muted-foreground/80 group-hover:text-foreground transition-colors">
+            <div className="text-2xl font-medium text-foreground/80 group-hover:text-foreground transition-colors">
               {tagCount}
             </div>
-            <div className="text-sm text-muted-foreground/50 font-mono">
+            <div className="text-xs text-muted-foreground">
               {t("connections")}
             </div>
           </Link>
 
           <Link
             href="/admin/comments"
-            className="group block space-y-2 hover:translate-x-1 transition-transform duration-300"
+            className="group block space-y-1 hover:translate-x-0.5 transition-transform"
           >
-            <div className="text-3xl font-serif text-muted-foreground/80 group-hover:text-foreground transition-colors">
+            <div className="text-2xl font-medium text-foreground/80 group-hover:text-foreground transition-colors">
               {pendingComments}
             </div>
-            <div className="text-sm text-muted-foreground/50 font-mono">
+            <div className="text-xs text-muted-foreground">
               {t("pendingResponses")}
             </div>
           </Link>
         </div>
       </section>
 
-      {/* Recent activity timeline */}
+      {/* Recent activity */}
       <section>
-        <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
+        <h2 className="text-xs text-muted-foreground mb-6">
           {t("recentActivity")}
         </h2>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {recentPosts.map((post) => (
             <Link
               key={post.id}
               href={`/admin/posts/${post.id}/edit`}
               className="group block"
             >
-              <div className="flex items-baseline gap-4">
-                <time className="text-xs text-muted-foreground/40 font-mono shrink-0 w-24">
+              <div className="flex items-baseline gap-3">
+                <time className="text-xs text-muted-foreground shrink-0 w-16">
                   {post.updatedAt.toLocaleDateString('zh-CN', {
                     month: '2-digit',
                     day: '2-digit'
                   }).replace(/\//g, '.')}
                 </time>
-                <div className="flex-1">
-                  <div className="flex items-baseline gap-3">
-                    <h3 className="text-base font-medium group-hover:text-muted-foreground transition-colors">
-                      {post.title}
-                    </h3>
-                    <span className={`text-xs font-mono ${
-                      post.published
-                        ? 'text-muted-foreground/40'
-                        : 'text-primary/60'
-                    }`}>
-                      {post.published ? t("published") : t("draft")}
-                    </span>
-                  </div>
+                <div className="flex-1 flex items-baseline gap-2">
+                  <h3 className="text-sm group-hover:text-muted-foreground transition-colors">
+                    {post.title}
+                  </h3>
+                  <span className={`text-xs ${
+                    post.published
+                      ? 'text-muted-foreground/50'
+                      : 'text-primary/60'
+                  }`}>
+                    {post.published ? t("published") : t("draft")}
+                  </span>
                 </div>
               </div>
             </Link>
@@ -130,18 +112,18 @@ export default async function StudioDashboard() {
         </div>
 
         {recentPosts.length === 0 && (
-          <p className="text-sm text-muted-foreground/50 italic">
+          <p className="text-sm text-muted-foreground">
             {t("noRecentActivity")}
           </p>
         )}
       </section>
 
       {/* Quick actions */}
-      <section className="pt-8 border-t border-border/20">
-        <div className="flex flex-wrap gap-4">
+      <section className="pt-6 border-t border-border/40">
+        <div className="flex gap-3">
           <Link
             href="/admin/posts/new"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-foreground/5 hover:bg-foreground/10 border border-border/20 hover:border-border/40 rounded-lg text-sm font-medium transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded text-sm transition-colors"
           >
             <span>+</span>
             <span>{t("newWriting")}</span>
@@ -149,7 +131,7 @@ export default async function StudioDashboard() {
 
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border/20 hover:border-border/40 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 border border-border/40 hover:border-border rounded text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <span>→</span>
             <span>{t("viewGarden")}</span>

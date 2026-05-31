@@ -89,9 +89,9 @@ export function SearchDialog() {
         size="sm"
         onClick={() => setOpen(true)}
         className="text-muted-foreground hover:text-foreground"
+        aria-label={t("title")}
       >
         <Search className="size-4" />
-        <span className="ml-1.5 sr-only sm:not-sr-only">{t("title")}</span>
       </Button>
 
       <DialogContent className="sm:max-w-lg bg-white dark:bg-popover/95 backdrop-blur-xl">

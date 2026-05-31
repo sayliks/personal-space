@@ -10,31 +10,33 @@ export default async function AdminCommentsPage() {
   const comments = await getPendingComments()
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">{t("comments")}</h1>
+    <div className="space-y-8">
+      <header>
+        <h1 className="text-2xl font-medium">{t("comments")}</h1>
+      </header>
 
-      <div className="border rounded-md">
+      <div className="border border-border/40 rounded">
         <table className="w-full">
           <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("author")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("content")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("mod.aiVerdict")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("post")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium">{t("date")}</th>
-              <th className="text-right px-4 py-3 text-sm font-medium">{t("actions")}</th>
+            <tr className="border-b border-border/40 bg-muted/30">
+              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("author")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("content")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("mod.aiVerdict")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("post")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("date")}</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
             {comments.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                <td colSpan={6} className="px-4 py-8 text-center text-sm text-muted-foreground">
                   {t("noPendingComments")}
                 </td>
               </tr>
             ) : (
               comments.map((comment) => (
-                <tr key={comment.id} className="border-b last:border-0">
+                <tr key={comment.id} className="border-b border-border/40 last:border-0">
                   <td className="px-4 py-3 text-sm">
                     <div className="font-medium">{comment.authorName}</div>
                     {comment.authorEmail && (

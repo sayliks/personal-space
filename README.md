@@ -21,12 +21,16 @@ than only what you've recently published.
 - **Revision-aware notes** — a note edited meaningfully after publishing is
   marked as *tended*, with its updated date surfaced in lists and on the note
   itself. The space reads as actively maintained, not frozen.
+- **Photo gallery** — curate and display photos on the homepage with tags and
+  ordering, managed through the admin console.
 - **Search & topics** — full-text search and category/tag navigation for
   finding your way back to an idea.
 - **Comments with auth & moderation** — optional GitHub sign-in, admin approval
   flow, for discussion without turning the space into a social feed.
 - **Bilingual** — Chinese (default) and English via cookie-based locale
   switching, no URL prefix.
+- **Minimal admin console** — clean, distraction-free interface for managing
+  content with a focus on simplicity and clarity.
 
 ## Stack
 
@@ -61,7 +65,7 @@ npm run dev          # http://localhost:3000
 ```
 
 Sign in at `/login` with the admin credentials you set, then write your first
-note from the studio at `/admin`.
+note from the console at `/admin`.
 
 **Want to see it populated first?** Run `npm run seed:demo` (after `npm run
 seed`) to load a small set of interlinked example notes. They demonstrate
@@ -108,7 +112,12 @@ Prisma: `npx prisma db push` (schema → DB), `npx prisma studio` (GUI),
 ```
 app/              # App Router pages, server actions, read-only API routes
   actions/        # mutations (server actions, not API routes)
-  admin/          # the writing studio (auth-guarded)
+  admin/          # the admin console (auth-guarded)
+    posts/        # post management
+    categories/   # category management
+    tags/         # tag management
+    photos/       # photo gallery management
+    comments/     # comment moderation
 components/       # UI — layout, blog (notes), admin
 lib/              # prisma, auth, queries, validations, wiki-link
 messages/         # i18n strings (zh.json, en.json)
@@ -124,6 +133,31 @@ import type { Prisma } from "@/app/generated/prisma/client"
 
 Reads go through `lib/queries.ts`; mutations are server actions in
 `app/actions/`. See `CLAUDE.md` for the full architecture notes.
+
+## Features
+
+### Admin Console
+A minimal, distraction-free interface for managing your knowledge space:
+- **Overview** — dashboard with stats and recent activity
+- **Posts** — create, edit, and manage articles with markdown support
+- **Categories** — organize content into knowledge paths
+- **Tags** — create connections between ideas
+- **Gallery** — curate photos for the homepage
+- **Comments** — moderate and approve reader comments
+
+### Content Management
+- Full markdown support with syntax highlighting
+- Draft/publish workflow
+- Category and tag organization
+- Cover images and summaries for SEO
+- Wiki-link support for internal connections
+
+### Photo Gallery
+- Upload and manage photos through the admin console
+- Tag photos for organization
+- Control display order
+- Publish/unpublish individual photos
+- Responsive grid layout on homepage
 
 ## Deployment
 

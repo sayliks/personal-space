@@ -9,13 +9,13 @@ export default async function StudioConnectionsPage() {
   const tags = await getAllTags()
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
       {/* Header */}
       <header>
-        <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+        <h1 className="text-2xl font-medium mb-2">
           {t("tagsTitle")}
         </h1>
-        <p className="text-muted-foreground/70 leading-relaxed max-w-xl">
+        <p className="text-sm text-muted-foreground">
           {t("tagsSubtitle")}
         </p>
       </header>
@@ -29,26 +29,26 @@ export default async function StudioConnectionsPage() {
         />
       </section>
 
-      {/* List — connections flow as a woven field of tags */}
-      <section className="pt-8 border-t border-border/20">
+      {/* List */}
+      <section className="pt-6 border-t border-border/40">
         {tags.length === 0 ? (
-          <p className="text-sm text-muted-foreground/50 italic">
+          <p className="text-sm text-muted-foreground">
             {t("noConnections")}
           </p>
         ) : (
-          <div className="flex flex-wrap gap-x-8 gap-y-6">
+          <div className="flex flex-wrap gap-x-6 gap-y-4">
             {tags.map((tag) => (
               <div
                 key={tag.id}
-                className="group flex items-baseline gap-3"
+                className="group flex items-baseline gap-2"
               >
-                <span className="text-base font-mono text-muted-foreground/70 group-hover:text-foreground transition-colors duration-300">
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                   #{tag.name}
                 </span>
-                <span className="text-xs text-muted-foreground/40 font-mono">
+                <span className="text-xs text-muted-foreground">
                   {tag._count.documents}
                 </span>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">
                   <InlineRemoveForm action={deleteTag} id={tag.id} />
                 </span>
               </div>

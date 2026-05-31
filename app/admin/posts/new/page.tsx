@@ -8,8 +8,8 @@ export default async function NewPostPage() {
   const tags = await getAllTags()
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">{t("newPost")}</h1>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-medium">{t("newPost")}</h1>
       <PostForm categories={categories} tags={tags} />
     </div>
   )

@@ -8,38 +8,38 @@ export default async function StudioWritingPage() {
   const posts = await getAllPosts()
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
       {/* Header */}
       <header className="flex items-start justify-between gap-6">
         <div>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+          <h1 className="text-2xl font-medium mb-2">
             {t("writingTitle")}
           </h1>
-          <p className="text-muted-foreground/70 leading-relaxed max-w-xl">
+          <p className="text-sm text-muted-foreground">
             {t("writingSubtitle")}
           </p>
         </div>
         <Link
           href="/admin/posts/new"
-          className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-foreground/5 hover:bg-foreground/10 border border-border/20 hover:border-border/40 rounded-lg text-sm font-medium transition-all duration-300"
+          className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded text-sm transition-colors"
         >
           <span>+</span>
           <span>{t("newWriting")}</span>
         </Link>
       </header>
 
-      {/* Timeline */}
-      <section className="pt-8 border-t border-border/20">
+      {/* List */}
+      <section className="pt-6 border-t border-border/40">
         {posts.length === 0 ? (
-          <p className="text-sm text-muted-foreground/50 italic">
+          <p className="text-sm text-muted-foreground">
             {t("noWritings")}
           </p>
         ) : (
-          <div className="space-y-10">
+          <div className="space-y-6">
             {posts.map((post) => (
-              <article key={post.id} className="group flex items-baseline gap-6">
-                {/* Hanging date */}
-                <time className="text-xs text-muted-foreground/40 font-mono shrink-0 w-20 pt-1">
+              <article key={post.id} className="group flex items-baseline gap-4">
+                {/* Date */}
+                <time className="text-xs text-muted-foreground shrink-0 w-20">
                   {(post.publishedAt ?? post.createdAt)
                     .toLocaleDateString("zh-CN", {
                       year: "numeric",
@@ -51,17 +51,17 @@ export default async function StudioWritingPage() {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-3 mb-1.5">
+                  <div className="flex items-baseline gap-2 mb-1">
                     <Link
                       href={`/admin/posts/${post.id}/edit`}
-                      className="text-lg font-serif tracking-tight group-hover:text-muted-foreground transition-colors duration-300 truncate"
+                      className="text-sm font-medium group-hover:text-muted-foreground transition-colors truncate"
                     >
                       {post.title || t("untitled")}
                     </Link>
                     <span
-                      className={`shrink-0 text-xs font-mono ${
+                      className={`shrink-0 text-xs ${
                         post.published
-                          ? "text-muted-foreground/40"
+                          ? "text-muted-foreground/50"
                           : "text-primary/60"
                       }`}
                     >
@@ -69,22 +69,22 @@ export default async function StudioWritingPage() {
                     </span>
                   </div>
 
-                  {/* Meta line: slug + category */}
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground/40 font-mono">
+                  {/* Meta */}
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <span className="truncate">{post.slug}</span>
                     {post.category && (
                       <>
-                        <span className="text-border/40">·</span>
+                        <span>·</span>
                         <span className="shrink-0">{post.category.title}</span>
                       </>
                     )}
                   </div>
 
-                  {/* Actions — appear on hover */}
-                  <div className="flex items-center gap-4 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {/* Actions */}
+                  <div className="flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Link
                       href={`/admin/posts/${post.id}/edit`}
-                      className="text-xs text-muted-foreground/50 hover:text-foreground font-mono transition-colors"
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {t("edit")}
                     </Link>
@@ -92,7 +92,7 @@ export default async function StudioWritingPage() {
                       <Link
                         href={`/posts/${post.slug}`}
                         target="_blank"
-                        className="text-xs text-muted-foreground/50 hover:text-foreground font-mono transition-colors"
+                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {t("view")}
                       </Link>

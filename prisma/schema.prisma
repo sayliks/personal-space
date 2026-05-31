@@ -17,6 +17,7 @@ model User {
   role          String     @default("user")
   documents     Document[]
   comments      Comment[]
+  photos        Photo[]
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime   @default(now())
@@ -101,6 +102,7 @@ model Tag {
   name      String        @unique
   slug      String        @unique
   documents DocumentTag[]
+  photos    PhotoTag[]
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 }
@@ -167,4 +169,33 @@ model Comment {
 
   @@index([documentId])
   @@index([userId])
+}
+
+model Photo {
+  id          String    @id @default(cuid())
+  title       String
+  imageUrl    String
+  description String?
+  order       Int       @default(0)
+  published   Boolean   @default(true)
+
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id])
+
+  tags        PhotoTag[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, order])
+}
+
+model PhotoTag {
+  photoId String
+  photo   Photo  @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  tagId   String
+  tag     Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([photoId, tagId])
+  @@index([tagId])
 }

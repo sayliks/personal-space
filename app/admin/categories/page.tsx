@@ -9,13 +9,13 @@ export default async function StudioPathsPage() {
   const categories = await getAllCategories()
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
       {/* Header */}
       <header>
-        <h1 className="text-4xl md:text-5xl font-serif mb-4 tracking-tight leading-tight">
+        <h1 className="text-2xl font-medium mb-2">
           {t("categoriesTitle")}
         </h1>
-        <p className="text-muted-foreground/70 leading-relaxed max-w-xl">
+        <p className="text-sm text-muted-foreground">
           {t("categoriesSubtitle")}
         </p>
       </header>
@@ -30,27 +30,27 @@ export default async function StudioPathsPage() {
       </section>
 
       {/* List */}
-      <section className="pt-8 border-t border-border/20">
+      <section className="pt-6 border-t border-border/40">
         {categories.length === 0 ? (
-          <p className="text-sm text-muted-foreground/50 italic">
+          <p className="text-sm text-muted-foreground">
             {t("noPaths")}
           </p>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4">
             {categories.map((category) => (
               <div
                 key={category.id}
                 className="group flex items-baseline justify-between gap-6"
               >
-                <div className="flex items-baseline gap-4 min-w-0">
-                  <h3 className="text-lg font-serif tracking-tight truncate group-hover:text-muted-foreground transition-colors duration-300">
+                <div className="flex items-baseline gap-3 min-w-0">
+                  <h3 className="text-sm font-medium truncate group-hover:text-muted-foreground transition-colors">
                     {category.title}
                   </h3>
-                  <span className="shrink-0 text-xs text-muted-foreground/40 font-mono">
+                  <span className="shrink-0 text-xs text-muted-foreground">
                     {t("countWritings", { count: category._count.documents })}
                   </span>
                 </div>
-                <div className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                   <InlineRemoveForm action={deleteCategory} id={category.id} />
                 </div>
               </div>

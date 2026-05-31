@@ -27,3 +27,23 @@ export const createCategorySchema = z.object({
 export const createTagSchema = z.object({
   name: z.string().min(1).max(50),
 });
+
+export const createPhotoSchema = z.object({
+  title: z.string().min(1).max(200),
+  imageUrl: z.string().min(1).transform((val) => {
+    // Extract URL from Markdown: ![alt](url)
+    const markdownMatch = val.match(/!\[.*?\]\((.*?)\)/);
+    if (markdownMatch) return markdownMatch[1];
+
+    // Extract URL from HTML: <img src="url" />
+    const htmlMatch = val.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (htmlMatch) return htmlMatch[1];
+
+    // Return as-is if it's already a plain URL
+    return val;
+  }).pipe(z.string().url()),
+  description: z.string().max(500).nullish().or(z.literal("")),
+  order: z.number().int().default(0),
+  tags: z.array(z.string()).default([]),
+  published: z.boolean().optional(),
+});
