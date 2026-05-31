@@ -208,11 +208,13 @@
     "footerMeta": "Continuously updated · Forever unfinished"
   },
   "studio": {
-    "studioName": "Studio",
-    "studio": "Studio",
+    "studioName": "Console",
+    "studio": "Console",
     "writing": "Writing",
     "paths": "Paths",
     "connections": "Connections",
+    "gallery": "Gallery",
+    "galleryDescription": "Manage photos displayed on the homepage",
     "responses": "Responses",
     "backToGarden": "Back to garden",
     "welcome": "Welcome back",

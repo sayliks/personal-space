@@ -4,8 +4,9 @@ import Link from "next/link"
 import { cookies } from "next/headers"
 import { SayliksSplash } from "./SayliksSplash"
 import { isPostRevisited } from "@/lib/posts/revision-status"
-import { getPublishedPosts } from "@/lib/queries"
+import { getPublishedPosts, getPublishedPhotos } from "@/lib/queries"
 import { formatDateShort } from "@/lib/utils"
+import { PhotoWall } from "@/components/blog/PhotoWall"
 
 export const dynamic = "force-dynamic"
 
@@ -31,6 +32,7 @@ export default async function HomePage() {
   const cookieStore = await cookies()
   const shouldPlayIntro = cookieStore.get("sayliks_intro_seen")?.value !== "1"
   const { posts } = await getPublishedPosts({ page: 1, pageSize: 40 })
+  const photos = await getPublishedPhotos()
 
   return (
     <>
@@ -78,6 +80,21 @@ export default async function HomePage() {
             </ul>
           )}
         </div>
+
+        {/* Photo Wall Section */}
+        {photos.length > 0 && (
+          <>
+            <header className="pt-8 pb-6">
+              <h2 className="font-mono text-xs lowercase tracking-wide text-muted-foreground/50">
+                gallery
+              </h2>
+            </header>
+
+            <div className="border-t border-border/40 pt-6 pb-10">
+              <PhotoWall photos={photos} />
+            </div>
+          </>
+        )}
       </div>
     </>
   )

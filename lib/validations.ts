@@ -27,3 +27,12 @@ export const createCategorySchema = z.object({
 export const createTagSchema = z.object({
   name: z.string().min(1).max(50),
 });
+
+export const createPhotoSchema = z.object({
+  title: z.string().min(1).max(200),
+  imageUrl: z.string().url(),
+  description: z.string().max(500).nullish().or(z.literal("")),
+  order: z.number().int().default(0),
+  tags: z.array(z.string()).default([]),
+  published: z.boolean().optional(),
+});

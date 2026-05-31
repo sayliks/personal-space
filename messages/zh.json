@@ -210,11 +210,13 @@
     "footerMeta": "持续更新中"
   },
   "studio": {
-    "studioName": "工作室",
-    "studio": "工作室",
+    "studioName": "控制台",
+    "studio": "控制台",
     "writing": "写作",
     "paths": "路径",
     "connections": "连接",
+    "gallery": "相册",
+    "galleryDescription": "管理首页展示的照片",
     "responses": "回应",
     "backToGarden": "返回笔记",
     "welcome": "欢迎回来",
