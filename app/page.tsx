@@ -7,6 +7,7 @@ import { isPostRevisited } from "@/lib/posts/revision-status"
 import { getPublishedPosts, getPublishedPhotos } from "@/lib/queries"
 import { formatDateShort } from "@/lib/utils"
 import { PhotoWall } from "@/components/blog/PhotoWall"
+import { DailyQuote } from "@/components/blog/DailyQuote"
 
 export const dynamic = "force-dynamic"
 
@@ -38,7 +39,13 @@ export default async function HomePage() {
     <>
       <SayliksSplash shouldPlay={shouldPlayIntro} />
       <div className="mx-auto max-w-[908px] px-5 sm:px-6">
-        <header className="pt-14 pb-8 sm:pt-20">
+        {/* Daily Quote Section */}
+        <div className="pt-14 pb-8 sm:pt-20">
+          <DailyQuote />
+        </div>
+
+        {/* Writing Section */}
+        <header className="pb-8">
           <h1 className="font-mono text-xs lowercase tracking-wide text-muted-foreground/50">
             {tPosts("title")}
           </h1>
