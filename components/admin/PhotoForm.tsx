@@ -59,13 +59,16 @@ export function PhotoForm({ photo, allTags }: PhotoFormProps) {
       <div>
         <label className="block text-sm font-medium mb-2">{t("photoImageUrl")}</label>
         <input
-          type="url"
+          type="text"
           name="imageUrl"
           defaultValue={photo?.imageUrl}
           required
-          placeholder="https://example.com/image.jpg"
+          placeholder="https://example.com/image.jpg or ![alt](url) or <img src='url' />"
           className="w-full px-3 py-2 border border-input rounded-md bg-background"
         />
+        <p className="text-xs text-muted-foreground mt-1">
+          Supports: Plain URL, Markdown ![alt](url), or HTML &lt;img src="url" /&gt;
+        </p>
       </div>
 
       {/* Description */}
