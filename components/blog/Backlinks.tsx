@@ -42,7 +42,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
   return (
     <section className="border-t border-border/20 pt-12 mt-16">
       <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
-        连接的笔记
+        标签的笔记
       </h2>
       <div className="space-y-6">
         {backlinks.map((bl) => (

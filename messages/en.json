@@ -76,6 +76,7 @@
     "confirmDelete": "Are you sure?",
     "postCreated": "Post created",
     "postUpdated": "Post updated",
+    "postDeleted": "Post deleted",
     "failedToSave": "Failed to save",
     "status": "Status",
     "date": "Date",
