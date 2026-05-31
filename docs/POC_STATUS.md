@@ -13,7 +13,6 @@
 - ✅ Production build successful
 - ✅ Homepage working
 - ✅ Search API working (3 results for "语言")
-- ✅ Graph API working (6 posts)
 - ✅ Admin pages functional
 
 ### Code Quality

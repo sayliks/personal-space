@@ -23,9 +23,6 @@ than only what you've recently published.
   itself. The space reads as actively maintained, not frozen.
 - **Search & topics** — full-text search and category/tag navigation for
   finding your way back to an idea.
-- **Knowledge graph data** — a `/api/graph` endpoint derives a graph from
-  wiki-link references between notes (graph *visualization* is intentionally
-  left out until a knowledge base is large enough to warrant it).
 - **Comments with auth & moderation** — optional GitHub sign-in, admin approval
   flow, for discussion without turning the space into a social feed.
 - **Bilingual** — Chinese (default) and English via cookie-based locale
@@ -113,7 +110,7 @@ app/              # App Router pages, server actions, read-only API routes
   actions/        # mutations (server actions, not API routes)
   admin/          # the writing studio (auth-guarded)
 components/       # UI — layout, blog (notes), admin
-lib/              # prisma, auth, queries, validations, wiki-link, graph
+lib/              # prisma, auth, queries, validations, wiki-link
 messages/         # i18n strings (zh.json, en.json)
 prisma/           # schema, seed
 ```

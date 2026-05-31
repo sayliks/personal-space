@@ -1,5 +1,4 @@
 import { getPostById, getBacklinkCandidates } from "@/lib/queries"
-import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { escapeRegex } from "@/lib/utils"
 
@@ -39,9 +38,6 @@ export async function Backlinks({ postId }: BacklinksProps) {
   )
 
   if (backlinks.length === 0) return null
-
-  const t = await getTranslations("graph").catch(() => null)
-  if (!t) return null
 
   return (
     <section className="border-t border-border/20 pt-12 mt-16">

@@ -17,7 +17,6 @@ export async function Header() {
         <HeaderNav
           labels={{
             articles: t("articles"),
-            graph: t("graph"),
             about: t("about"),
             search: t("search"),
           }}

@@ -103,7 +103,7 @@ Most public pages (categories, tags, search, homepage) declare `export const dyn
 - Public: `/`, `/posts/[slug]`, `/categories/[slug]`, `/tags/[slug]`, `/search`, `/about`, `/sitemap.xml`
 - Admin (guarded by `AdminLayout`): `/admin`, `/admin/posts`, `/admin/posts/new`, `/admin/posts/[id]/edit`, `/admin/categories`, `/admin/tags`, `/admin/comments`
 - Auth: `/login` (independent layout), `/api/auth/[...nextauth]`
-- API (reads only): `/api/search`, `/api/graph`. **All mutations are Server Actions** (`app/actions/`), not API routes.
+- API (reads only): `/api/search`. **All mutations are Server Actions** (`app/actions/`), not API routes.
 - **No RSS feed** — `app/rss.xml/` was removed in `f2390b4`. Sitemap (`app/sitemap.ts`) is retained.
 
 ### shadcn/ui
@@ -115,10 +115,6 @@ Most public pages (categories, tags, search, homepage) declare `export const dyn
 `react-markdown` + `remark-gfm` + `rehype-raw` + `rehype-highlight` + `rehype-slug` + custom `remark-wiki-link`, styled via `@tailwindcss/typography` (`prose` classes). Renderer is `components/blog/MarkdownRenderer.tsx`.
 
 Wiki-link syntax (`[[target|alias]]`) is supported. The regex and `extractWikiLinks()` live in `lib/wiki-link.ts` — import from there (not redefined in other files). The remark plugin (`lib/remark-wiki-link.ts`) converts `[[text]]` to `<a class="wiki-link">` links. CSS for `.wiki-link` is in `app/globals.css`.
-
-### Knowledge graph
-
-`components/blog/KnowledgeGraph.tsx` renders a force-directed graph using `react-force-graph-2d` (client-only, dynamic import). Data comes from `/api/graph` → `lib/graph.ts` which builds nodes/links from wiki-link references between posts. `components/blog/Backlinks.tsx` (server component, error handling via `.catch()`) shows incoming wiki-links on each post page. The graph API is available at `/api/graph`.
 
 ## Conventions
 

@@ -288,16 +288,3 @@ export async function getSitemapEntries() {
 
   return { posts, categories, tags };
 }
-
-export async function getGraphPosts() {
-  return prisma.document.findMany({
-    where: { type: "POST", published: true, publishedAt: { lte: new Date() } },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      content: true,
-      category: { select: { title: true } },
-    },
-  });
-}

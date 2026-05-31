@@ -79,13 +79,6 @@ export default async function HomePage() {
       active: true,
     },
     {
-      label: t("moduleGraph"),
-      description: t("moduleGraphDesc"),
-      href: "/graph",
-      count: t("moduleMap"),
-      active: false,
-    },
-    {
       label: t("moduleTools"),
       description: t("moduleToolsDesc"),
       href: "/search",
@@ -122,11 +115,6 @@ export default async function HomePage() {
       label: t("starterBegin"),
       href: posts[0] ? `/posts/${posts[0].slug}` : "/posts",
       meta: t("starterBeginMeta"),
-    },
-    {
-      label: t("starterConnections"),
-      href: "/graph",
-      meta: t("starterConnectionsMeta"),
     },
     {
       label: t("starterRevisit"),
@@ -218,7 +206,7 @@ export default async function HomePage() {
         </aside>
       </section>
 
-      <section className="mt-16 grid gap-px border border-foreground/10 bg-foreground/10 dark:border-white/10 dark:bg-white/10 md:grid-cols-3 lg:mt-24">
+      <section className="mt-16 grid gap-px border border-foreground/10 bg-foreground/10 dark:border-white/10 dark:bg-white/10 md:grid-cols-2 lg:mt-24">
         <section className="bg-background p-6 sm:p-7">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-foreground/42">
             {t("currentFocus")}
@@ -239,31 +227,6 @@ export default async function HomePage() {
             ))}
           </ul>
         </section>
-
-        <Link
-          href="/graph"
-          className="group min-h-[260px] overflow-hidden bg-background p-6 transition-colors sm:p-7"
-        >
-          <div className="flex items-center justify-between">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-foreground/42">
-              {t("graphPreview")}
-            </h2>
-            <span className="text-xs text-muted-foreground/45 transition-colors group-hover:text-foreground/70">
-              {t("openGraph")}
-            </span>
-          </div>
-          <div className="graph-preview mt-9" aria-hidden="true">
-            <span className="node node-a" />
-            <span className="node node-b" />
-            <span className="node node-c" />
-            <span className="node node-d" />
-            <span className="node node-e" />
-            <span className="edge edge-a" />
-            <span className="edge edge-b" />
-            <span className="edge edge-c" />
-            <span className="edge edge-d" />
-          </div>
-        </Link>
 
         <section className="bg-background p-6 sm:p-7">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-foreground/42">

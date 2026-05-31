@@ -16,7 +16,7 @@ User, Document (POST/NOTE/PAGE/CATEGORY), Tag, DocumentTag, DocumentRelation, Co
 
 **Admin:** `/admin/*` (guarded by `app/admin/layout.tsx`), `/login` (independent layout)
 
-**API:** `/api/search`, `/api/graph`, `/api/auth/[...nextauth]` (writes use Server Actions)
+**API:** `/api/search`, `/api/auth/[...nextauth]` (writes use Server Actions)
 
 ## Architecture
 

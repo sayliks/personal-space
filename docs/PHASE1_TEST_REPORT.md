@@ -26,7 +26,6 @@
 
 ### Public Pages
 - ✅ Homepage (`/`) - Loads successfully
-- ✅ Graph API (`/api/graph`) - Returns 6 posts with categories
 - ✅ Search API (`/api/search?q=语言`) - Returns 3 matching posts
 - ✅ Admin page (`/admin`) - Loads successfully
 

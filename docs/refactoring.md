@@ -116,7 +116,7 @@ model AISummary {
 
 ## Wiki-link Relations
 
-Wiki-link syntax (`[[target|alias]]`) parses to `DocumentRelation` records, enabling knowledge graph, backlinks, and related posts.
+Wiki-link syntax (`[[target|alias]]`) parses to `DocumentRelation` records, enabling backlinks and related posts.
 
 ## Implementation Phases
 

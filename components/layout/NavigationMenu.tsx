@@ -6,12 +6,10 @@ import { usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { Menu, X } from "lucide-react"
-import { ThemeToggle } from "@/components/layout/ThemeToggle"
 
 type NavigationMenuProps = {
   labels: {
     articles: string
-    graph: string
     about: string
     search: string
   }
@@ -19,7 +17,6 @@ type NavigationMenuProps = {
 
 const links = [
   { href: "/posts", key: "articles" },
-  { href: "/graph", key: "graph" },
   { href: "/about", key: "about" },
   { href: "/search", key: "search" },
 ] as const
@@ -72,15 +69,6 @@ export function NavigationMenu({ labels }: NavigationMenuProps) {
                 )
               })}
             </nav>
-
-            <div className="mt-10 flex items-center justify-between border-t border-foreground/10 pt-5 dark:border-white/10 sm:mt-12">
-              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-foreground/42 dark:text-foreground/48">
-                {t("appearance")}
-              </span>
-              <div className="text-foreground/70">
-                <ThemeToggle />
-              </div>
-            </div>
           </div>
         </DialogPrimitive.Popup>
       </DialogPrimitive.Portal>

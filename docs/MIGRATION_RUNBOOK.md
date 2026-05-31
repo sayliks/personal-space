@@ -201,7 +201,6 @@ npm run dev
 - [ ] Can add comments to posts
 - [ ] Admin pages work correctly
 - [ ] Search works
-- [ ] Knowledge graph works
 - [ ] Tests pass
 - [ ] Production build succeeds
 - [ ] Backup of old database is stored safely

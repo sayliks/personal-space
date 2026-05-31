@@ -545,7 +545,6 @@ html {
   }
 }
 
-/* Homepage knowledge graph preview */
 .knowledge-module-label {
   color: oklch(0.22 0.01 70 / 62%);
 }
@@ -565,104 +564,4 @@ html.dark .kb-index-row:hover .knowledge-module-label {
 
 html.dark .kb-index-row[data-active="true"] .knowledge-module-label {
   color: oklch(0.98 0.004 260 / 88%);
-}
-
-.graph-preview {
-  position: relative;
-  height: 11rem;
-}
-
-.graph-preview .node,
-.graph-preview .edge {
-  position: absolute;
-  display: block;
-}
-
-.graph-preview .node {
-  width: 0.58rem;
-  height: 0.58rem;
-  border-radius: 999px;
-  background: oklch(0.24 0.01 70 / 58%);
-  box-shadow: 0 0 0 0.55rem oklch(0.24 0.01 70 / 5%);
-  transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.dark .graph-preview .node {
-  background: oklch(0.9 0.012 250 / 58%);
-  box-shadow: 0 0 0 0.55rem oklch(0.9 0.012 250 / 7%);
-}
-
-a:hover .graph-preview .node {
-  background: oklch(0.22 0.01 70 / 82%);
-  box-shadow: 0 0 0 0.7rem oklch(0.24 0.01 70 / 7%);
-}
-
-.dark a:hover .graph-preview .node {
-  background: oklch(0.95 0.01 250 / 88%);
-  box-shadow: 0 0 0 0.7rem oklch(0.9 0.012 250 / 10%);
-}
-
-.graph-preview .edge {
-  height: 1px;
-  transform-origin: left center;
-  background: linear-gradient(90deg, transparent, oklch(0.24 0.01 70 / 20%), transparent);
-}
-
-.dark .graph-preview .edge {
-  background: linear-gradient(90deg, transparent, oklch(0.9 0.012 250 / 20%), transparent);
-}
-
-.graph-preview .node-a {
-  left: 9%;
-  top: 58%;
-}
-
-.graph-preview .node-b {
-  left: 31%;
-  top: 24%;
-}
-
-.graph-preview .node-c {
-  left: 52%;
-  top: 48%;
-}
-
-.graph-preview .node-d {
-  left: 72%;
-  top: 19%;
-}
-
-.graph-preview .node-e {
-  left: 86%;
-  top: 66%;
-}
-
-.graph-preview .edge-a {
-  left: 11%;
-  top: 58%;
-  width: 27%;
-  transform: rotate(-34deg);
-}
-
-.graph-preview .edge-b {
-  left: 33%;
-  top: 28%;
-  width: 27%;
-  transform: rotate(28deg);
-}
-
-.graph-preview .edge-c {
-  left: 54%;
-  top: 48%;
-  width: 25%;
-  transform: rotate(-32deg);
-}
-
-.graph-preview .edge-d {
-  left: 74%;
-  top: 23%;
-  width: 25%;
-  transform: rotate(47deg);
 }
