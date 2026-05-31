@@ -6,7 +6,7 @@ export async function Header() {
   const t = await getTranslations("common")
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/30 bg-background/78 backdrop-blur-md">
+    <header className="group/header sticky top-0 z-40 border-b border-border/30 bg-background/78 backdrop-blur-md">
       <div className="mx-auto flex max-w-[760px] items-center justify-between gap-4 px-5 py-3.5 sm:px-6">
         <Link
           href="/"

@@ -545,6 +545,82 @@ html {
   }
 }
 
+.navigation-hover-panel {
+  overflow: hidden;
+  background: var(--background);
+  color: oklch(0.22 0.01 70);
+  box-shadow: 0 26px 80px oklch(0.2 0.02 70 / 10%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.navigation-hover-panel::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.67 0.09 180 / 32%),
+    oklch(0.75 0.11 72 / 26%),
+    transparent
+  );
+}
+
+.dark .navigation-hover-panel {
+  background: var(--background);
+  color: oklch(0.955 0.006 260);
+  box-shadow: 0 30px 90px oklch(0 0 0 / 34%);
+}
+
+.navigation-panel-link {
+  font-family:
+    var(--font-heading),
+    "Noto Sans SC",
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 550;
+  line-height: 1.18;
+  letter-spacing: 0;
+  color: oklch(0.25 0.01 70 / 72%);
+}
+
+.navigation-panel-link:hover,
+.navigation-panel-link[aria-current="page"] {
+  color: oklch(0.18 0.01 70 / 94%);
+}
+
+.dark .navigation-panel-link {
+  color: oklch(0.92 0.012 260 / 72%);
+}
+
+.dark .navigation-panel-link:hover,
+.dark .navigation-panel-link[aria-current="page"] {
+  color: oklch(0.98 0.004 260 / 96%);
+}
+
+.navigation-panel-small-link {
+  border-left: 1px solid transparent;
+  padding-left: 0;
+  transition:
+    border-color 180ms ease,
+    padding-left 180ms ease;
+}
+
+.navigation-panel-small-link:hover,
+.navigation-panel-small-link[aria-current="page"] {
+  border-left-color: oklch(0.24 0.12 180 / 52%);
+  padding-left: 0.6rem;
+}
+
+.dark .navigation-panel-small-link:hover,
+.dark .navigation-panel-small-link[aria-current="page"] {
+  border-left-color: oklch(0.86 0.08 180 / 48%);
+}
+
 .knowledge-module-label {
   color: oklch(0.22 0.01 70 / 62%);
 }
@@ -566,47 +642,185 @@ html.dark .kb-index-row[data-active="true"] .knowledge-module-label {
   color: oklch(0.98 0.004 260 / 88%);
 }
 
+.knowledge-home {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: min(42rem, calc(100svh - 5rem));
+  align-items: center;
+}
+
+.knowledge-home::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16% -3rem auto;
+  height: 58%;
+  background:
+    linear-gradient(102deg, transparent 0 8%, oklch(0.94 0.105 84 / 48%) 8% 36%, transparent 36% 42%),
+    linear-gradient(86deg, transparent 0 34%, oklch(0.82 0.15 24 / 20%) 34% 59%, transparent 59%),
+    linear-gradient(95deg, transparent 0 54%, oklch(0.78 0.16 232 / 16%) 54% 75%, transparent 75%);
+  clip-path: polygon(0 26%, 100% 0, 94% 73%, 10% 100%);
+  pointer-events: none;
+}
+
+.knowledge-hero-frame {
+  position: relative;
+  width: 100%;
+  padding-block: 2.5rem;
+}
+
+.knowledge-hero-frame::after {
+  content: "";
+  position: absolute;
+  right: 5%;
+  bottom: 9%;
+  left: 5%;
+  z-index: -1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(0.22 0.02 70 / 24%), transparent);
+}
+
 .knowledge-hero-statement {
-  color: oklch(0.18 0.01 70 / 88%);
+  position: relative;
+  z-index: 0;
+  margin-inline: auto;
+  color: oklch(0.17 0.012 70 / 94%);
   font-family:
-    var(--font-sans),
     var(--font-heading),
-    ui-sans-serif,
-    system-ui,
+    "SimHei",
+    "Microsoft YaHei UI",
     sans-serif;
-  font-size: clamp(1.75rem, 4.8vw, 4rem);
-  font-weight: 400;
-  line-height: 1.2;
+  font-size: 2.35rem;
+  font-weight: 800;
+  line-height: 1.08;
   letter-spacing: 0;
+}
+
+.quote-line {
+  display: block;
+}
+
+.quote-line-equal {
+  margin-bottom: 0.08em;
+  color: oklch(0.35 0.08 245);
+  font-family:
+    var(--font-serif),
+    "Songti SC",
+    "SimSun",
+    serif;
+  font-size: 0.74em;
+  font-weight: 700;
+}
+
+.quote-line-fracture {
+  color: oklch(0.18 0.018 68 / 88%);
+}
+
+.quote-line-survive {
+  color: oklch(0.18 0.018 68);
+}
+
+.quote-line-day {
+  margin-top: 0.18em;
+  color: oklch(0.38 0.045 225 / 82%);
+  font-family:
+    var(--font-serif),
+    "Kaiti SC",
+    "KaiTi",
+    serif;
+  font-size: 0.58em;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.quote-line-light {
+  margin-top: 0.02em;
+}
+
+.quote-word {
+  position: relative;
+  display: inline-block;
+  margin-inline: 0.02em;
+  line-height: 0.98;
+}
+
+.quote-word-broken {
+  color: oklch(0.58 0.22 31);
+  font-family:
+    var(--font-display-cn),
+    "SimHei",
+    "Microsoft YaHei UI",
+    sans-serif;
+  text-shadow: 0.04em 0.04em 0 oklch(0.95 0.12 74 / 62%);
+  transform: rotate(-2deg);
+}
+
+.quote-word-pain {
+  color: oklch(0.5 0.2 15);
+  font-family:
+    var(--font-display-cn),
+    "SimHei",
+    "Microsoft YaHei UI",
+    sans-serif;
+  text-shadow: -0.035em 0.035em 0 oklch(0.81 0.18 45 / 38%);
+  transform: rotate(1.5deg);
+}
+
+.quote-word-stand {
+  color: oklch(0.22 0.16 286);
+  font-family:
+    var(--font-script-cn),
+    "STKaiti",
+    "KaiTi",
+    serif;
+  font-size: 1.12em;
+  font-weight: 400;
+}
+
+.quote-word-stand::after {
+  content: "";
+  position: absolute;
+  right: 0.08em;
+  bottom: 0.04em;
+  left: 0.08em;
+  z-index: -1;
+  height: 0.18em;
+  background: oklch(0.72 0.18 303 / 42%);
+  transform: rotate(-2deg);
+}
+
+.quote-punctuation {
+  color: oklch(0.28 0.015 70 / 70%);
 }
 
 .knowledge-hero-highlight {
   position: relative;
   z-index: 0;
   display: inline-block;
-  margin-inline-start: 0.08em;
-  color: oklch(0.12 0.018 140);
+  color: oklch(0.15 0.13 140);
   font-family:
-    var(--font-brand),
+    var(--font-script-cn),
     var(--font-serif),
-    cursive;
-  font-size: 1.16em;
-  font-weight: 700;
-  line-height: 0.92;
+    "STKaiti",
+    "KaiTi",
+    serif;
+  font-size: 0.88em;
+  font-weight: 400;
+  line-height: 1;
   transform: rotate(-2deg);
   transform-origin: 12% 70%;
-  white-space: nowrap;
 }
 
 .knowledge-hero-highlight::before {
   content: "";
   position: absolute;
   z-index: -1;
-  right: -0.1em;
-  bottom: -0.06em;
+  right: -0.12em;
+  bottom: 0.01em;
   left: -0.12em;
-  height: 0.5em;
-  background: oklch(0.78 0.2 136 / 68%);
+  height: 0.48em;
+  background: oklch(0.8 0.21 136 / 72%);
   border-radius: 48% 42% 46% 54% / 52% 44% 58% 48%;
   clip-path: polygon(
     0 46%,
@@ -631,14 +845,92 @@ html.dark .kb-index-row[data-active="true"] .knowledge-module-label {
   transform-origin: 50% 100%;
 }
 
+@media (min-width: 640px) {
+  .knowledge-hero-statement {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .knowledge-hero-frame {
+    padding-block: 4.5rem;
+  }
+
+  .knowledge-hero-statement {
+    font-size: 5.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .knowledge-hero-statement {
+    font-size: 6rem;
+  }
+}
+
+html.dark .knowledge-home::before {
+  background:
+    linear-gradient(102deg, transparent 0 8%, oklch(0.48 0.14 74 / 20%) 8% 36%, transparent 36% 42%),
+    linear-gradient(86deg, transparent 0 34%, oklch(0.54 0.15 24 / 16%) 34% 59%, transparent 59%),
+    linear-gradient(95deg, transparent 0 54%, oklch(0.58 0.16 232 / 18%) 54% 75%, transparent 75%);
+}
+
+html.dark .knowledge-hero-frame::after {
+  background: linear-gradient(90deg, transparent, oklch(0.9 0.02 260 / 18%), transparent);
+}
+
 html.dark .knowledge-hero-statement {
-  color: oklch(0.96 0.008 260 / 88%);
+  color: oklch(0.96 0.008 260 / 92%);
+}
+
+html.dark .quote-line-equal {
+  color: oklch(0.82 0.11 242);
+}
+
+html.dark .quote-line-fracture,
+html.dark .quote-line-survive {
+  color: oklch(0.98 0.006 260 / 88%);
+}
+
+html.dark .quote-line-day {
+  color: oklch(0.8 0.06 225 / 78%);
+}
+
+html.dark .quote-word-broken {
+  color: oklch(0.72 0.2 34);
+  text-shadow: 0.04em 0.04em 0 oklch(0.44 0.14 74 / 42%);
+}
+
+html.dark .quote-word-pain {
+  color: oklch(0.74 0.18 21);
+  text-shadow: -0.035em 0.035em 0 oklch(0.42 0.12 25 / 42%);
+}
+
+html.dark .quote-word-stand {
+  color: oklch(0.78 0.16 292);
+}
+
+html.dark .quote-word-stand::after {
+  background: oklch(0.65 0.17 303 / 34%);
 }
 
 html.dark .knowledge-hero-highlight {
-  color: oklch(0.96 0.018 140);
+  color: oklch(0.9 0.08 146);
 }
 
 html.dark .knowledge-hero-highlight::before {
-  background: oklch(0.74 0.18 140 / 58%);
+  background: oklch(0.74 0.18 140 / 56%);
+}
+
+body:has(.black-mirror-home) {
+  overflow: hidden;
+  background: #000;
+}
+
+body:has(.black-mirror-home) > header,
+body:has(.black-mirror-home) > footer {
+  display: none;
+}
+
+body:has(.black-mirror-home) > main {
+  min-height: 100dvh;
 }
