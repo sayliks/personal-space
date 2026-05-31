@@ -19,6 +19,7 @@ export function StudioLayout({ email, children }: StudioLayoutProps) {
 
   const navigation = [
     { href: "/admin", label: t("studio"), icon: "◆" },
+    { href: "/admin/quotes", label: t("quotes"), icon: "“" },
     { href: "/admin/posts", label: t("writing"), icon: "✎" },
     { href: "/admin/categories", label: t("paths"), icon: "⌘" },
     { href: "/admin/tags", label: t("connections"), icon: "∿" },

@@ -55,6 +55,26 @@ export async function getHomePosts(limit = 14) {
   });
 }
 
+export async function getHomeQuotes(limit = 6) {
+  return prisma.document.findMany({
+    where: {
+      type: "NOTE",
+      published: true,
+      publishedAt: { lte: new Date() },
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      publishedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+    orderBy: { publishedAt: "desc" },
+    take: limit,
+  });
+}
+
 export async function getPublishedPosts(params: {
   page?: number;
   pageSize?: number;
@@ -117,10 +137,38 @@ export async function getAllPosts() {
   });
 }
 
+export async function getAllQuotes() {
+  return prisma.document.findMany({
+    where: { type: "NOTE" },
+    orderBy: { updatedAt: "desc" },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      slug: true,
+      published: true,
+      publishedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+}
+
 export async function getPostById(id: string) {
   return prisma.document.findUnique({
     where: { id, type: "POST" },
     include: { ...DOCUMENT_INCLUDES, comments: true },
+  });
+}
+
+export async function getQuoteById(id: string) {
+  return prisma.document.findFirst({
+    where: { id, type: "NOTE" },
+    select: {
+      id: true,
+      content: true,
+      published: true,
+    },
   });
 }
 
@@ -222,13 +270,14 @@ export async function getAllComments() {
 }
 
 export async function getStudioStats() {
-  const [postCount, categoryCount, tagCount, pendingComments] = await Promise.all([
+  const [postCount, quoteCount, categoryCount, tagCount, pendingComments] = await Promise.all([
     prisma.document.count({ where: { type: "POST" } }),
+    prisma.document.count({ where: { type: "NOTE" } }),
     prisma.document.count({ where: { type: "CATEGORY" } }),
     prisma.tag.count(),
     prisma.comment.count({ where: { approved: false } }),
   ]);
-  return { postCount, categoryCount, tagCount, pendingComments };
+  return { postCount, quoteCount, categoryCount, tagCount, pendingComments };
 }
 
 export async function getRecentPosts(limit = 5) {

@@ -57,7 +57,7 @@ export function DailyQuote() {
     <div className="py-6 px-4 border border-border/40 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors sm:py-8 sm:px-6">
       <blockquote className="space-y-3">
         <p className="text-sm leading-relaxed text-foreground/85 font-serif italic sm:text-base">
-          "{quote.hitokoto}"
+          {"\u201c"}{quote.hitokoto}{"\u201d"}
         </p>
         <footer className="flex items-center gap-2 text-xs text-muted-foreground">
           <span>—</span>

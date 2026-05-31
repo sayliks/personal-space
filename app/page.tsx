@@ -4,7 +4,7 @@ import Link from "next/link"
 import { cookies } from "next/headers"
 import { SayliksSplash } from "./SayliksSplash"
 import { isPostRevisited } from "@/lib/posts/revision-status"
-import { getPublishedPosts, getPublishedPhotos } from "@/lib/queries"
+import { getHomeQuotes, getPublishedPosts, getPublishedPhotos } from "@/lib/queries"
 import { formatDateShort } from "@/lib/utils"
 import { PhotoWall } from "@/components/blog/PhotoWall"
 import { DailyQuote } from "@/components/blog/DailyQuote"
@@ -32,8 +32,11 @@ export default async function HomePage() {
   const tCommon = await getTranslations("common")
   const cookieStore = await cookies()
   const shouldPlayIntro = cookieStore.get("sayliks_intro_seen")?.value !== "1"
-  const { posts } = await getPublishedPosts({ page: 1, pageSize: 20 })
-  const photos = await getPublishedPhotos()
+  const [{ posts }, photos, quotes] = await Promise.all([
+    getPublishedPosts({ page: 1, pageSize: 20 }),
+    getPublishedPhotos(),
+    getHomeQuotes(6),
+  ])
   const displayPhotos = photos.slice(0, 16)
 
   return (
@@ -44,6 +47,40 @@ export default async function HomePage() {
         <div className="pt-14 pb-8 sm:pt-20">
           <DailyQuote />
         </div>
+
+        {/* Quotes Section */}
+        <section className="pb-10">
+          <header className="pb-8">
+            <h1 className="font-mono text-xs lowercase tracking-wide text-muted-foreground font-medium">
+              {tPosts("quotes")}
+            </h1>
+          </header>
+
+          <div className="border-t border-border/40 pt-6">
+            {quotes.length === 0 ? (
+              <p className="text-sm italic text-muted-foreground/50">{tPosts("noQuotes")}</p>
+            ) : (
+              <ul className="space-y-3">
+                {quotes.map((quote) => (
+                  <li
+                    key={quote.id}
+                    className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-3 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4"
+                  >
+                    <time
+                      dateTime={quote.publishedAt?.toISOString()}
+                      className="pt-1 font-mono text-xs tabular-nums text-muted-foreground/60 sm:text-sm"
+                    >
+                      {noteDate(quote.publishedAt ?? quote.createdAt)}
+                    </time>
+                    <p className="whitespace-pre-wrap text-base leading-7 text-foreground/85">
+                      {quote.content}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
 
         {/* Writing Section */}
         <header className="pb-8 flex items-center justify-between gap-4">

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const COMMENT_MAX_LENGTH = 2000;
+export const QUOTE_MAX_LENGTH = 500;
 
 export const createPostSchema = z.object({
   title: z.string().min(1).max(200),
@@ -9,6 +10,11 @@ export const createPostSchema = z.object({
   coverImage: z.string().url().nullish().or(z.literal("")),
   categoryId: z.string().nullish(),
   tags: z.array(z.string()).default([]),
+  published: z.boolean().optional(),
+});
+
+export const createQuoteSchema = z.object({
+  content: z.string().trim().min(1).max(QUOTE_MAX_LENGTH),
   published: z.boolean().optional(),
 });
 

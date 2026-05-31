@@ -5,7 +5,7 @@ import Link from "next/link"
 export default async function StudioDashboard() {
   const t = await getTranslations("studio")
 
-  const [{ postCount, categoryCount, tagCount, pendingComments }, recentPosts] =
+  const [{ postCount, quoteCount, categoryCount, tagCount, pendingComments }, recentPosts] =
     await Promise.all([getStudioStats(), getRecentPosts(5)])
 
   return (
@@ -23,7 +23,19 @@ export default async function StudioDashboard() {
           {t("gardenOverview")}
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+          <Link
+            href="/admin/quotes"
+            className="group block space-y-1 hover:translate-x-0.5 transition-transform"
+          >
+            <div className="text-2xl font-medium text-foreground/80 group-hover:text-foreground transition-colors">
+              {quoteCount}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {t("quotes")}
+            </div>
+          </Link>
+
           <Link
             href="/admin/posts"
             className="group block space-y-1 hover:translate-x-0.5 transition-transform"
