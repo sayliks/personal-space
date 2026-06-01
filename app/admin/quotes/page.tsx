@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getAllQuotes } from "@/lib/queries"
+import { QuoteContent } from "@/components/blog/QuoteContent"
 import { DeleteQuoteButton } from "./DeleteQuoteButton"
 
 function quoteDate(d: Date | null) {
@@ -48,9 +49,9 @@ export default async function StudioQuotesPage() {
                   <div className="mb-1 flex items-baseline gap-2">
                     <Link
                       href={`/admin/quotes/${quote.id}/edit`}
-                      className="line-clamp-2 text-sm leading-6 transition-colors group-hover:text-muted-foreground"
+                      className="block transition-colors group-hover:text-muted-foreground"
                     >
-                      {quote.content || t("untitled")}
+                      <QuoteContent content={quote.content || t("untitled")} compact />
                     </Link>
                     <span
                       className={`shrink-0 text-xs ${

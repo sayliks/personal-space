@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const COMMENT_MAX_LENGTH = 2000;
-export const QUOTE_MAX_LENGTH = 500;
+export const QUOTE_MAX_LENGTH = 2000;
 
 export const createPostSchema = z.object({
   title: z.string().min(1).max(200),

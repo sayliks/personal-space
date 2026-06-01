@@ -555,6 +555,70 @@ html {
   scrollbar-color: oklch(0.52 0.025 260 / 36%) oklch(0.09 0.014 260);
 }
 
+.quote-markdown {
+  display: grid;
+  gap: 0.55rem;
+  color: oklch(0.18 0.01 70 / 86%);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.quote-markdown p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.quote-markdown a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.quote-markdown-image {
+  position: relative;
+  display: block;
+  width: min(100%, 34rem);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid oklch(0.88 0.01 70 / 70%);
+  border-radius: 0.5rem;
+  background: oklch(0.96 0.008 70);
+}
+
+.quote-markdown-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quote-markdown-compact {
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.quote-markdown-compact .quote-markdown-image {
+  width: min(100%, 13rem);
+  aspect-ratio: 5 / 4;
+}
+
+html.dark .quote-markdown {
+  color: oklch(0.94 0.006 260 / 86%);
+}
+
+html.dark .quote-markdown-image {
+  border-color: oklch(1 0 0 / 10%);
+  background: oklch(0.14 0.014 260);
+}
+
+.site-brand-title {
+  font-family:
+    var(--font-brand),
+    var(--font-serif),
+    cursive;
+  letter-spacing: 0;
+}
+
 /* Editorial navigation overlay */
 .navigation-overlay {
   background: rgba(250, 248, 243, 0.97);

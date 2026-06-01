@@ -10,7 +10,7 @@ export async function Header() {
       <div className="mx-auto flex max-w-[760px] items-center justify-between gap-4 px-5 py-3.5 sm:px-6">
         <Link
           href="/"
-          className="font-mono text-[13px] font-semibold text-foreground/78 transition-colors hover:text-foreground"
+          className="site-brand-title text-[22px] font-bold leading-none text-foreground/82 transition-colors hover:text-foreground"
         >
           {t("siteTitle")}
         </Link>

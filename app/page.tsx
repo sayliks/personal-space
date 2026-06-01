@@ -8,6 +8,7 @@ import { getHomeQuotes, getPublishedPosts, getPublishedPhotos } from "@/lib/quer
 import { formatDateShort } from "@/lib/utils"
 import { PhotoWall } from "@/components/blog/PhotoWall"
 import { DailyQuote } from "@/components/blog/DailyQuote"
+import { QuoteContent } from "@/components/blog/QuoteContent"
 
 export const dynamic = "force-dynamic"
 
@@ -72,9 +73,7 @@ export default async function HomePage() {
                     >
                       {noteDate(quote.publishedAt ?? quote.createdAt)}
                     </time>
-                    <p className="whitespace-pre-wrap text-base leading-7 text-foreground/85">
-                      {quote.content}
-                    </p>
+                    <QuoteContent content={quote.content ?? ""} />
                   </li>
                 ))}
               </ul>

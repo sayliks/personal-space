@@ -1,7 +1,6 @@
 "use client"
 
 import { SearchDialog } from "@/components/layout/SearchDialog"
-import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { NavigationMenu } from "@/components/layout/NavigationMenu"
 
 type HeaderNavProps = {
@@ -15,7 +14,6 @@ export function HeaderNav({ labels }: HeaderNavProps) {
   return (
     <div className="flex items-center gap-2 sm:gap-4">
       <div className="flex items-center gap-1 sm:gap-2">
-        <ThemeToggle />
         <SearchDialog />
       </div>
       <NavigationMenu labels={labels} />

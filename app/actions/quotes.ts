@@ -4,9 +4,22 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { generateSlug } from "@/lib/slug"
 import { createQuoteSchema } from "@/lib/validations"
+import { randomUUID } from "node:crypto"
+import { mkdir, writeFile } from "node:fs/promises"
+import path from "node:path"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import type { ActionResult } from "./posts"
+
+const QUOTE_IMAGE_MAX_SIZE = 6 * 1024 * 1024
+
+const QUOTE_IMAGE_EXTENSIONS = new Map([
+  ["image/jpeg", "jpg"],
+  ["image/png", "png"],
+  ["image/webp", "webp"],
+  ["image/gif", "gif"],
+  ["image/avif", "avif"],
+])
 
 async function requireAdmin() {
   const session = await auth()
@@ -17,7 +30,14 @@ async function requireAdmin() {
 }
 
 function quoteTitle(content: string) {
-  return content.replace(/\s+/g, " ").trim().slice(0, 80)
+  const title = content
+    .replace(/!\[([^\]]*)]\([^)]+\)/g, "$1")
+    .replace(/\[([^\]]+)]\([^)]+\)/g, "$1")
+    .replace(/[#*_`>~-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+
+  return (title || "Image update").slice(0, 80)
 }
 
 async function uniqueQuoteSlug(content: string, currentId?: string) {
@@ -29,6 +49,59 @@ async function uniqueQuoteSlug(content: string, currentId?: string) {
   }
 
   return `${base}-${Date.now().toString(36)}`
+}
+
+function imageAltText(fileName: string) {
+  return fileName
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/[[\]()\n\r]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 60) || "image"
+}
+
+export async function uploadQuoteImage(
+  formData: FormData
+): Promise<ActionResult<{ markdown: string; url: string }>> {
+  try {
+    await requireAdmin()
+
+    const image = formData.get("image")
+    if (!(image instanceof File)) {
+      return { success: false, error: "Image is required" }
+    }
+
+    const extension = QUOTE_IMAGE_EXTENSIONS.get(image.type)
+    if (!extension) {
+      return { success: false, error: "Unsupported image type" }
+    }
+
+    if (image.size > QUOTE_IMAGE_MAX_SIZE) {
+      return { success: false, error: "Image must be 6MB or smaller" }
+    }
+
+    const now = new Date()
+    const year = String(now.getFullYear())
+    const month = String(now.getMonth() + 1).padStart(2, "0")
+    const fileName = `${Date.now()}-${randomUUID()}.${extension}`
+    const uploadDir = path.join(process.cwd(), "public", "uploads", "quotes", year, month)
+    const uploadPath = path.join(uploadDir, fileName)
+
+    await mkdir(uploadDir, { recursive: true })
+    await writeFile(uploadPath, Buffer.from(await image.arrayBuffer()))
+
+    const url = `/uploads/quotes/${year}/${month}/${fileName}`
+    const markdown = `![${imageAltText(image.name)}](${url})`
+
+    return { success: true, data: { markdown, url } }
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" }
+    }
+    console.error("Failed to upload quote image:", error)
+    return { success: false, error: "Failed to upload image" }
+  }
 }
 
 export async function createQuote(formData: FormData): Promise<ActionResult> {
