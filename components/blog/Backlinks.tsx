@@ -40,7 +40,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
   if (backlinks.length === 0) return null
 
   return (
-    <section className="border-t border-border/20 pt-12 mt-16">
+    <section className="border-t border-border/20 pt-12 mt-16 animate-entrance">
       <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
         标签的笔记
       </h2>
@@ -49,7 +49,7 @@ export async function Backlinks({ postId }: BacklinksProps) {
           <Link
             key={bl.id}
             href={`/posts/${bl.slug}`}
-            className="group block"
+            className="group block card-interactive"
           >
             <article className="space-y-2">
               <h3 className="text-lg font-serif group-hover:text-muted-foreground/80 transition-colors duration-200">

@@ -7,12 +7,14 @@ import { formatDate } from "@/lib/utils"
 export async function CommentSection({ postId }: { postId: string }) {
   const t = await getTranslations("post")
   const comments = await getCommentsByPostId(postId).catch((e) => {
-    console.error("CommentSection: failed to fetch comments:", e)
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("CommentSection: failed to fetch comments:", e)
+    }
     return []
   })
 
   return (
-    <section className="mt-12">
+    <section className="mt-12 animate-entrance">
       <h2 className="text-xl font-bold mb-6">
         {t("comments")}{comments.length > 0 && ` (${comments.length})`}
       </h2>
@@ -20,7 +22,7 @@ export async function CommentSection({ postId }: { postId: string }) {
       {comments.length > 0 && (
         <div className="space-y-6 mb-8">
           {comments.map((comment) => (
-            <div key={comment.id} className="border-b pb-4 last:border-0">
+            <div key={comment.id} className="border-b pb-4 last:border-0 animate-entrance">
               <div className="flex items-center gap-2 text-sm mb-1">
                 {comment.user?.image && (
                   <Image
@@ -40,7 +42,7 @@ export async function CommentSection({ postId }: { postId: string }) {
               {comment.replies.length > 0 && (
                 <div className="ml-4 mt-3 space-y-3 border-l-2 pl-4">
                   {comment.replies.map((reply) => (
-                    <div key={reply.id}>
+                    <div key={reply.id} className="animate-entrance">
                       <div className="flex items-center gap-2 text-sm mb-1">
                         {reply.user?.image && (
                           <Image

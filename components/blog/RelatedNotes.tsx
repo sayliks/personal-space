@@ -18,7 +18,7 @@ export async function RelatedNotes({ postId, tags, categoryId }: RelatedNotesPro
   if (relatedPosts.length === 0) return null
 
   return (
-    <section className="border-t border-border/20 pt-12 mt-16">
+    <section className="border-t border-border/20 pt-12 mt-16 animate-entrance">
       <h2 className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-8 font-mono">
         相关探索
       </h2>
@@ -33,7 +33,7 @@ export async function RelatedNotes({ postId, tags, categoryId }: RelatedNotesPro
             <Link
               key={post.id}
               href={`/posts/${post.slug}`}
-              className="group block"
+              className="group block card-interactive"
             >
               <article className="space-y-2">
                 <h3 className="text-lg font-serif group-hover:text-muted-foreground/80 transition-colors duration-200">

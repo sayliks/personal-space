@@ -60,7 +60,7 @@ export function ArticleToc() {
   return (
     <nav
       aria-label={t("tableOfContents")}
-      className="mx-auto mb-9 max-w-[728px] px-5 sm:px-6 lg:hidden"
+      className="mx-auto mb-9 max-w-182 px-5 sm:px-6 lg:hidden animate-entrance"
     >
       <button
         type="button"

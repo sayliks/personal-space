@@ -123,9 +123,16 @@ export async function getPublishedPosts(params: {
 }
 
 export async function getPostBySlug(slug: string) {
-  return prisma.document.findUnique({
-    where: { slug, type: "POST" },
-    include: DOCUMENT_INCLUDES,
+  return withTransientRetry("post by slug", () =>
+    prisma.document.findUnique({
+      where: { slug, type: "POST" },
+      include: DOCUMENT_INCLUDES,
+    }),
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: post by slug fell back after failure", error);
+    }
+    return null;
   });
 }
 
@@ -155,9 +162,16 @@ export async function getAllQuotes() {
 }
 
 export async function getPostById(id: string) {
-  return prisma.document.findUnique({
-    where: { id, type: "POST" },
-    include: { ...DOCUMENT_INCLUDES, comments: true },
+  return withTransientRetry("post by id", () =>
+    prisma.document.findUnique({
+      where: { id, type: "POST" },
+      include: { ...DOCUMENT_INCLUDES, comments: true },
+    }),
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: post by id fell back after failure", error);
+    }
+    return null;
   });
 }
 
@@ -237,17 +251,24 @@ export async function getBacklinkCandidates(params: {
   title: string
   slug: string
 }) {
-  return prisma.document.findMany({
-    where: {
-      type: "POST",
-      published: true,
-      id: { not: params.postId },
-      OR: [
-        { content: { contains: params.title, mode: "insensitive" } },
-        { content: { contains: `[[${params.slug}]]`, mode: "insensitive" } },
-      ],
-    },
-    select: { id: true, title: true, slug: true, summary: true, content: true },
+  return withTransientRetry("backlink candidates", () =>
+    prisma.document.findMany({
+      where: {
+        type: "POST",
+        published: true,
+        id: { not: params.postId },
+        OR: [
+          { content: { contains: params.title, mode: "insensitive" } },
+          { content: { contains: `[[${params.slug}]]`, mode: "insensitive" } },
+        ],
+      },
+      select: { id: true, title: true, slug: true, summary: true, content: true },
+    }),
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: backlink candidates fell back after failure", error);
+    }
+    return [];
   })
 }
 

@@ -68,14 +68,7 @@ export default async function PostPage({
 }) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
-
-  let post
-  try {
-    post = await getPostBySlug(decodedSlug)
-  } catch (e) {
-    console.error("PostPage: getPostBySlug failed:", e)
-    notFound()
-  }
+  const post = await getPostBySlug(decodedSlug)
 
   const t = await getTranslations("post")
 
@@ -87,7 +80,7 @@ export default async function PostPage({
 
   return (
     <article className="relative">
-      <header className="mx-auto max-w-[760px] px-5 pb-8 pt-16 sm:px-6 sm:pb-10 sm:pt-20 lg:pt-24">
+      <header className="mx-auto max-w-190 px-5 pb-8 pt-16 sm:px-6 sm:pb-10 sm:pt-20 lg:pt-24">
         <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] uppercase text-muted-foreground/38">
           <time dateTime={post.publishedAt?.toISOString()}>
             {post.publishedAt ? formatDateLong(post.publishedAt) : t("draft")}
@@ -115,12 +108,12 @@ export default async function PostPage({
           <span>{post.author.name}</span>
         </div>
 
-        <h1 className="article-title max-w-[720px] font-serif font-medium text-foreground/95">
+        <h1 className="article-title max-w-180 font-serif font-medium text-foreground/95">
           {renderTitle(post.title)}
         </h1>
 
         {post.summary && (
-          <p className="mt-5 max-w-[680px] font-serif text-lg leading-[1.85] text-muted-foreground/75 sm:text-xl">
+          <p className="mt-5 max-w-170 font-serif text-lg leading-[1.85] text-muted-foreground/75 sm:text-xl">
             {post.summary}
           </p>
         )}
@@ -142,24 +135,24 @@ export default async function PostPage({
 
       <ArticleToc />
 
-      <div className="mx-auto max-w-[728px] px-5 pb-8 sm:px-6">
-        <div className="mb-9 h-px bg-gradient-to-r from-transparent via-border/28 to-transparent" />
+      <div className="mx-auto max-w-182 px-5 pb-8 sm:px-6">
+        <div className="mb-9 h-px bg-linear-to-r from-transparent via-border/28 to-transparent" />
         {post.content && <MarkdownRenderer content={post.content} />}
       </div>
 
-      <div className="mx-auto max-w-[728px] px-5 pb-10 sm:px-6">
+      <div className="mx-auto max-w-182 px-5 pb-10 sm:px-6">
         <Suspense>
           <Backlinks postId={post.id} />
         </Suspense>
       </div>
 
-      <div className="mx-auto max-w-[728px] px-5 pb-10 sm:px-6">
+      <div className="mx-auto max-w-182 px-5 pb-10 sm:px-6">
         <Suspense>
           <RelatedNotes postId={post.id} tags={tags} categoryId={post.categoryId} />
         </Suspense>
       </div>
 
-      <div className="mx-auto max-w-[728px] px-5 pb-16 sm:px-6 sm:pb-20">
+      <div className="mx-auto max-w-182 px-5 pb-16 sm:px-6 sm:pb-20">
         <Suspense>
           <CommentSection postId={post.id} />
         </Suspense>
