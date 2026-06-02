@@ -82,54 +82,63 @@ export default async function HomePage() {
         </section>
 
         {/* Writing Section */}
-        <header className="pb-8 flex items-center justify-between gap-4">
-          <h1 className="font-mono text-xs lowercase tracking-wide text-muted-foreground font-medium">
-            {tPosts("title")}
-          </h1>
-          <Link
-            href="/posts"
-            className="font-mono text-xs lowercase tracking-wide text-muted-foreground/50 hover:text-foreground transition-colors shrink-0"
-          >
-            {tPosts("viewAll")}
-          </Link>
-        </header>
+        <section id="blog" className="blog-panel" aria-labelledby="blog-heading">
+          <header className="blog-panel-header flex items-center justify-between gap-4">
+            <h1
+              id="blog-heading"
+              className="font-mono text-xs lowercase tracking-wide text-muted-foreground font-medium"
+            >
+              {tPosts("title")}
+            </h1>
+            <Link
+              href="/posts"
+              className="font-mono text-xs lowercase tracking-wide text-muted-foreground/50 transition-colors hover:text-foreground shrink-0"
+            >
+              {tPosts("viewAll")}
+            </Link>
+          </header>
 
-        <div className="border-t border-border/40 pt-6 pb-10">
-          {posts.length === 0 ? (
-            <p className="text-sm italic text-muted-foreground/50">{tPosts("noPosts")}</p>
-          ) : (
-            <ul>
-              {posts.map((post) => (
-                <li key={post.id} className="group">
-                  <Link
-                    href={`/posts/${post.slug}`}
-                    className="-mx-2 grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-3 rounded px-2 py-2.5 transition-colors hover:bg-muted/40 sm:grid-cols-[7.5rem_minmax(0,1fr)_auto_auto] sm:gap-x-4"
+          <div className="blog-panel-list">
+            {posts.length === 0 ? (
+              <p className="text-sm italic text-muted-foreground/50">{tPosts("noPosts")}</p>
+            ) : (
+              <ul>
+                {posts.map((post, index) => (
+                  <li
+                    key={post.id}
+                    className="blog-post-item group"
+                    style={{ animationDelay: `${Math.min(index, 10) * 42}ms` }}
                   >
-                    <time
-                      dateTime={post.publishedAt?.toISOString()}
-                      className="pt-0.5 font-mono text-xs tabular-nums text-muted-foreground/60 sm:text-sm"
+                    <Link
+                      href={`/posts/${post.slug}`}
+                      className="blog-post-link grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-3 rounded px-2 py-2.5 sm:grid-cols-[7.5rem_minmax(0,1fr)_auto_auto] sm:gap-x-4"
                     >
-                      {noteDate(post.publishedAt)}
-                    </time>
-                    <span className="text-base leading-snug text-foreground font-medium decoration-border underline-offset-4 group-hover:underline">
-                      {post.title}
-                    </span>
-                    {isPostRevisited(post) && (
-                      <span className="col-start-2 self-start pt-0.5 font-mono text-xs text-muted-foreground/50 sm:col-start-auto">
-                        {tCommon("tended")} {formatDateShort(post.updatedAt)}
+                      <time
+                        dateTime={post.publishedAt?.toISOString()}
+                        className="pt-0.5 font-mono text-xs tabular-nums text-muted-foreground/60 sm:text-sm"
+                      >
+                        {noteDate(post.publishedAt)}
+                      </time>
+                      <span className="text-base leading-snug text-foreground font-medium decoration-border underline-offset-4 group-hover:underline">
+                        {post.title}
                       </span>
-                    )}
-                    {post.category && (
-                      <span className="col-start-2 self-start pt-0.5 font-mono text-xs text-muted-foreground/55 sm:col-start-auto">
-                        {post.category.title}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+                      {isPostRevisited(post) && (
+                        <span className="col-start-2 self-start pt-0.5 font-mono text-xs text-muted-foreground/50 sm:col-start-auto">
+                          {tCommon("tended")} {formatDateShort(post.updatedAt)}
+                        </span>
+                      )}
+                      {post.category && (
+                        <span className="col-start-2 self-start pt-0.5 font-mono text-xs text-muted-foreground/55 sm:col-start-auto">
+                          {post.category.title}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
 
         {/* Photo Wall Section */}
         {photos.length > 0 && (

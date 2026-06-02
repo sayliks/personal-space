@@ -611,6 +611,222 @@ html.dark .quote-markdown-image {
   background: oklch(0.14 0.014 260);
 }
 
+.blog-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  padding: 1.15rem;
+  border: 1px solid oklch(0.84 0.018 72 / 58%);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      135deg,
+      oklch(1 0.006 72 / 78%),
+      oklch(0.965 0.014 72 / 48%)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      oklch(0.33 0.018 72 / 3.5%) 0,
+      oklch(0.33 0.018 72 / 3.5%) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.8 0.028 72 / 4%) 0,
+      oklch(0.8 0.028 72 / 4%) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+  box-shadow:
+    0 22px 58px oklch(0.38 0.02 72 / 9%),
+    inset 0 1px 0 oklch(1 0 0 / 70%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: blogPanelIn 620ms cubic-bezier(0.2, 0.82, 0.2, 1) both;
+}
+
+.blog-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 10%, oklch(1 0 0 / 48%), transparent 28%),
+    radial-gradient(circle at 88% 84%, oklch(0.76 0.04 220 / 13%), transparent 34%),
+    linear-gradient(180deg, transparent, oklch(0.8 0.025 72 / 8%));
+  opacity: 0.82;
+}
+
+.blog-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(115deg, transparent 0 42%, oklch(1 0 0 / 26%) 46%, transparent 52%),
+    repeating-linear-gradient(
+      28deg,
+      oklch(0.72 0.02 72 / 3%) 0,
+      oklch(0.72 0.02 72 / 3%) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+  opacity: 0.62;
+}
+
+.blog-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.blog-panel-header {
+  padding: 0.1rem 0.1rem 1rem;
+  border-bottom: 1px solid oklch(0.78 0.018 72 / 34%);
+}
+
+.blog-panel-list {
+  padding-top: 0.85rem;
+}
+
+.blog-post-item {
+  opacity: 0;
+  transform: translateY(7px);
+  animation: blogRowIn 520ms cubic-bezier(0.2, 0.82, 0.2, 1) both;
+}
+
+.blog-post-link {
+  border: 1px solid transparent;
+  transition:
+    transform 180ms cubic-bezier(0.22, 0.8, 0.24, 1),
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.blog-post-link:hover {
+  transform: translateX(3px);
+  border-color: oklch(0.76 0.018 72 / 30%);
+  background-color: oklch(1 0.006 72 / 38%);
+  box-shadow: 0 10px 24px oklch(0.32 0.016 72 / 7%);
+}
+
+html.dark .blog-panel {
+  border-color: oklch(1 0 0 / 9%);
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.18 0.018 260 / 58%),
+      oklch(0.12 0.016 260 / 42%)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      oklch(1 0 0 / 2.6%) 0,
+      oklch(1 0 0 / 2.6%) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.72 0.04 260 / 3.2%) 0,
+      oklch(0.72 0.04 260 / 3.2%) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+  box-shadow:
+    0 24px 70px oklch(0 0 0 / 26%),
+    inset 0 1px 0 oklch(1 0 0 / 7%);
+}
+
+html.dark .blog-panel::before {
+  background:
+    radial-gradient(circle at 18% 10%, oklch(1 0 0 / 8%), transparent 28%),
+    radial-gradient(circle at 88% 84%, oklch(0.64 0.08 220 / 10%), transparent 34%),
+    linear-gradient(180deg, transparent, oklch(0.06 0.015 260 / 22%));
+}
+
+html.dark .blog-panel::after {
+  background-image:
+    linear-gradient(115deg, transparent 0 42%, oklch(1 0 0 / 5%) 46%, transparent 52%),
+    repeating-linear-gradient(
+      28deg,
+      oklch(1 0 0 / 2.4%) 0,
+      oklch(1 0 0 / 2.4%) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+}
+
+html.dark .blog-panel-header {
+  border-bottom-color: oklch(1 0 0 / 9%);
+}
+
+html.dark .blog-post-link:hover {
+  border-color: oklch(1 0 0 / 9%);
+  background-color: oklch(1 0 0 / 4.5%);
+  box-shadow: 0 12px 30px oklch(0 0 0 / 18%);
+}
+
+@keyframes blogPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes blogRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-panel {
+    padding: 0.9rem;
+  }
+
+  .blog-panel-header {
+    padding-bottom: 0.85rem;
+  }
+
+  .blog-panel-list {
+    padding-top: 0.7rem;
+  }
+
+  .blog-post-link {
+    padding-block: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-panel,
+  .blog-post-item {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .blog-post-link {
+    transition: none;
+  }
+
+  .blog-post-link:hover {
+    transform: none;
+  }
+}
+
 .site-brand-title {
   font-family:
     var(--font-brand),
