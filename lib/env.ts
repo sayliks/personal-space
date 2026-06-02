@@ -36,7 +36,10 @@ const fallback = {
 
 export const env: z.infer<typeof envSchema> = result.success ? result.data : fallback;
 
-if (env.NODE_ENV === "production") {
+const isProductionBuild =
+  env.NODE_ENV === "production" && process.env.NEXT_PHASE === "phase-production-build";
+
+if (env.NODE_ENV === "production" && !isProductionBuild) {
   const fatal: string[] = [];
   if (!env.DATABASE_URL) fatal.push("DATABASE_URL");
   if (!env.AUTH_SECRET || env.AUTH_SECRET.length < 32) fatal.push("AUTH_SECRET (min 32 chars)");

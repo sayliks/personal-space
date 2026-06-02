@@ -1,17 +1,40 @@
 import { PrismaClient } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { env } from "@/lib/env";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
+let prismaClient: PrismaClient | undefined;
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({ adapter });
+function getPrismaClient() {
+  if (prismaClient) {
+    return prismaClient;
+  }
 
-if (env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  const connectionString = process.env.DATABASE_URL;
+
+  if (!connectionString) {
+    throw new Error("[prisma] DATABASE_URL is required to create a Prisma client.");
+  }
+
+  const adapter = new PrismaPg({ connectionString });
+  prismaClient =
+    globalForPrisma.prisma ??
+    new PrismaClient({ adapter });
+
+  if (process.env.NODE_ENV !== "production") {
+    globalForPrisma.prisma = prismaClient;
+  }
+
+  return prismaClient;
 }
+
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, property, receiver) {
+    const client = getPrismaClient();
+    const value = Reflect.get(client, property, receiver);
+
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+}) as PrismaClient;
