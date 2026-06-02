@@ -56,22 +56,29 @@ export async function getHomePosts(limit = 14) {
 }
 
 export async function getHomeQuotes(limit = 6) {
-  return prisma.document.findMany({
-    where: {
-      type: "NOTE",
-      published: true,
-      publishedAt: { lte: new Date() },
-    },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      publishedAt: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-    orderBy: { publishedAt: "desc" },
-    take: limit,
+  return withTransientRetry("home quotes", () =>
+    prisma.document.findMany({
+      where: {
+        type: "NOTE",
+        published: true,
+        publishedAt: { lte: new Date() },
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        publishedAt: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: { publishedAt: "desc" },
+      take: limit,
+    }),
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: home quotes fell back after failure", error);
+    }
+    return [];
   });
 }
 
@@ -370,17 +377,21 @@ export async function getSitemapEntries() {
 }
 
 export async function getPublishedPhotos() {
-  return await prisma.photo.findMany({
-    where: { published: true },
-    include: {
-      tags: {
-        include: { tag: true }
-      }
-    },
-    orderBy: [
-      { order: 'asc' },
-      { createdAt: 'desc' }
-    ]
+  return withTransientRetry("published photos", () =>
+    prisma.photo.findMany({
+      where: { published: true },
+      include: {
+        tags: {
+          include: { tag: true },
+        },
+      },
+      orderBy: [{ order: "asc" }, { createdAt: "desc" }],
+    }),
+  ).catch((error) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Queries: published photos fell back after failure", error);
+    }
+    return [];
   });
 }
 

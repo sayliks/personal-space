@@ -1,19 +1,23 @@
-# A Personal Knowledge Space
+# sayliks's Corner
 
-A personal knowledge space — a quiet, long-term place where notes, essays, and
-half-formed questions accumulate, link to each other, and get revisited over
-time. It is built for **continuous refinement**, not one-shot publishing.
+This is a personal space: a quiet, long-term corner for short thoughts,
+essays, photos, fragments, and half-formed questions. It is built for
+**continuous refinement**, not one-shot publishing.
 
-Most blog engines treat a post as finished the moment it ships. This treats a
-note as something you return to: edits are surfaced, connections between ideas
-are first-class, and the index reflects what you've recently *tended* rather
-than only what you've recently published.
+Most blog engines treat a post as finished the moment it ships. This space
+treats writing as something you return to: edits are surfaced, connections
+between ideas are first-class, and the index reflects what has recently been
+*tended* rather than only what has recently been published.
 
-> Not a CMS, not a startup landing page, not a productivity dashboard. A system
-> for thinking that becomes more valuable as it grows.
+> Not a CMS, not a startup landing page, not a productivity dashboard. A small
+> room on the web for thinking, remembering, and leaving traces.
 
-## What makes it a knowledge space
+## What makes it personal
 
+- **Quotes** — capture immediate thoughts, status notes, and one-sentence
+  updates with lightweight Markdown and image support.
+- **Writing** — longer essays and notes can grow slowly over time instead of
+  being treated as frozen artifacts.
 - **Wiki-links** — write `[[another note]]` (or `[[slug|alias]]`) in any note to
   link ideas directly, the way you'd cross-reference a notebook.
 - **Backlinks** — every note shows which other notes point *to* it, so
@@ -21,7 +25,7 @@ than only what you've recently published.
 - **Revision-aware notes** — a note edited meaningfully after publishing is
   marked as *tended*, with its updated date surfaced in lists and on the note
   itself. The space reads as actively maintained, not frozen.
-- **Photo gallery** — curate and display photos on the homepage with tags and
+- **Photo gallery** — curate images and memories on the homepage with tags and
   ordering, managed through the admin console.
 - **Search & topics** — full-text search and category/tag navigation for
   finding your way back to an idea.
@@ -29,8 +33,8 @@ than only what you've recently published.
   flow, for discussion without turning the space into a social feed.
 - **Bilingual** — Chinese (default) and English via cookie-based locale
   switching, no URL prefix.
-- **Minimal admin console** — clean, distraction-free interface for managing
-  content with a focus on simplicity and clarity.
+- **Personal studio** — a clean, distraction-free admin interface for managing
+  quotes, writing, photos, comments, and simple analytics.
 
 ## Stack
 
@@ -64,8 +68,8 @@ npm run seed
 npm run dev          # http://localhost:3000
 ```
 
-Sign in at `/login` with the admin credentials you set, then write your first
-note from the console at `/admin`.
+Sign in at `/login` with the admin credentials you set, then add your first
+quote, photo, or piece of writing from the studio at `/admin`.
 
 **Want to see it populated first?** Run `npm run seed:demo` (after `npm run
 seed`) to load a small set of interlinked example notes. They demonstrate
@@ -113,12 +117,13 @@ Prisma: `npx prisma db push` (schema → DB), `npx prisma studio` (GUI),
 app/              # App Router pages, server actions, read-only API routes
   actions/        # mutations (server actions, not API routes)
   admin/          # the admin console (auth-guarded)
+    quotes/       # short thought/status management
     posts/        # post management
     categories/   # category management
     tags/         # tag management
     photos/       # photo gallery management
     comments/     # comment approval
-components/       # UI — layout, blog (notes), admin
+components/       # UI — layout, blog, quotes, admin
 lib/              # prisma, auth, queries, validations, wiki-link
 messages/         # i18n strings (zh.json, en.json)
 prisma/           # schema, seed
@@ -136,10 +141,11 @@ Reads go through `lib/queries.ts`; mutations are server actions in
 
 ## Features
 
-### Admin Console
-A minimal, distraction-free interface for managing your knowledge space:
+### Personal Studio
+A minimal, distraction-free interface for managing this personal space:
 - **Overview** — dashboard with stats and recent activity
-- **Posts** — create, edit, and manage articles with markdown support
+- **Quotes** — record short updates with Markdown and image uploads
+- **Writing** — create, edit, and manage articles with Markdown support
 - **Categories** — organize content into knowledge paths
 - **Tags** — create connections between ideas
 - **Gallery** — curate photos for the homepage
@@ -147,6 +153,7 @@ A minimal, distraction-free interface for managing your knowledge space:
 
 ### Content Management
 - Full markdown support with syntax highlighting
+- Lightweight quote/status updates with image upload and paste support
 - Draft/publish workflow
 - Category and tag organization
 - Cover images and summaries for SEO
