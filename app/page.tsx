@@ -103,11 +103,10 @@ export default async function HomePage() {
               <p className="text-sm italic text-muted-foreground/50">{tPosts("noPosts")}</p>
             ) : (
               <ul>
-                {posts.map((post, index) => (
+                {posts.map((post) => (
                   <li
                     key={post.id}
                     className="blog-post-item group"
-                    style={{ animationDelay: `${Math.min(index, 10) * 42}ms` }}
                   >
                     <Link
                       href={`/posts/${post.slug}`}

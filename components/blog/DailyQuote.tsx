@@ -43,7 +43,7 @@ export function DailyQuote() {
 
   if (loading) {
     return (
-      <div className="py-6 px-4 border border-border/40 rounded-lg bg-muted/20 sm:py-8 sm:px-6">
+      <div className="rounded-lg border border-white/15 bg-white/[0.04] px-4 py-6 backdrop-blur-[22px] dark:border-white/10 dark:bg-white/[0.035] sm:px-6 sm:py-8">
         <div className="h-16 flex items-center justify-center">
           <p className="text-sm text-muted-foreground/50">Loading...</p>
         </div>
@@ -54,7 +54,7 @@ export function DailyQuote() {
   if (!quote) return null
 
   return (
-    <div className="py-6 px-4 border border-border/40 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors sm:py-8 sm:px-6">
+    <div className="rounded-lg border border-white/15 bg-white/[0.04] px-4 py-6 backdrop-blur-[22px] dark:border-white/10 dark:bg-white/[0.035] sm:px-6 sm:py-8">
       <blockquote className="space-y-3">
         <p className="text-sm leading-relaxed text-foreground/85 font-serif italic sm:text-base">
           {"\u201c"}{quote.hitokoto}{"\u201d"}
