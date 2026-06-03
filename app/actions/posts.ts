@@ -6,6 +6,7 @@ import { generateSlug } from "@/lib/slug"
 import { createPostSchema } from "@/lib/validations"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { handleActionError } from "@/lib/action-error"
 
 export type ActionResult<T = void> =
   | { success: true; data?: T }
@@ -67,11 +68,7 @@ export async function createPost(formData: FormData): Promise<ActionResult> {
     revalidatePath("/admin/posts")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to create post:", error)
-    return { success: false, error: "Failed to create post" }
+    return handleActionError(error, "Failed to create post")
   }
 }
 
@@ -160,11 +157,7 @@ export async function updatePost(formData: FormData): Promise<ActionResult> {
     revalidatePath("/admin")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to update post:", error)
-    return { success: false, error: "Failed to update post" }
+    return handleActionError(error, "Failed to update post")
   }
 }
 
@@ -183,10 +176,6 @@ export async function deletePost(id: string): Promise<ActionResult> {
     revalidatePath("/admin")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to delete post:", error)
-    return { success: false, error: "Failed to delete post" }
+    return handleActionError(error, "Failed to delete post")
   }
 }

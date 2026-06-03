@@ -24,3 +24,18 @@ export function formatDateShort(date: Date | string): string {
 export function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
+
+// Dotted date (YYYY.MM.DD) in local time, with a "····" placeholder for missing
+// dates. Used by the home feeds and the posts index.
+export function formatDateDots(date: Date | string | null | undefined): string {
+  if (!date) return "····"
+  const d = typeof date === "string" ? new Date(date) : date
+  return d
+    .toLocaleDateString("en-CA", { year: "numeric", month: "2-digit", day: "2-digit" })
+    .replace(/-/g, ".")
+}
+
+export function parsePositiveInt(value: string | null, fallback: number): number {
+  const parsed = Number.parseInt(value ?? "", 10)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
+}

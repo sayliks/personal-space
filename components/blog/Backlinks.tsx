@@ -1,6 +1,6 @@
 import { getPostById, getBacklinkCandidates } from "@/lib/queries"
 import Link from "next/link"
-import { escapeRegex } from "@/lib/utils"
+import { buildWikiLinkRegex } from "@/lib/wiki-link"
 
 interface BacklinksProps {
   postId: string
@@ -22,14 +22,8 @@ export async function Backlinks({ postId }: BacklinksProps) {
     return []
   })
 
-  const wikiLinkPattern = new RegExp(
-    `\\[\\[${escapeRegex(targetPost.title)}(\\|[^\\]]+)?\\]\\]`,
-    "i"
-  )
-  const slugPattern = new RegExp(
-    `\\[\\[${escapeRegex(targetPost.slug)}(\\|[^\\]]+)?\\]\\]`,
-    "i"
-  )
+  const wikiLinkPattern = buildWikiLinkRegex(targetPost.title)
+  const slugPattern = buildWikiLinkRegex(targetPost.slug)
 
   const backlinks = candidates.filter(
     (c) =>

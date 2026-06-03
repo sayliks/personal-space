@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getPublishedQuotes } from "@/lib/queries"
+import { parsePositiveInt } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
 
@@ -23,10 +24,4 @@ export async function GET(request: NextRequest) {
       updatedAt: quote.updatedAt.toISOString(),
     })),
   })
-}
-
-function parsePositiveInt(value: string | null, fallback: number) {
-  const parsed = Number.parseInt(value ?? "", 10)
-
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
 }

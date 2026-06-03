@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { QuoteContent } from "@/components/blog/QuoteContent"
+import { formatDateDots } from "@/lib/utils"
 
 export type HomeQuoteFeedItem = {
   id: string
@@ -107,7 +108,7 @@ export function HomeQuoteFeed({
                 dateTime={(quote.publishedAt ?? quote.createdAt) || undefined}
                 className="home-feed-date"
               >
-                {noteDate(quote.publishedAt ?? quote.createdAt)}
+                {formatDateDots(quote.publishedAt ?? quote.createdAt)}
               </time>
               <div className="min-w-0">
                 {title && (
@@ -181,18 +182,4 @@ function getVisibleTitle(quote: HomeQuoteFeedItem) {
   }
 
   return title
-}
-
-function noteDate(date: string | null) {
-  if (!date) {
-    return "····"
-  }
-
-  return new Date(date)
-    .toLocaleDateString("en-CA", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .replace(/-/g, ".")
 }

@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server"
 import { Pagination } from "@/components/blog/Pagination"
 import { isPostRevisited } from "@/lib/posts/revision-status"
 import { getPublishedPosts } from "@/lib/queries"
-import { formatDateShort } from "@/lib/utils"
+import { formatDateShort, formatDateDots } from "@/lib/utils"
 import Link from "next/link"
 import type { Metadata } from "next"
 
@@ -13,13 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("title"),
   }
-}
-
-function noteDate(d: Date | null) {
-  if (!d) return "····"
-  return d
-    .toLocaleDateString("en-CA", { year: "numeric", month: "2-digit", day: "2-digit" })
-    .replace(/-/g, ".")
 }
 
 export default async function PostsPage({
@@ -56,7 +49,7 @@ export default async function PostsPage({
                     dateTime={post.publishedAt?.toISOString()}
                     className="pt-0.5 font-mono text-xs tabular-nums text-muted-foreground/40"
                   >
-                    {noteDate(post.publishedAt)}
+                    {formatDateDots(post.publishedAt)}
                   </time>
                   <span className="text-sm leading-snug text-foreground/85 decoration-border underline-offset-4 group-hover:text-foreground group-hover:underline">
                     {post.title}

@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { formatDateShort } from "@/lib/utils"
+import { formatDateShort, formatDateDots } from "@/lib/utils"
 
 const POST_REVISIT_THRESHOLD_MS = 24 * 60 * 60 * 1000
 
@@ -119,7 +119,7 @@ export function HomePostFeed({
               <span className="home-post-body">
                 <span className="home-post-meta">
                   <time dateTime={post.publishedAt ?? undefined}>
-                    {noteDate(post.publishedAt)}
+                    {formatDateDots(post.publishedAt)}
                   </time>
                   {post.category && <span>{post.category.title}</span>}
                   {isPostRevisited(post) && (
@@ -156,20 +156,6 @@ export function HomePostFeed({
       </div>
     </div>
   )
-}
-
-function noteDate(date: string | null) {
-  if (!date) {
-    return "····"
-  }
-
-  return new Date(date)
-    .toLocaleDateString("en-CA", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .replace(/-/g, ".")
 }
 
 function isPostRevisited(post: HomePostFeedItem) {

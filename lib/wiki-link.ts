@@ -1,13 +1,9 @@
+import { escapeRegex } from "@/lib/utils"
+
 export const WIKI_LINK_REGEX = /\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]/g
 
-export function extractWikiLinks(content: string): string[] {
-  const links = new Set<string>()
-  let match: RegExpExecArray | null
-  // Reset lastIndex since the regex is a module-level constant with the `g` flag
-  WIKI_LINK_REGEX.lastIndex = 0
-  while ((match = WIKI_LINK_REGEX.exec(content)) !== null) {
-    const target = match[1].trim()
-    if (target) links.add(target)
-  }
-  return [...links]
+// Matches a wiki-link that targets a specific title or slug, e.g. `[[target]]`
+// or `[[target|alias]]` (case-insensitive). Used for backlink detection.
+export function buildWikiLinkRegex(target: string): RegExp {
+  return new RegExp(`\\[\\[${escapeRegex(target)}(\\|[^\\]]+)?\\]\\]`, "i")
 }

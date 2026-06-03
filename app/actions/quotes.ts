@@ -10,6 +10,7 @@ import path from "node:path"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import type { ActionResult } from "./posts"
+import { handleActionError } from "@/lib/action-error"
 
 const QUOTE_IMAGE_MAX_SIZE = 6 * 1024 * 1024
 
@@ -96,11 +97,7 @@ export async function uploadQuoteImage(
 
     return { success: true, data: { markdown, url } }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to upload quote image:", error)
-    return { success: false, error: "Failed to upload image" }
+    return handleActionError(error, "Failed to upload image", "Failed to upload quote image")
   }
 }
 
@@ -139,11 +136,7 @@ export async function createQuote(formData: FormData): Promise<ActionResult> {
     revalidatePath("/admin/quotes")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to create quote:", error)
-    return { success: false, error: "Failed to create quote" }
+    return handleActionError(error, "Failed to create quote")
   }
 }
 
@@ -193,11 +186,7 @@ export async function updateQuote(formData: FormData): Promise<ActionResult> {
     revalidatePath("/admin/quotes")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to update quote:", error)
-    return { success: false, error: "Failed to update quote" }
+    return handleActionError(error, "Failed to update quote")
   }
 }
 
@@ -222,10 +211,6 @@ export async function deleteQuote(id: string): Promise<ActionResult> {
     revalidatePath("/admin/quotes")
     return { success: true }
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" }
-    }
-    console.error("Failed to delete quote:", error)
-    return { success: false, error: "Failed to delete quote" }
+    return handleActionError(error, "Failed to delete quote")
   }
 }

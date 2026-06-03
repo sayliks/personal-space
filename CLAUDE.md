@@ -141,7 +141,7 @@ Most public pages (categories, tags, search, homepage) declare `export const dyn
 - **Admin** (guarded by `app/admin/layout.tsx`): `/admin`, `/admin/posts` (`+ /new`, `/[id]/edit`), `/admin/quotes` (`+ /new`, `/[id]/edit`), `/admin/photos` (`+ /new`, `/[id]/edit`), `/admin/categories`, `/admin/tags`, `/admin/comments`, `/admin/analytics`
 - **Auth**: `/login` (independent layout), `/api/auth/[...nextauth]`
 - **API**: `/api/search` (read), `/api/analytics/track` (write, called by `proxy.ts`). Other mutations are Server Actions.
-- The `app/graph/` and `app/api/graph/` directories are **empty** — the knowledge graph is a component, not a route.
+- **No graph route or component** — the knowledge-graph view was removed; backlinks/related-notes render via `components/blog/Backlinks.tsx` and `RelatedNotes.tsx`.
 - **No RSS feed** — `app/rss.xml/` was removed; the sitemap (`app/sitemap.ts`) is retained.
 
 ### Analytics

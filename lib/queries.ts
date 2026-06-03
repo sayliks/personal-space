@@ -19,9 +19,6 @@ const HOME_QUOTE_SELECT = {
 export type PostWithRelations = Prisma.DocumentGetPayload<{
   include: typeof DOCUMENT_INCLUDES;
 }>;
-export type HomeQuote = Prisma.DocumentGetPayload<{
-  select: typeof HOME_QUOTE_SELECT;
-}>;
 
 function isTransientPrismaError(error: unknown): boolean {
   return (
@@ -51,26 +48,6 @@ async function withTransientRetry<T>(label: string, query: () => Promise<T>): Pr
     await new Promise((resolve) => setTimeout(resolve, 100));
     return query();
   }
-}
-
-export async function getHomePosts(limit = 14) {
-  return prisma.document.findMany({
-    where: {
-      type: "POST",
-      published: true,
-      publishedAt: { lte: new Date() },
-    },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      publishedAt: true,
-      updatedAt: true,
-      category: { select: { title: true } },
-    },
-    orderBy: { publishedAt: "desc" },
-    take: limit,
-  });
 }
 
 export async function getPublishedQuotes(params: {
@@ -108,12 +85,6 @@ export async function getPublishedQuotes(params: {
     });
 
   return { quotes, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
-}
-
-export async function getHomeQuotes(limit = 6) {
-  const { quotes } = await getPublishedQuotes({ page: 1, pageSize: limit });
-
-  return quotes;
 }
 
 export async function getPublishedPosts(params: {
@@ -311,14 +282,6 @@ export async function getBacklinkCandidates(params: {
     }
     return [];
   })
-}
-
-export async function getPendingComments() {
-  return prisma.comment.findMany({
-    where: { approved: false },
-    include: { document: { select: { id: true, title: true, slug: true } } },
-    orderBy: { createdAt: "desc" },
-  });
 }
 
 export async function getAllComments() {

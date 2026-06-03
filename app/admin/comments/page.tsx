@@ -15,16 +15,17 @@ export default async function AdminCommentsPage() {
         <h1 className="text-2xl font-medium">{t("comments")}</h1>
       </header>
 
-      <div className="border border-border/40 rounded animate-entrance">
-        <table className="w-full">
+      <div className="overflow-hidden rounded border border-border/40 animate-entrance">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-170">
           <thead>
             <tr className="border-b border-border/40 bg-muted/30">
-              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("status")}</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("author")}</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("content")}</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("post")}</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium">{t("date")}</th>
-              <th className="text-right px-4 py-2.5 text-xs font-medium">{t("actions")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("status")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("author")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("content")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("post")}</th>
+              <th className="text-left px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("date")}</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium whitespace-nowrap">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -58,12 +59,12 @@ export default async function AdminCommentsPage() {
                   <td className="px-4 py-3 text-sm">
                     <Link
                       href={`/posts/${comment.document.slug}`}
-                      className="text-primary hover:underline"
+                      className="block max-w-48 truncate text-primary hover:underline"
                     >
                       {comment.document.title}
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">
+                  <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">
                     {formatDate(comment.createdAt)}
                   </td>
                   <td className="px-4 py-3 text-right">
@@ -87,8 +88,9 @@ export default async function AdminCommentsPage() {
                 </tr>
               ))
             )}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
