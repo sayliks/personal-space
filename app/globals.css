@@ -267,7 +267,7 @@
 /* Paragraphs - comfortable rhythm */
 .prose p {
   margin-top: 0;
-  margin-bottom: 1.48rem;
+  margin-bottom: 1.1rem;
 }
 
 .prose p:last-child {
@@ -407,7 +407,7 @@
 .prose blockquote {
   border-left: 2px solid oklch(0.55 0 0 / 35%);
   padding-left: 1.5rem;
-  margin: 2.75rem 0;
+  margin: 1.9rem 0;
   font-style: italic;
   color: oklch(0.32 0 0);
   font-size: 0.95em;
@@ -424,7 +424,7 @@
 }
 
 .prose blockquote.pull-quote {
-  margin: 2.5rem 0;
+  margin: 1.85rem 0;
   padding-left: 1.5rem;
   border-left-width: 2px;
   border-left-color: oklch(0.28 0 0 / 22%);
@@ -441,7 +441,7 @@
 
 @media (min-width: 640px) {
   .prose blockquote.pull-quote {
-    margin: 2.75rem 0;
+    margin: 2rem 0;
     padding-left: 1.65rem;
     font-size: 1.42rem;
     line-height: 1.6;
@@ -474,7 +474,7 @@
 
 /* Images - breathing room */
 .prose img {
-  margin: 2.5rem 0;
+  margin: 1.5rem 0;
   border-radius: 0.5rem;
   border: 1px solid oklch(0.922 0 0 / 40%);
 }
