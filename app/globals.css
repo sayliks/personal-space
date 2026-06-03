@@ -209,7 +209,7 @@
 .prose {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
-  line-height: 1.85;
+  line-height: 1.7;
   color: oklch(0.28 0 0);
   font-weight: 450;
 }
@@ -221,7 +221,7 @@
 @media (min-width: 640px) {
   .article-prose {
     font-size: 1.125rem;
-    line-height: 1.9;
+    line-height: 1.75;
   }
 }
 
@@ -267,7 +267,7 @@
 /* Paragraphs - comfortable rhythm */
 .prose p {
   margin-top: 0;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.95rem;
 }
 
 .prose p:last-child {
